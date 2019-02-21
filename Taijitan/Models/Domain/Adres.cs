@@ -8,7 +8,7 @@ namespace Taijitan.Models.Domain
         #region Properties
         public String Land {
             get { return Land; }
-            set
+            private set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -23,22 +23,22 @@ namespace Taijitan.Models.Domain
         public String Postcode
         {
             get { return Postcode; }
-            set
+            private set
             {
-                if (String.IsNullOrWhiteSpace(value))
+                if(Regex.IsMatch(value, @"^\d{4}$"))
                 {
-                    throw new ArgumentException("Postcode mag geen lege waarde bevatten.");
+                    Postcode = value;
                 }
                 else
                 {
-                    Postcode = value;
+                    throw new ArgumentException("Ongeldige waarde voor postcode.");
                 }
             }
         }
         public String Stad
         {
             get { return Stad; }
-            set
+            private set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -53,7 +53,7 @@ namespace Taijitan.Models.Domain
         public String Straat
         {
             get { return Straat; }
-            set
+            private set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -68,7 +68,7 @@ namespace Taijitan.Models.Domain
         public String Nummer
         {
             get { return Nummer; }
-            set
+            private set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -86,6 +86,17 @@ namespace Taijitan.Models.Domain
         public Adres(String land, String postcode, String stad, String straat, String nummer)
         {
             this.Land = land;
+            this.Postcode = postcode;
+            this.Stad = stad;
+            this.Straat = straat;
+            this.Nummer = nummer;
+        }
+        #endregion
+        
+        #region Methods
+        public void WijzigGegevens(String land, String postcode, String stad, String straat, String nummer)
+        {
+            this.Land = Land;
             this.Postcode = postcode;
             this.Stad = stad;
             this.Straat = straat;
