@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Taijitan.Models
+namespace Taijitan.Models.Domain
 {
     public class Adres
     {

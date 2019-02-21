@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Taijitan.Models
+namespace Taijitan.Models.Domain
 {
     public class DomeinController
     {

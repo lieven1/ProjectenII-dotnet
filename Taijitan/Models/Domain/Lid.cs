@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Taijitan.Models
+namespace Taijitan.Models.Domain
 {
     public class Lid
     {
@@ -20,7 +20,7 @@ namespace Taijitan.Models
         #endregion
 
         #region Constructor
-        public Lid(String gebruikersnaam, String wachtwoord, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
+        public Lid(String gebruikersnaam, String wachtwoord, String naam, String voornaam, DateTime geboortedatum, string telefoonnummer, String email, Adres adres)
         {
             _gebruikersnaam = gebruikersnaam;
             _wachtwoord = wachtwoord;
