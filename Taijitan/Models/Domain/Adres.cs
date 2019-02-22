@@ -5,9 +5,17 @@ namespace Taijitan.Models.Domain
 {
     public class Adres
     {
+        #region Fields
+        private String _land;
+        private String _postcode;
+        private String _stad;
+        private String _straat;
+        private String _nummer;
+        #endregion
+
         #region Properties
         public String Land {
-            get { return Land; }
+            get { return _land; }
             private set
             {
                 if (String.IsNullOrWhiteSpace(value))
@@ -16,18 +24,18 @@ namespace Taijitan.Models.Domain
                 }
                 else
                 {
-                    Land = value;
+                    _land = value;
                 }
             }
         }
         public String Postcode
         {
-            get { return Postcode; }
+            get { return _postcode; }
             private set
             {
                 if(Regex.IsMatch(value, @"^\d{4}$"))
                 {
-                    Postcode = value;
+                    _postcode = value;
                 }
                 else
                 {
@@ -37,7 +45,7 @@ namespace Taijitan.Models.Domain
         }
         public String Stad
         {
-            get { return Stad; }
+            get { return _stad; }
             private set
             {
                 if (String.IsNullOrWhiteSpace(value))
@@ -46,13 +54,13 @@ namespace Taijitan.Models.Domain
                 }
                 else
                 {
-                    Stad = value;
+                    _stad = value;
                 }
             }
         }
         public String Straat
         {
-            get { return Straat; }
+            get { return _straat; }
             private set
             {
                 if (String.IsNullOrWhiteSpace(value))
@@ -61,13 +69,13 @@ namespace Taijitan.Models.Domain
                 }
                 else
                 {
-                    Straat = value;
+                    _straat = value;
                 }
             }
         }
         public String Nummer
         {
-            get { return Nummer; }
+            get { return _nummer; }
             private set
             {
                 if (String.IsNullOrWhiteSpace(value))
@@ -76,7 +84,7 @@ namespace Taijitan.Models.Domain
                 }
                 else
                 {
-                    Nummer = value;
+                    _nummer = value;
                 }
             }
         }
@@ -85,11 +93,11 @@ namespace Taijitan.Models.Domain
         #region Constructor
         public Adres(String land, String postcode, String stad, String straat, String nummer)
         {
-            this.Land = land;
-            this.Postcode = postcode;
-            this.Stad = stad;
-            this.Straat = straat;
-            this.Nummer = nummer;
+            this._land = land;
+            this._postcode = postcode;
+            this._stad = stad;
+            this._straat = straat;
+            this._nummer = nummer;
         }
         #endregion
         

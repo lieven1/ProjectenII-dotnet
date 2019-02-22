@@ -5,10 +5,19 @@ namespace Taijitan.Models.Domain
 {
     public class Lid
     {
-        #region Properties
+        #region Fields
+        private String _naam;
+        private String _voornaam;
+        private DateTime _geboortedatum;
+        private String _telefoonnummer;
+        private String _email;
+        #endregion
+
+        #region Properties        
         public String Gebruikersnaam { get; }
-        public String Naam {
-            get { return Naam; }
+        public String Naam
+        {
+            get { return _naam; }
             private set
             {
                 if (String.IsNullOrWhiteSpace(value))
@@ -17,13 +26,13 @@ namespace Taijitan.Models.Domain
                 }
                 else
                 {
-                    Naam = value;
+                    _naam = value;
                 }
             }
         }
         public String Voornaam
         {
-            get { return Voornaam; }
+            get { return _voornaam; }
             private set
             {
                 if (String.IsNullOrWhiteSpace(value))
@@ -32,13 +41,13 @@ namespace Taijitan.Models.Domain
                 }
                 else
                 {
-                    Voornaam = value;
+                    _voornaam = value;
                 }
             }
         }
         public DateTime Geboortedatum
         {
-            get { return Geboortedatum; }
+            get { return _geboortedatum; }
             private set
             {
                 if (value.CompareTo(DateTime.Today) >= 0)
@@ -47,18 +56,18 @@ namespace Taijitan.Models.Domain
                 }
                 else
                 {
-                    Geboortedatum = value;
+                    _geboortedatum = value;
                 }
             }
         }
         public String Telefoonnummer
         {
-            get { return Telefoonnummer; }
+            get { return _telefoonnummer; }
             private set
             {
                 if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
                 {
-                    Telefoonnummer = value;
+                    _telefoonnummer = value;
                 }
                 else
                 {
@@ -68,12 +77,12 @@ namespace Taijitan.Models.Domain
         }
         public String Email
         {
-            get { return Email; }
+            get { return _email; }
             private set
             {
                 if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
                 {
-                    Email = value;
+                    _email = value;
                 }
                 else
                 {
@@ -88,11 +97,11 @@ namespace Taijitan.Models.Domain
         public Lid(String gebruikersnaam, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
         {
             this.Gebruikersnaam = gebruikersnaam;
-            this.Naam = naam;
-            this.Voornaam = voornaam;
-            this.Geboortedatum = geboortedatum;
-            this.Telefoonnummer = telefoonnummer;
-            this.Email = email;
+            this._naam = naam;
+            this._voornaam = voornaam;
+            this._geboortedatum = geboortedatum;
+            this._telefoonnummer = telefoonnummer;
+            this._email = email;
             this.Adres = adres;
         }
         #endregion
