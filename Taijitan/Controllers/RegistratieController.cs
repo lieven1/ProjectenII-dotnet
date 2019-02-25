@@ -9,7 +9,7 @@ namespace Taijitan.Controllers
 {
     public class RegistratieController : Controller
     {
-        private List<Lid> leden;
+        private List<Gebruiker> leden;
 
         public IActionResult Index()
         {

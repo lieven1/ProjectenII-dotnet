@@ -8,28 +8,28 @@ namespace Taijitan.Models.Domain
     public class Sessie
     {
         #region Fields
-        private List<Lid> _leden;
-        private List<Lid> _ledenBuitenSessie;
+        private List<Gebruiker> _leden;
+        private List<Gebruiker> _ledenBuitenSessie;
         #endregion
 
         #region Properties
         public DateTime StartTijd { get; }
         public DateTime EindTijd { get; }
-        public List<Lid> IngeschrevenLeden { get; }
+        public List<Gebruiker> IngeschrevenLeden { get; }
         #endregion
 
         #region Constructor
-        public Sessie(DateTime startTijd, DateTime eindTijd, List<Lid> ingeschrevenLeden)
+        public Sessie(DateTime startTijd, DateTime eindTijd, List<Gebruiker> ingeschrevenLeden)
         {
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
-            this._leden = new List<Lid>();
+            this._leden = new List<Gebruiker>();
             this.IngeschrevenLeden = ingeschrevenLeden;
         }
         #endregion
 
         #region Methods
-        public void RegistreerLid(Lid lid)
+        public void RegistreerLid(Gebruiker lid)
         {
             if (IngeschrevenLeden.Contains(lid))
             {
@@ -40,11 +40,11 @@ namespace Taijitan.Models.Domain
                 _ledenBuitenSessie.Add(lid);
             }
         }
-        public List<Lid> geefLeden()
+        public List<Gebruiker> geefLeden()
         {
             return this._leden;
         } 
-        public List<Lid> geefLedenBuitenSessie()
+        public List<Gebruiker> geefLedenBuitenSessie()
         {
             return this._ledenBuitenSessie;
         }

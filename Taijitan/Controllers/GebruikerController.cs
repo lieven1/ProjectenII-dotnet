@@ -10,13 +10,13 @@ namespace Taijitan.Controllers
 {
     public class GebruikerController : Controller
     {
-        private ILidRepository lidRepo;
+        private IGebruikerRepository lidRepo;
 
-        public GebruikerController(ILidRepository lidRepo) {
+        public GebruikerController(IGebruikerRepository lidRepo) {
             this.lidRepo = lidRepo;
         }
 
-        public IActionResult Index(Lid lid)
+        public IActionResult Index(Gebruiker lid)
         {
             throw new NotImplementedException();
         }

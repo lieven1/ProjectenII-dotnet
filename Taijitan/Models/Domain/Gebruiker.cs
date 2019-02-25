@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Taijitan.Models.Domain
 {
-    public class Lid
+    public class Gebruiker
     {
         #region Fields
         private String _naam;
@@ -94,7 +94,7 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Constructor
-        public Lid(String gebruikersnaam, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
+        public Gebruiker(String gebruikersnaam, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
         {
             this.Gebruikersnaam = gebruikersnaam;
             this._naam = naam;

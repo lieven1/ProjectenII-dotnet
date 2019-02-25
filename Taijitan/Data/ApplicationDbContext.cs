@@ -9,7 +9,7 @@ namespace Taijitan.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public DbSet<Lid> Leden { get; set; }
+        public DbSet<Gebruiker> Leden { get; set; }
         public DbSet<Sessie> Sessies { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)

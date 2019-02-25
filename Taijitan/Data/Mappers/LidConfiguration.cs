@@ -8,9 +8,9 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Mappers
 {
-    public class LidConfiguration : IEntityTypeConfiguration<Lid>
+    public class LidConfiguration : IEntityTypeConfiguration<Gebruiker>
     {
-        public void Configure(EntityTypeBuilder<Lid> builder)
+        public void Configure(EntityTypeBuilder<Gebruiker> builder)
         {
             builder.ToTable("Gebruiker");
             builder.HasKey(t => t.Gebruikersnaam);

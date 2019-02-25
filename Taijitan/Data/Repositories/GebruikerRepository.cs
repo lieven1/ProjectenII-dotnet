@@ -6,9 +6,9 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Repositories
 {
-    public class LidRepository : ILidRepository
+    public class GebruikerRepository : IGebruikerRepository
     {
-        public Lid GetById(int v)
+        public Gebruiker GetById(int v)
         {
             throw new NotImplementedException();
         }

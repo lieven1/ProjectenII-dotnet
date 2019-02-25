@@ -15,7 +15,7 @@ namespace Taijitan.Data.Mappers
             builder.ToTable("Sessie");
             builder.Property(t => t.StartTijd).IsRequired();
             builder.Property(t => t.EindTijd).IsRequired();
-            builder.HasMany<Lid>(t => t.IngeschrevenLeden).WithOne().IsRequired();
+            builder.HasMany<Gebruiker>(t => t.IngeschrevenLeden).WithOne().IsRequired();
         }
     }
 }
