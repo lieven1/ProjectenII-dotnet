@@ -12,6 +12,7 @@ namespace Taijitan.Data.Repositories
         SqlCommand command;
 
         private string getByEmailQuery = "SELECT * FROM Leden WHERE email={0}";
+        private string updateGebruikerCommand = "UPDATE Leden SET naam={0}, voornaam={1}, geboortedatum={2}, telefoonnummer={3}, email={4}, straat={5}, nummer={6}, stad={7}, postcode={8}, land={9}  WHERE lidId={10}";
 
         public GebruikerRepositoryExtern()
         {
@@ -46,7 +47,18 @@ namespace Taijitan.Data.Repositories
 
         public void UpdateGebruiker(Gebruiker gebruiker)
         {
-            throw new System.NotImplementedException();
+            string commandStatement = string.Format(updateGebruikerCommand, gebruiker.Naam, gebruiker.Voornaam,
+                gebruiker.Geboortedatum, gebruiker.Telefoonnummer, gebruiker.Email, gebruiker.Adres.Straat, gebruiker.Adres.Nummer,
+                gebruiker.Adres.Stad, gebruiker.Adres.Postcode, gebruiker.Adres.Land, gebruiker.id);
+
+            using (connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (command = new SqlCommand(commandStatement, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
