@@ -62,7 +62,7 @@ namespace Taijitan.Data.Repositories
                     command.Parameters.AddWithValue("@stad", gebruiker.Adres.Stad);
                     command.Parameters.AddWithValue("@postcode", gebruiker.Adres.Postcode);
                     command.Parameters.AddWithValue("@land", gebruiker.Adres.Land);
-                    command.Parameters.AddWithValue("@lidId", gebruiker.id);
+                    command.Parameters.AddWithValue("@lidId", gebruiker.Id);
 
                     command.ExecuteNonQuery();
                 }

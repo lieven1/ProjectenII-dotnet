@@ -5,7 +5,6 @@ using Taijitan.Models.Domain;
 namespace Taijitan.Models.GebruikerViewModels {
     public class GebruikerEditViewModel {
         
-        public string Gebruikersnaam { get; }
         [Required]
         public String Naam { get; set; }
         [Required]
@@ -38,7 +37,6 @@ namespace Taijitan.Models.GebruikerViewModels {
 
         public GebruikerEditViewModel(Gebruiker gebruiker)
         {
-            this.Gebruikersnaam = gebruiker.Gebruikersnaam;
             this.Naam = gebruiker.Naam;
             this.Voornaam = gebruiker.Voornaam;
             this.Geboortedatum = gebruiker.Geboortedatum;

@@ -58,7 +58,7 @@ namespace Taijitan {
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Gebruiker}/{action=Index}/{id?}");
             });
             dataInitializer.InitializeData().Wait();
         }
