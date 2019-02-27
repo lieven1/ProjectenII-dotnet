@@ -5,16 +5,15 @@ namespace Taijitan.Data.Repositories
 {
     public class GebruikerRepositoryExtern : IGebruikerRepositoryExtern
     {
+        // connection string aanpassen: servernaam
         private string connectionString = @"Data Source=LAPTOP-3NH1NFIB; Initial Catalog=TaijitanYoshinRyu; User ID=TaijitanAdmin; Password=a";
         private SqlConnection connection;
-        private SqlDataAdapter adapter;
         private SqlDataReader reader;
         SqlCommand command;
 
         public GebruikerRepositoryExtern()
         {
             connection = new SqlConnection(connectionString);
-            adapter = new SqlDataAdapter();
         }
 
         public Gebruiker GetByEmail(string email)
