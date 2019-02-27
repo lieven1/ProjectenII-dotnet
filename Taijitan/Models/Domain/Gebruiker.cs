@@ -13,8 +13,7 @@ namespace Taijitan.Models.Domain
         private String _email;
         #endregion
 
-        #region Properties       
-        public int GebruikerId { get; set; }
+        #region Properties
         public String Naam
         {
             get { return _naam; }
