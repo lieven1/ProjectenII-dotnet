@@ -8,6 +8,7 @@ namespace Taijitan.Data {
     {
         public DbSet<Gebruiker> Gebruikers { get; set; }
         public DbSet<Sessie> Sessies { get; set; }
+        public DbSet<Adres> Adressen { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)

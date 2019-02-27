@@ -15,12 +15,13 @@ namespace Taijitan.Controllers {
             this._gebruikerRepository = gebruikerRepository;
         }
 
-        [ServiceFilter(typeof(GebruikerFilter))]
+        //[ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Index(Gebruiker gebruiker)
         {
             return RedirectToAction(nameof(Edit), gebruiker);
         }
 
+        [ServiceFilter(typeof(GebruikerFilter))]
         [HttpGet]
         public IActionResult Edit(Gebruiker gebruiker) {
             if (gebruiker == null)
