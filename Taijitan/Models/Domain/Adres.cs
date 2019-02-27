@@ -105,7 +105,7 @@ namespace Taijitan.Models.Domain
         #region Methods
         public void WijzigGegevens(String land, String postcode, String stad, String straat, String nummer)
         {
-            this.Land = Land;
+            this.Land = land;
             this.Postcode = postcode;
             this.Stad = stad;
             this.Straat = straat;

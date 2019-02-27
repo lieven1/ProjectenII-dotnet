@@ -15,7 +15,7 @@ namespace Taijitan.Data
                 : base(options)
         {
         }
-     
+
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

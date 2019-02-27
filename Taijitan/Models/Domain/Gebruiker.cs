@@ -14,7 +14,7 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Properties    
-        public int gebruikerID { get; set; }
+        public int GebruikerID { get; set; }
         public String Gebruikersnaam { get; set; }
         public String Naam
         {

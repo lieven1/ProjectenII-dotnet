@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,17 +25,17 @@ namespace Taijitan.Data.Repositories
 
         public IEnumerable<Gebruiker> getAll()
         {
-            return _context.Gebruikers.OrderBy(g => g.Gebruikersnaam).ToList();
+            return _context.Gebruikers.Include(g => g.Adres).OrderBy(g => g.Gebruikersnaam).ToList();
         }
 
         public Gebruiker GetById(int v)
         {
-            return _context.Gebruikers.FirstOrDefault(g => g.gebruikerID == v);
+            return _context.Gebruikers.Include(g => g.Adres).FirstOrDefault(g => g.GebruikerID == v);
         }
 
         public void RemoveGebruiker(Gebruiker gebruiker)
         {
-            _context.Remove(GetById(gebruiker.gebruikerID));
+            _context.Gebruikers.Remove(gebruiker);
         }
 
         public void SaveChanges()

@@ -44,7 +44,7 @@ namespace Taijitan.Controllers
             {
                 TempData["error"] = "Sorry, something went wrong, the data was not edited...";
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit));
         }
 
         private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker)

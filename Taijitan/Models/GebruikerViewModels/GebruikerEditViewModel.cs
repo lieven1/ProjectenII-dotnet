@@ -28,12 +28,16 @@ namespace Taijitan.Models.GebruikerViewModels {
         [Required]
         public String Nummer { get; set; }
 
+        public GebruikerEditViewModel()
+        {
+
+        }
+
         public GebruikerEditViewModel(Gebruiker gebruiker)
         {
             this.Gebruikersnaam = gebruiker.Gebruikersnaam;
             this.Naam = gebruiker.Naam;
             this.Voornaam = gebruiker.Voornaam;
-            this.Geboortedatum = gebruiker.Geboortedatum;
             this.TelefoonNummer = gebruiker.Telefoonnummer;
             this.Email = gebruiker.Email;
             this.Land = gebruiker.Adres.Land;
