@@ -14,6 +14,7 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Properties
+        public int AdresID { get; set; }
         public String Land {
             get { return _land; }
             private set

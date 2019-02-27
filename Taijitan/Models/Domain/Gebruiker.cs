@@ -13,12 +13,13 @@ namespace Taijitan.Models.Domain
         private String _email;
         #endregion
 
-        #region Properties        
-        public String Gebruikersnaam { get; }
+        #region Properties    
+        public int gebruikerID { get; set; }
+        public String Gebruikersnaam { get; set; }
         public String Naam
         {
             get { return _naam; }
-            private set
+            set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -33,7 +34,7 @@ namespace Taijitan.Models.Domain
         public String Voornaam
         {
             get { return _voornaam; }
-            private set
+            set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -63,7 +64,7 @@ namespace Taijitan.Models.Domain
         public String Telefoonnummer
         {
             get { return _telefoonnummer; }
-            private set
+            set
             {
                 if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
                 {
@@ -78,7 +79,7 @@ namespace Taijitan.Models.Domain
         public String Email
         {
             get { return _email; }
-            private set
+            set
             {
                 if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
                 {
@@ -90,10 +91,16 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
-        public Adres Adres { get; }
+        public Adres Adres { get; set; }
         #endregion
 
-        #region Constructor
+
+        #region Constructors
+        public Gebruiker()
+        {
+
+        }
+
         public Gebruiker(String gebruikersnaam, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
         {
             this.Gebruikersnaam = gebruikersnaam;
