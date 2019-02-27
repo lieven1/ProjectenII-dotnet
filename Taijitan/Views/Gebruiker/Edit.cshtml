@@ -2,7 +2,7 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form method="post">
+<form asp-controller="Gebruiker" asp-action="Edit" method="post">
     <h3>@Model.Gebruikersnaam</h3>
     <div class="form-group">
         <label asp-for="Naam"></label>
@@ -24,7 +24,7 @@
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" />
     </div>
-    <h3>Adreswijziging</h3>
+    <h4>Adreswijziging</h4>
     <div class="form-group">
         <label asp-for="Land"></label>
         <input asp-for="Land" class="form-control" />

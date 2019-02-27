@@ -40,9 +40,9 @@ namespace Taijitan.Controllers
                 ViewData["Title"] = String.Format("Wijzigen persoonlijke gegevens");
                 TempData["message"] = $"You successfully updated your data.";
             }
-            catch
+            catch (Exception e)
             {
-                TempData["error"] = "Sorry, something went wrong, the data was not edited...";
+                ModelState.AddModelError("", e.Message);
             }
             return RedirectToAction(nameof(Edit));
         }

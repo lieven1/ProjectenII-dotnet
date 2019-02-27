@@ -14,12 +14,15 @@ namespace Taijitan.Models.GebruikerViewModels {
         [DataType(DataType.Date)]
         public DateTime Geboortedatum { get; set; }
         [Required]
+        [Phone]
         public String TelefoonNummer { get; set; }
         [Required]
+        [EmailAddress]
         public String Email { get; set; }
         [Required]
         public String Land { get; set; }
         [Required]
+        [RegularExpression(@"^\d{4}$", ErrorMessage = "Ongeldige waarde voor postcode.")]
         public String Postcode { get; set; }
         [Required]
         public String Stad { get; set; }
@@ -38,6 +41,7 @@ namespace Taijitan.Models.GebruikerViewModels {
             this.Gebruikersnaam = gebruiker.Gebruikersnaam;
             this.Naam = gebruiker.Naam;
             this.Voornaam = gebruiker.Voornaam;
+            this.Geboortedatum = gebruiker.Geboortedatum;
             this.TelefoonNummer = gebruiker.Telefoonnummer;
             this.Email = gebruiker.Email;
             this.Land = gebruiker.Adres.Land;
