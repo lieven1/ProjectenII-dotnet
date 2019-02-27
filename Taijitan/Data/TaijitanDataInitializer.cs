@@ -29,8 +29,17 @@ namespace Taijitan.Data {
             string email = "taijitan@taijitan.be";
             IdentityUser user = new IdentityUser { UserName = email, Email = email };
             await _userManager.CreateAsync(user, "P@ssword1");
+
+            var gebruiker = new Gebruiker {
+                Naam = "gebruiker",
+                Voornaam = "gebruiker",
+                Geboortedatum = new DateTime(),
+                Telefoonnummer = "04593029",
+                Email = email,
+                Adres = new Adres("Belgie", "9000", "Gent", "straat", "1")
+            };
+            _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }
-
     }
 }

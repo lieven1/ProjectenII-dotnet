@@ -13,7 +13,7 @@ namespace Taijitan.Data.Mappers
         public void Configure(EntityTypeBuilder<Gebruiker> builder)
         {
             builder.ToTable("Gebruiker");
-            builder.HasKey(t => t.Email);
+            builder.HasKey(t => t.GebruikerId);
             builder.Property(t => t.Naam).IsRequired();
             builder.Property(t => t.Voornaam).IsRequired();
             builder.Property(t => t.Telefoonnummer).IsRequired();

@@ -13,11 +13,12 @@ namespace Taijitan.Models.Domain
         private String _email;
         #endregion
 
-        #region Properties        
+        #region Properties       
+        public int GebruikerId { get; set; }
         public String Naam
         {
             get { return _naam; }
-            private set
+            set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -32,7 +33,7 @@ namespace Taijitan.Models.Domain
         public String Voornaam
         {
             get { return _voornaam; }
-            private set
+            set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -47,7 +48,7 @@ namespace Taijitan.Models.Domain
         public DateTime Geboortedatum
         {
             get { return _geboortedatum; }
-            private set
+            set
             {
                 if (value.CompareTo(DateTime.Today) >= 0)
                 {
@@ -62,7 +63,7 @@ namespace Taijitan.Models.Domain
         public String Telefoonnummer
         {
             get { return _telefoonnummer; }
-            private set
+            set
             {
                 if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
                 {
@@ -77,7 +78,7 @@ namespace Taijitan.Models.Domain
         public String Email
         {
             get { return _email; }
-            private set
+            set
             {
                 if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
                 {
@@ -89,7 +90,7 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
-        public Adres Adres { get; private set; }
+        public Adres Adres { get; set; }
         #endregion
 
         #region Constructor

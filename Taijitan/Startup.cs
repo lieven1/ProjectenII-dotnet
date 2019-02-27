@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Taijitan.Models.Domain;
 using Taijitan.Data.Repositories;
+using System.Security.Claims;
+using Taijitan.Filters;
 
 namespace Taijitan {
     public class Startup {
@@ -32,8 +34,13 @@ namespace Taijitan {
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddAuthorization(options => {
+                options.AddPolicy("Gebruiker", policy => policy.RequireClaim(ClaimTypes.Role, "gebruiker"));
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddScoped<GebruikerFilter>();
             services.AddScoped<TaijitanDataInitializer>();
             services.AddScoped<IGebruikerRepository, GebruikerRepository>();
 
@@ -58,7 +65,7 @@ namespace Taijitan {
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Gebruiker}/{action=Index}/{id?}");
             });
             dataInitializer.InitializeData().Wait();
         }
