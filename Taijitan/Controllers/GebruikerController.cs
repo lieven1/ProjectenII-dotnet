@@ -20,15 +20,18 @@ namespace Taijitan.Controllers
         {
             return View();
         }
+
         [HttpGet]
-        public IActionResult Edit(int v) {
+        public IActionResult Edit(int v)
+        {
             var gebruiker = gebruikerRepo.GetById(1);               //tijdelijk aangezien er nog geen authenticatie is
             ViewData["Title"] = String.Format("Wijzigen persoonlijke gegevens");
             return View(new GebruikerEditViewModel(gebruiker));
         }
+
         [HttpPost]
-        public IActionResult Edit(int v, GebruikerEditViewModel model) {
-      
+        public IActionResult Edit(int v, GebruikerEditViewModel model)
+        {
             try
             {
                 Gebruiker gebruiker = gebruikerRepo.GetById(1);
@@ -41,19 +44,12 @@ namespace Taijitan.Controllers
             {
                 TempData["error"] = "Sorry, something went wrong, the data was not edited...";
             }
-
-
             return RedirectToAction(nameof(Index));
         }
 
         private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker)
         {
-            gebruiker.Gebruikersnaam = model.Gebruikersnaam;
-            gebruiker.Naam = model.Naam;
-            gebruiker.Voornaam = model.Voornaam;
-            gebruiker.Adres = model.Adres;
-            gebruiker.Email = model.Email;
-            gebruiker.Telefoonnummer = model.TelefoonNummer;
+            gebruiker.WijzigGegevens(model.Naam,model.Voornaam,model.Geboortedatum,model.TelefoonNummer,model.Email,model.Land,model.Postcode,model.Stad,model.Straat,model.Nummer);
         }
     }
    
