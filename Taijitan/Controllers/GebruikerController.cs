@@ -1,56 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Taijitan.Filters;
 using Taijitan.Models.Domain;
 using Taijitan.Models.GebruikerViewModels;
 
-namespace Taijitan.Controllers
-{
-    public class GebruikerController : Controller
-    {
-        private IGebruikerRepository gebruikerRepo;
+namespace Taijitan.Controllers {
+    [Authorize]
+    public class GebruikerController : Controller {
+        private IGebruikerRepository _gebruikerRepository;
 
-        public GebruikerController(IGebruikerRepository gebruikerRepo) {
-            this.gebruikerRepo = gebruikerRepo;
+        public GebruikerController(IGebruikerRepository gebruikerRepository) {
+            this._gebruikerRepository = gebruikerRepository;
+        }
+        
+        public IActionResult Index(Gebruiker gebruiker) {
+            return RedirectToAction(nameof(Edit), gebruiker);
         }
 
-        public IActionResult Index(Gebruiker lid)   //authenticatie implementeren
-        {
-            return View();
-        }
-
+        [ServiceFilter(typeof(GebruikerFilter))]
         [HttpGet]
-        public IActionResult Edit(int v)
-        {
-            var gebruiker = gebruikerRepo.GetById(1);               //tijdelijk aangezien er nog geen authenticatie is
-            ViewData["Title"] = String.Format("Wijzigen persoonlijke gegevens");
+        public IActionResult Edit(Gebruiker gebruiker) {
+            if (gebruiker == null)
+                return NotFound();
             return View(new GebruikerEditViewModel(gebruiker));
         }
 
         [HttpPost]
-        public IActionResult Edit(int v, GebruikerEditViewModel model)
-        {
-            try
-            {
-                Gebruiker gebruiker = gebruikerRepo.GetById(1);
+        public IActionResult Edit(Gebruiker gebruiker, EditViewModel model) {
+            try {
                 MapGebruikerEditViewModelToGebruiker(model, gebruiker);
-                gebruikerRepo.SaveChanges();
-                ViewData["Title"] = String.Format("Wijzigen persoonlijke gegevens");
+                _gebruikerRepository.SaveChanges();
                 TempData["message"] = $"You successfully updated your data.";
-            }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("", e.Message);
+            } catch {
+                TempData["error"] = "Sorry, something went wrong, the data was not edited...";
             }
             return RedirectToAction(nameof(Edit));
         }
-
-        private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker)
-        {
-            gebruiker.WijzigGegevens(model.Naam,model.Voornaam,model.Geboortedatum,model.TelefoonNummer,model.Email,model.Land,model.Postcode,model.Stad,model.Straat,model.Nummer);
+        private void MapGebruikerEditViewModelToGebruiker(EditViewModel model, Gebruiker gebruiker) {
+            gebruiker.Naam = model.Naam;
+            gebruiker.Voornaam = model.Voornaam;
+            gebruiker.Email = model.Email;
+            gebruiker.Geboortedatum = model.Geboortedatum;
+            gebruiker.Telefoonnummer = model.TelefoonNummer;
+            gebruiker.Adres = new Adres(model.Land, model.Postcode, model.Stad, model.Straat, model.Nummer);
         }
     }
-   
 }
