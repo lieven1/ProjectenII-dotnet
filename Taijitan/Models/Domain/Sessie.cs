@@ -13,8 +13,8 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Properties
-        public DateTime StartTijd { get; }
-        public DateTime EindTijd { get; }
+        public DateTime StartTijd { get; private set; }
+        public DateTime EindTijd { get; private set; }
         public List<Gebruiker> IngeschrevenLeden { get; }
         #endregion
 
@@ -24,7 +24,12 @@ namespace Taijitan.Models.Domain
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
             this._leden = new List<Gebruiker>();
+            this._ledenBuitenSessie = new List<Gebruiker>();
             this.IngeschrevenLeden = ingeschrevenLeden;
+        }
+
+        public Sessie() {
+
         }
         #endregion
 

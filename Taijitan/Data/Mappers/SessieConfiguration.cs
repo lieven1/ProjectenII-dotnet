@@ -13,9 +13,10 @@ namespace Taijitan.Data.Mappers
         public void Configure(EntityTypeBuilder<Sessie> builder)
         {
             builder.ToTable("Sessie");
+            builder.HasKey(t => t.StartTijd);
             builder.Property(t => t.StartTijd).IsRequired();
             builder.Property(t => t.EindTijd).IsRequired();
-            builder.HasMany<Gebruiker>(t => t.IngeschrevenLeden).WithOne().IsRequired();
+            builder.HasMany<Gebruiker>(t => t.IngeschrevenLeden).WithOne();
         }
     }
 }

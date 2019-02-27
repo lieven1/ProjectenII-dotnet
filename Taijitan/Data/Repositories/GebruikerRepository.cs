@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,14 +9,21 @@ namespace Taijitan.Data.Repositories
 {
     public class GebruikerRepository : IGebruikerRepository
     {
-        public Gebruiker GetById(int v)
+        private readonly DbSet<Gebruiker> _gebruikers;
+        private readonly ApplicationDbContext _context;
+
+        public GebruikerRepository(ApplicationDbContext context) {
+            _context = context;
+            _gebruikers = _context.Gebruikers;
+        }
+        public Gebruiker GetBy(string email)
         {
-            throw new NotImplementedException();
+            return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Email == email);
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
     }
 }

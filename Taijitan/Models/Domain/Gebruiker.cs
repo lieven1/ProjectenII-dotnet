@@ -14,7 +14,6 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Properties        
-        public String Gebruikersnaam { get; }
         public String Naam
         {
             get { return _naam; }
@@ -90,19 +89,22 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
-        public Adres Adres { get; }
+        public Adres Adres { get; private set; }
         #endregion
 
         #region Constructor
-        public Gebruiker(String gebruikersnaam, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
+        public Gebruiker(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
         {
-            this.Gebruikersnaam = gebruikersnaam;
             this._naam = naam;
             this._voornaam = voornaam;
             this._geboortedatum = geboortedatum;
             this._telefoonnummer = telefoonnummer;
             this._email = email;
             this.Adres = adres;
+        }
+
+        public Gebruiker() {
+
         }
         #endregion
 

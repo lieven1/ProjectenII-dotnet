@@ -8,19 +8,19 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Mappers
 {
-    public class LidConfiguration : IEntityTypeConfiguration<Gebruiker>
+    public class GebruikerConfiguration : IEntityTypeConfiguration<Gebruiker>
     {
         public void Configure(EntityTypeBuilder<Gebruiker> builder)
         {
             builder.ToTable("Gebruiker");
-            builder.HasKey(t => t.Gebruikersnaam);
+            builder.HasKey(t => t.Email);
             builder.Property(t => t.Naam).IsRequired();
             builder.Property(t => t.Voornaam).IsRequired();
             builder.Property(t => t.Telefoonnummer).IsRequired();
             builder.Property(t => t.Geboortedatum).IsRequired();
             builder.Property(t => t.Email).IsRequired();
 
-            builder.HasOne(t => t.Adres).WithOne().IsRequired();
+            builder.HasOne(t => t.Adres).WithMany().IsRequired();
         }
     }
 }

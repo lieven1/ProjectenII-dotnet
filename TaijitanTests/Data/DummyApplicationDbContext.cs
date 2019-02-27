@@ -10,7 +10,7 @@ namespace TaijitanTests.Data {
 
         public DummyApplicationDbContext() {
             Adres adresBruceLee = new Adres("Belgie", "1001", "Gent", "eenstraat", "12");
-            BruceLee = new Gebruiker("BruceLee", "Lee", "Bruce", System.DateTime.Today, "047384950", "bruce.lee@hotmail.com",
+            BruceLee = new Gebruiker("Lee", "Bruce", System.DateTime.Today, "047384950", "bruce.lee@hotmail.com",
                 adresBruceLee);
             _leden = new List<Gebruiker>() {
                 BruceLee

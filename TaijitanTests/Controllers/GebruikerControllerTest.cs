@@ -7,7 +7,6 @@ using Taijitan.Models.GebruikerViewModels;
 using Moq;
 
 namespace TaijitanTests.Controllers {
-    //eventueel andere naam afhankelijk van hoe controller noemt
     public class GebruikerControllerTest {
 
         private readonly GebruikerController _controller;
@@ -23,7 +22,6 @@ namespace TaijitanTests.Controllers {
         }
 
         #region -- Index --
-        // voorstel: index geeft edit view terug? er is volgens mij geen aparte index view nodig voor gebruiker/lid
         [Fact]
         public void Index_GeeftGegevensLid() {
             var lid = _bruceLee;
