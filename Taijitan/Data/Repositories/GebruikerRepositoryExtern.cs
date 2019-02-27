@@ -11,9 +11,6 @@ namespace Taijitan.Data.Repositories
         private SqlDataReader reader;
         SqlCommand command;
 
-        private string getByEmailQuery = "SELECT * FROM Leden WHERE email={0}";
-        private string updateGebruikerCommand = "UPDATE Leden SET naam={0}, voornaam={1}, geboortedatum={2}, telefoonnummer={3}, email={4}, straat={5}, nummer={6}, stad={7}, postcode={8}, land={9}  WHERE lidId={10}";
-
         public GebruikerRepositoryExtern()
         {
             connection = new SqlConnection(connectionString);
@@ -24,13 +21,14 @@ namespace Taijitan.Data.Repositories
         {
             Gebruiker gebruiker = null;
 
-            string query = string.Format(getByEmailQuery, email);
+            string query = "SELECT * FROM Leden WHERE email=@email";
 
             using (connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 using (command = new SqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@email", email);
                     using (reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -47,15 +45,26 @@ namespace Taijitan.Data.Repositories
 
         public void UpdateGebruiker(Gebruiker gebruiker)
         {
-            string commandStatement = string.Format(updateGebruikerCommand, gebruiker.Naam, gebruiker.Voornaam,
-                gebruiker.Geboortedatum, gebruiker.Telefoonnummer, gebruiker.Email, gebruiker.Adres.Straat, gebruiker.Adres.Nummer,
-                gebruiker.Adres.Stad, gebruiker.Adres.Postcode, gebruiker.Adres.Land, gebruiker.id);
+            string commandStatement = "UPDATE Leden SET naam=@naam, voornaam=@voornaam, geboortedatum=@geboortedatum, telefoonnummer=@telefoonnummer, email=@email, " +
+                "straat=@straat, nummer=@nummer, stad=@stad, postcode=@postcode, land=@land  WHERE lidId=@lidId";
 
             using (connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 using (command = new SqlCommand(commandStatement, connection))
                 {
+                    command.Parameters.AddWithValue("@naam", gebruiker.Naam);
+                    command.Parameters.AddWithValue("@voornaam", gebruiker.Voornaam);
+                    command.Parameters.AddWithValue("@geboortedatum", gebruiker.Geboortedatum);
+                    command.Parameters.AddWithValue("@telefoonnummer", gebruiker.Telefoonnummer);
+                    command.Parameters.AddWithValue("@email", gebruiker.Email);
+                    command.Parameters.AddWithValue("@straat", gebruiker.Adres.Straat);
+                    command.Parameters.AddWithValue("@nummer", gebruiker.Adres.Nummer);
+                    command.Parameters.AddWithValue("@stad", gebruiker.Adres.Stad);
+                    command.Parameters.AddWithValue("@postcode", gebruiker.Adres.Postcode);
+                    command.Parameters.AddWithValue("@land", gebruiker.Adres.Land);
+                    command.Parameters.AddWithValue("@lidId", gebruiker.id);
+
                     command.ExecuteNonQuery();
                 }
             }
