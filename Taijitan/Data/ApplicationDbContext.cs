@@ -17,12 +17,12 @@ namespace Taijitan.Data
         }
      
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var connectionstring = @"Server=DESKTOP-KS6ATME;Database=Taijitan;Integrated Security=True;";
-            optionsBuilder.UseSqlServer(connectionstring);
-            //var connectionstring = @"Server=.\SQLEXPRESS;Database=Taijitan;Integrated Security=True;";
-            //optionsBuilder.UseSqlServer(connectionstring);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    var connectionstring = @"Server=DESKTOP-KS6ATME;Database=Taijitan;Integrated Security=True;";
+        //    optionsBuilder.UseSqlServer(connectionstring);
+        //    //var connectionstring = @"Server=.\SQLEXPRESS;Database=Taijitan;Integrated Security=True;";
+        //    //optionsBuilder.UseSqlServer(connectionstring);
+        //}
     }
 }
