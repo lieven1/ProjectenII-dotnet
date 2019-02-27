@@ -90,6 +90,7 @@ namespace Taijitan.Models.Domain
             }
         }
         public Adres Adres { get; private set; }
+        public int id { get; private set; }
         #endregion
 
         #region Constructor
@@ -103,7 +104,13 @@ namespace Taijitan.Models.Domain
             this.Adres = adres;
         }
 
-        public Gebruiker() {
+        public Gebruiker(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres, int id) : this(naam, voornaam, geboortedatum, telefoonnummer, email, adres)
+        {
+            this.id = id;
+        }
+
+        public Gebruiker()
+        {
 
         }
         #endregion
