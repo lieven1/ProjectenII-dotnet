@@ -27,7 +27,7 @@ namespace Taijitan.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Edit(Gebruiker gebruiker, EditViewModel model) {
+        public IActionResult Edit(Gebruiker gebruiker, GebruikerEditViewModel model) {
             try {
                 MapGebruikerEditViewModelToGebruiker(model, gebruiker);
                 _gebruikerRepository.SaveChanges();
@@ -37,7 +37,7 @@ namespace Taijitan.Controllers {
             }
             return RedirectToAction(nameof(Edit));
         }
-        private void MapGebruikerEditViewModelToGebruiker(EditViewModel model, Gebruiker gebruiker) {
+        private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker) {
             gebruiker.Naam = model.Naam;
             gebruiker.Voornaam = model.Voornaam;
             gebruiker.Email = model.Email;

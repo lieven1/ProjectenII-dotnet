@@ -33,7 +33,7 @@ namespace Taijitan.Data.Repositories
                         while (reader.Read())
                         {
                             Adres adres = new Adres(reader.GetString(8), reader.GetString(7), reader.GetString(6), reader.GetString(4), reader.GetString(5));
-                            gebruiker = new Gebruiker(reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(9), reader.GetString(10), adres, reader.GetInt32(0));
+                            gebruiker = new Gebruiker(reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(9), reader.GetString(10), adres);
                         }
                     }
                 }
@@ -62,7 +62,7 @@ namespace Taijitan.Data.Repositories
                     command.Parameters.AddWithValue("@stad", gebruiker.Adres.Stad);
                     command.Parameters.AddWithValue("@postcode", gebruiker.Adres.Postcode);
                     command.Parameters.AddWithValue("@land", gebruiker.Adres.Land);
-                    command.Parameters.AddWithValue("@lidId", gebruiker.Id);
+                    //command.Parameters.AddWithValue("@lidId", gebruiker.Id);
 
                     command.ExecuteNonQuery();
                 }

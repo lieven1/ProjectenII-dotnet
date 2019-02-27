@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Taijitan.Models.Domain
-{
-    public class Gebruiker
-    {
+namespace Taijitan.Models.Domain {
+    public class Gebruiker {
         #region Fields
         private String _naam;
         private String _voornaam;
@@ -13,89 +11,62 @@ namespace Taijitan.Models.Domain
         private String _email;
         #endregion
 
-        #region Properties 
-        public String Naam
-        {
+        #region Properties
+        public String Naam {
             get { return _naam; }
-            private set
-            {
-                if (String.IsNullOrWhiteSpace(value))
-                {
+            set {
+                if (String.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Naam mag geen lege waarde bevatten.");
-                }
-                else
-                {
+                } else {
                     _naam = value;
                 }
             }
         }
-        public String Voornaam
-        {
+        public String Voornaam {
             get { return _voornaam; }
-            private set
-            {
-                if (String.IsNullOrWhiteSpace(value))
-                {
+            set {
+                if (String.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Voornaam mag geen lege waarde bevatten.");
-                }
-                else
-                {
+                } else {
                     _voornaam = value;
                 }
             }
         }
-        public DateTime Geboortedatum
-        {
+        public DateTime Geboortedatum {
             get { return _geboortedatum; }
-            private set
-            {
-                if (value.CompareTo(DateTime.Today) >= 0)
-                {
+            set {
+                if (value.CompareTo(DateTime.Today) >= 0) {
                     throw new ArgumentException("Geboortedatum kan niet in de toekomst liggen.");
-                }
-                else
-                {
+                } else {
                     _geboortedatum = value;
                 }
             }
         }
-        public String Telefoonnummer
-        {
+        public String Telefoonnummer {
             get { return _telefoonnummer; }
-            private set
-            {
-                if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
-                {
+            set {
+                if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))")) {
                     _telefoonnummer = value;
-                }
-                else
-                {
+                } else {
                     throw new ArgumentException("Ongeldige waarde voor telefoonnummer.");
                 }
             }
         }
-        public String Email
-        {
+        public String Email {
             get { return _email; }
-            private set
-            {
-                if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
-                {
+            set {
+                if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")) {
                     _email = value;
-                }
-                else
-                {
+                } else {
                     throw new ArgumentException("Ongeldige waarde voor e-mailadres.");
                 }
             }
         }
-        public Adres Adres { get; private set; }
-        public int Id { get; private set; }
+        public Adres Adres { get; set; }
         #endregion
 
         #region Constructor
-        public Gebruiker(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
-        {
+        public Gebruiker(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres) {
             this._naam = naam;
             this._voornaam = voornaam;
             this._geboortedatum = geboortedatum;
@@ -104,20 +75,13 @@ namespace Taijitan.Models.Domain
             this.Adres = adres;
         }
 
-        public Gebruiker(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres, int id) : this(naam, voornaam, geboortedatum, telefoonnummer, email, adres)
-        {
-            this.Id = id;
-        }
-
-        public Gebruiker()
-        {
+        public Gebruiker() {
 
         }
         #endregion
 
         #region Methods
-        public void WijzigGegevens(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, String land, String postcode, String stad, String straat, String nummer)
-        {
+        public void WijzigGegevens(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, String land, String postcode, String stad, String straat, String nummer) {
             this.Naam = naam;
             this.Voornaam = voornaam;
             this.Geboortedatum = geboortedatum;

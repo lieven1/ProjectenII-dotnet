@@ -20,10 +20,6 @@ namespace Taijitan.Data.Repositories
         {
             return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Email == email);
         }
-        public Gebruiker GetById(int id)
-        {
-            return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Id == id);
-        }
 
         public void SaveChanges()
         {

@@ -4,6 +4,5 @@
     {
         void SaveChanges();
         Gebruiker GetBy(string email);
-        Gebruiker GetById(int id);
     }
 }
