@@ -44,7 +44,6 @@ namespace Taijitan.Models.GebruikerViewModels {
             this.Geboortedatum = gebruiker.Geboortedatum;
             this.TelefoonNummer = gebruiker.Telefoonnummer;
             this.Email = gebruiker.Email;
-            this.Geboortedatum = gebruiker.Geboortedatum;
             this.Land = gebruiker.Adres.Land;
             this.Postcode = gebruiker.Adres.Postcode;
             this.Stad = gebruiker.Adres.Stad;
