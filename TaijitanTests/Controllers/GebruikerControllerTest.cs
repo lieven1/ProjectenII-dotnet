@@ -24,8 +24,8 @@ namespace TaijitanTests.Controllers {
         #region -- Index --
         [Fact]
         public void Index_GeeftGegevensLid() {
-            var lid = _bruceLee;
-            var result = _controller.Index(lid) as ViewResult;
+            var gebruiker = _bruceLee;
+            var result = _controller.Index(gebruiker) as ViewResult;
             var viewLid = result.Model as Gebruiker;
             Assert.Equal("Lee",viewLid.Naam);
             Assert.Equal("Bruce", viewLid.Voornaam);
@@ -36,32 +36,30 @@ namespace TaijitanTests.Controllers {
         #region -- Edit --
         [Fact]
         public void EditHttpPost_ValidEdit_UpdatesAndPersistsData() {
-            _mockLidRepository.Setup(r => r.GetById(1)).Returns(_dummyContext.BruceLee);
+            _mockLidRepository.Setup(r => r.GetBy("bruce.lee@hotmail.com")).Returns(_dummyContext.BruceLee);
             var gebruikerVM = new GebruikerEditViewModel(_bruceLee) {
-                Gebruikersnaam = "BruceLeeGewijzigd",
-                Adres = new Adres("Japan", "1000", "Tokyo", "eenanderestraat", "15")
+                Naam = "BruceGewijzig"
             };
-            _controller.Edit(1, gebruikerVM);
-            Assert.Equal("BruceLeeGewijzigd", _bruceLee.Naam);
-            Assert.Equal(new Adres("Japan", "1000", "Tokyo", "eenanderestraat", "15"), _bruceLee.Adres);
+            _controller.Edit(_dummyContext.BruceLee, gebruikerVM);
+            Assert.Equal("BruceGewijzigd", _bruceLee.Naam);
             _mockLidRepository.Verify(r => r.SaveChanges(), Times.Once);
         }
 
         [Fact]
         public void EditHttpPost_ValidEdit_RedirectsToIndex() {
-            _mockLidRepository.Setup(r => r.GetById(1)).Returns(_dummyContext.BruceLee);
+            _mockLidRepository.Setup(r => r.GetBy("bruce.lee@hotmail.com")).Returns(_dummyContext.BruceLee);
             var gebruikerVM = new GebruikerEditViewModel(_bruceLee);
-            var result = _controller.Edit(1, gebruikerVM) as RedirectToActionResult;
+            var result = _controller.Edit(_dummyContext.BruceLee, gebruikerVM) as RedirectToActionResult;
             Assert.Equal("Index", result?.ActionName);
         }
 
         [Fact]
         public void EditHttpPost_InValidEdit_DoesNotUpdateAndPersistData() {
-            _mockLidRepository.Setup(r => r.GetById(1)).Returns(_dummyContext.BruceLee);
+            _mockLidRepository.Setup(r => r.GetBy("bruce.lee@hotmail.com")).Returns(_dummyContext.BruceLee);
             var gebruikerVM = new GebruikerEditViewModel(_bruceLee) {
                 Naam = ""
             };
-            _controller.Edit(1, gebruikerVM);
+            _controller.Edit(_dummyContext.BruceLee, gebruikerVM);
             Assert.Equal("Lee", _bruceLee.Naam);
             _mockLidRepository.Verify(r => r.SaveChanges(), Times.Never);
         }

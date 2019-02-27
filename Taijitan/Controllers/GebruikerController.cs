@@ -14,12 +14,12 @@ namespace Taijitan.Controllers {
             this._gebruikerRepository = gebruikerRepository;
         }
         
-        public IActionResult Index(Gebruiker gebruiker) {
-            return RedirectToAction(nameof(Edit), gebruiker);
+        public IActionResult Index() {
+            return RedirectToAction(nameof(Edit));
         }
-
-        [ServiceFilter(typeof(GebruikerFilter))]
+        
         [HttpGet]
+        [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Edit(Gebruiker gebruiker) {
             if (gebruiker == null)
                 return NotFound();
@@ -27,6 +27,7 @@ namespace Taijitan.Controllers {
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Edit(Gebruiker gebruiker, GebruikerEditViewModel model) {
             try {
                 MapGebruikerEditViewModelToGebruiker(model, gebruiker);
@@ -34,6 +35,7 @@ namespace Taijitan.Controllers {
                 TempData["message"] = $"You successfully updated your data.";
             } catch {
                 TempData["error"] = "Sorry, something went wrong, the data was not edited...";
+                return RedirectToAction(nameof(Edit), model);
             }
             return RedirectToAction(nameof(Edit));
         }
