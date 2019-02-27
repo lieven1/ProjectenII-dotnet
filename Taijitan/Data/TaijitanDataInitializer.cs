@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Taijitan.Models.Domain;
 
@@ -16,12 +17,15 @@ namespace Taijitan.Data {
         public async Task InitializeData() {
             _context.Database.EnsureDeleted();
             if (_context.Database.EnsureCreated()) {
-                await InitializeUsers();
+                Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
+                _context.Adressen.Add(adres1);
+                _context.SaveChanges();
 
-                Gebruiker BruceLee = new Gebruiker("Lee", "Bruce", new DateTime(1940, 11, 27), "0479076258", "BruceLee@MartialArt.com", new Adres("België", "9820", "Gent", "MartialArtStraat", "5a"));
-
+                Gebruiker BruceLee = new Gebruiker("Lee", "Bruce", new DateTime(1940, 11, 27), "0479076258", "BruceLee@MartialArt.com", adres1);
                 _context.Gebruikers.Add(BruceLee);
                 _context.SaveChanges();
+
+                await InitializeUsers();
             }
         }
 
@@ -29,8 +33,17 @@ namespace Taijitan.Data {
             string email = "taijitan@taijitan.be";
             IdentityUser user = new IdentityUser { UserName = email, Email = email };
             await _userManager.CreateAsync(user, "P@ssword1");
+
+            var gebruiker = new Gebruiker {
+                Naam = "gebruiker",
+                Voornaam = "gebruiker",
+                Geboortedatum = new DateTime(),
+                Telefoonnummer = "04593029",
+                Email = email,
+                Adres = _context.Adressen.FirstOrDefault(a => a.AdresId == 1)
+            };
+            _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }
-
     }
 }
