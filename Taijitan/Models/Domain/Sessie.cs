@@ -9,7 +9,6 @@ namespace Taijitan.Models.Domain
     {
         #region Fields
         private List<Gebruiker> _leden;
-        private List<Gebruiker> _ledenBuitenSessie;
         #endregion
 
         #region Properties
@@ -36,14 +35,7 @@ namespace Taijitan.Models.Domain
         #region Methods
         public void RegistreerLid(Gebruiker lid)
         {
-            if (IngeschrevenLeden.Contains(lid))
-            {
-                _leden.Add(lid);
-            }
-            else
-            {
-                _ledenBuitenSessie.Add(lid);
-            }
+            _leden.Add(lid);
         }
         public List<Gebruiker> geefLeden()
         {
@@ -51,7 +43,7 @@ namespace Taijitan.Models.Domain
         } 
         public List<Gebruiker> geefLedenBuitenSessie()
         {
-            return this._ledenBuitenSessie;
+            return this._leden.Except(this.IngeschrevenLeden).ToList();
         }
         #endregion
     }
