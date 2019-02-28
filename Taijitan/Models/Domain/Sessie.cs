@@ -23,7 +23,6 @@ namespace Taijitan.Models.Domain
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
             this._leden = new List<Gebruiker>();
-            this._ledenBuitenSessie = new List<Gebruiker>();
             this.IngeschrevenLeden = ingeschrevenLeden;
         }
 
