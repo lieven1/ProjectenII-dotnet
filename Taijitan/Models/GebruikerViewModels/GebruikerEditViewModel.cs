@@ -14,9 +14,11 @@ namespace Taijitan.Models.GebruikerViewModels {
         public DateTime Geboortedatum { get; set; }
         [Required]
         [Phone]
+        [RegularExpression(@"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))", ErrorMessage = "Ongeldige waarde voor telefoonnummer.")]
         public String TelefoonNummer { get; set; }
         [Required]
         [EmailAddress]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Ongeldige waarde voor e-mailadres.")]
         public String Email { get; set; }
         [Required]
         public String Land { get; set; }
