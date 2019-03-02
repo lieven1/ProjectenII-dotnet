@@ -16,14 +16,14 @@ namespace Taijitan.Models.Domain
         {
             // Change to repository
             _leden = new List<Gebruiker>() {
-                new Gebruiker("LastName1", "FirstName1", new DateTime(1998,01,01), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
-                new Gebruiker("LastName2", "FirstName2", new DateTime(1998,05,15), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
-                new Gebruiker("LastName3", "FirstName3", new DateTime(1998,03,12), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
-                new Gebruiker("LastName4", "FirstName4", new DateTime(1998,07,12), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
-                new Gebruiker("LastName5", "FirstName5", new DateTime(1998,05,11), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1"))};
+                new Gebruiker("Username1", "LastName1", "FirstName1", new DateTime(1998,01,01), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
+                new Gebruiker("Username2", "LastName2", "FirstName2", new DateTime(1998,05,15), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
+                new Gebruiker("Username3", "LastName3", "FirstName3", new DateTime(1998,03,12), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
+                new Gebruiker("Username4", "LastName4", "FirstName4", new DateTime(1998,07,12), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1")),
+                new Gebruiker("Username5", "LastName5", "FirstName5", new DateTime(1998,05,11), "052525252", "email1@email.be", new Adres("Belgium", "9000", "Gent", "Straat", "1"))};
             DateTime now = new DateTime();
             // Sessie met alle leden behalve laatste 2
-            _sessie = new Sessie(now, now.AddHours(4), _leden.GetRange(0, _leden.Count-2));
+            _sessie = new Sessie(now, now.AddHours(4), _leden.GetRange(0, _leden.Count - 2));
         }
         #endregion
 
