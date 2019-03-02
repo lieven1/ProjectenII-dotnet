@@ -37,11 +37,13 @@ namespace Taijitan.Data
         private async Task InitializeUsers()
         {
             string email = "taijitan@taijitan.be";
-            IdentityUser user = new IdentityUser { UserName = email, Email = email };
+            string usr = "taijitan";
+            IdentityUser user = new IdentityUser { UserName = usr, Email = email };
             await _userManager.CreateAsync(user, "P@ssword1");
 
             var gebruiker = new Gebruiker
             {
+                Gebruikersnaam = usr,
                 Naam = "gebruiker",
                 Voornaam = "gebruiker",
                 Geboortedatum = new DateTime(),

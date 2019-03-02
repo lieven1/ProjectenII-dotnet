@@ -18,7 +18,7 @@ namespace Taijitan.Models.Domain
         public String Gebruikersnaam
         {
             get { return _gebruikersnaam; }
-            private set
+            set
             {
                 if (String.IsNullOrWhiteSpace(value))
                 {
@@ -112,7 +112,7 @@ namespace Taijitan.Models.Domain
         #region Constructor
         public Gebruiker(String gebruikersnaam, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
         {
-            this.Gebruikersnaam = gebruikersnaam;
+            this._gebruikersnaam = gebruikersnaam;
             this._naam = naam;
             this._voornaam = voornaam;
             this._geboortedatum = geboortedatum;

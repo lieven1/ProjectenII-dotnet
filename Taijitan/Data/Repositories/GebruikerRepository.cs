@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Repositories
@@ -12,13 +9,15 @@ namespace Taijitan.Data.Repositories
         private readonly DbSet<Gebruiker> _gebruikers;
         private readonly ApplicationDbContext _context;
 
-        public GebruikerRepository(ApplicationDbContext context) {
+        public GebruikerRepository(ApplicationDbContext context)
+        {
             _context = context;
             _gebruikers = _context.Gebruikers;
         }
-        public Gebruiker GetBy(string email)
+        public Gebruiker GetBy(string gebruikersnaam)
         {
-            return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Email == email);
+            var result = _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam);
+            return result;
         }
 
         public void SaveChanges()
