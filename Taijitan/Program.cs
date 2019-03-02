@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Taijitan {
-    public class Program {
+    public static class Program {
         public static void Main(string[] args) {
             CreateWebHostBuilder(args).Build().Run();
         }
