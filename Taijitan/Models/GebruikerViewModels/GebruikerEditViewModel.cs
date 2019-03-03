@@ -5,9 +5,9 @@ using Taijitan.Models.Domain;
 namespace Taijitan.Models.GebruikerViewModels {
     public class GebruikerEditViewModel {
         
-        [Required]
+        [Required(ErrorMessage = "Naam is verplicht.")]
         public String Naam { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Voornaam is verplicht.")]
         public String Voornaam { get; set; }
         [Required]
         [DataType(DataType.Date)]
