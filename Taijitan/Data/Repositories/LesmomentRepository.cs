@@ -3,13 +3,13 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Repositories
 {
-    public class SessieRepository : ISessieRepository
+    public class LesmomentRepository : ILesmomentRepository
     {
         private string connectionString = @"Data Source=LAPTOP-3NH1NFIB; Initial Catalog=TaijitanYoshinRyu; User ID=TaijitanAdmin; Password=a";
         private SqlConnection connection;
         private SqlDataAdapter adapter;
 
-        public SessieRepository()
+        public LesmomentRepository()
         {
             connection = new SqlConnection(connectionString);
             adapter = new SqlDataAdapter();

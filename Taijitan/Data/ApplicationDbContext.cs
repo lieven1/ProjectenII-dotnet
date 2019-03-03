@@ -7,7 +7,7 @@ namespace Taijitan.Data {
     public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<Gebruiker> Gebruikers { get; set; }
-        public DbSet<Sessie> Sessies { get; set; }
+        public DbSet<Lesmoment> Sessies { get; set; }
         public DbSet<Adres> Adressen { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -19,7 +19,7 @@ namespace Taijitan.Data {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new GebruikerConfiguration());
             builder.ApplyConfiguration(new AdresConfiguration());
-            builder.ApplyConfiguration(new SessieConfiguration());
+            builder.ApplyConfiguration(new LesmomentConfiguration());
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

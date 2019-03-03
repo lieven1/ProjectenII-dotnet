@@ -8,11 +8,11 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Mappers
 {
-    public class SessieConfiguration : IEntityTypeConfiguration<Sessie>
+    public class LesmomentConfiguration : IEntityTypeConfiguration<Lesmoment>
     {
-        public void Configure(EntityTypeBuilder<Sessie> builder)
+        public void Configure(EntityTypeBuilder<Lesmoment> builder)
         {
-            builder.ToTable("Sessie");
+            builder.ToTable("Lesmoment");
             builder.HasKey(t => t.StartTijd);
             builder.Property(t => t.StartTijd).IsRequired();
             builder.Property(t => t.EindTijd).IsRequired();

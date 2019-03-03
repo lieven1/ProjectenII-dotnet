@@ -1,6 +1,6 @@
 ﻿namespace Taijitan.Models.Domain
 {
-    public interface ISessieRepository
+    public interface ILesmomentRepository
     {
         // TO DO - Implement
     }
