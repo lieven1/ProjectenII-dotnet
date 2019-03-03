@@ -3,65 +3,72 @@
 <h4>Wijzig gegevens</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Edit">
-            <div class="form-group col-6">
-                <label asp-for="Naam" class="control-label"></label>
-                <input asp-for="Naam" class="form-control" />
-                <span asp-validation-for="Naam" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Voornaam" class="control-label"></label>
-                <input asp-for="Voornaam" class="form-control" />
-                <span asp-validation-for="Voornaam" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="TelefoonNummer" class="control-label"></label>
-                <input asp-for="TelefoonNummer" class="form-control" />
-                <span asp-validation-for="TelefoonNummer" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Gsmnummer" class="control-label"></label>
-                <input asp-for="Gsmnummer" class="form-control" />
-                <span asp-validation-for="Gsmnummer" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="EmailOuders" class="control-label"></label>
-                <input asp-for="EmailOuders" class="form-control" />
-                <span asp-validation-for="EmailOuders" class="text-danger"></span>
-            </div>
-            <div class="form-group col-12">
-                <label asp-for="Land" class="control-label"></label>
-                <input asp-for="Land" class="form-control" />
-                <span asp-validation-for="Land" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Postcode" class="control-label"></label>
-                <input asp-for="Postcode" class="form-control" />
-                <span asp-validation-for="Postcode" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Stad" class="control-label"></label>
-                <input asp-for="Stad" class="form-control" />
-                <span asp-validation-for="Stad" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Straat" class="control-label"></label>
-                <input asp-for="Straat" class="form-control" />
-                <span asp-validation-for="Straat" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="Nummer" class="control-label"></label>
-                <input asp-for="Nummer" class="form-control" />
-                <span asp-validation-for="Nummer" class="text-danger"></span>
-            </div>
-            <div class="form-group col-12">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <fieldset class="col-md-12">
+                <legend>Persoonlijke gegevens</legend>
+                <div class="form-group col-md-6">
+                    <label asp-for="Naam" class="control-label"></label>
+                    <input asp-for="Naam" class="form-control" />
+                    <span asp-validation-for="Naam" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Voornaam" class="control-label"></label>
+                    <input asp-for="Voornaam" class="form-control" />
+                    <span asp-validation-for="Voornaam" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="TelefoonNummer" class="control-label"></label>
+                    <input asp-for="TelefoonNummer" class="form-control" />
+                    <span asp-validation-for="TelefoonNummer" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Gsmnummer" class="control-label"></label>
+                    <input asp-for="Gsmnummer" class="form-control" />
+                    <span asp-validation-for="Gsmnummer" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="EmailOuders" class="control-label"></label>
+                    <input asp-for="EmailOuders" class="form-control" />
+                    <span asp-validation-for="EmailOuders" class="text-danger"></span>
+                </div>
+            </fieldset>
+            <fieldset class="col-md-12">
+                <legend>Adres</legend>
+                <div class="form-group col-md-6">
+                    <label asp-for="Land" class="control-label"></label>
+                    <input asp-for="Land" class="form-control" />
+                    <span asp-validation-for="Land" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Postcode" class="control-label"></label>
+                    <input asp-for="Postcode" class="form-control" />
+                    <span asp-validation-for="Postcode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Stad" class="control-label"></label>
+                    <input asp-for="Stad" class="form-control" />
+                    <span asp-validation-for="Stad" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Straat" class="control-label"></label>
+                    <input asp-for="Straat" class="form-control" />
+                    <span asp-validation-for="Straat" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Nummer" class="control-label"></label>
+                    <input asp-for="Nummer" class="form-control" />
+                    <span asp-validation-for="Nummer" class="text-danger"></span>
+                </div>
+            </fieldset>
+            
+            <div class="form-group col-md-12 text-center">
+                <input type="submit" value="Save" class="btn btn-primary btn-lg" style="padding-left:6em;padding-right:6em;"/>
             </div>
         </form>
     </div>

@@ -26,7 +26,7 @@ namespace Taijitan.Data
                 _context.Adressen.Add(adres1);
                 _context.SaveChanges();
 
-                Gebruiker BruceLee = new Gebruiker("brucelee", "Lee", "Bruce", new DateTime(1940, 11, 27), "0479076258", "BruceLee@MartialArt.com", adres1);
+                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111112", new DateTime(2018, 05, 16),"Lee", "Bruce", "Man", new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), "Lid");
                 _context.Gebruikers.Add(BruceLee);
                 _context.SaveChanges();
 
@@ -41,16 +41,8 @@ namespace Taijitan.Data
             IdentityUser user = new IdentityUser { UserName = usr, Email = email };
             await _userManager.CreateAsync(user, "P@ssword1");
 
-            var gebruiker = new Gebruiker
-            {
-                Gebruikersnaam = usr,
-                Naam = "gebruiker",
-                Voornaam = "gebruiker",
-                Geboortedatum = new DateTime(),
-                Telefoonnummer = "04593029",
-                Email = email,
-                Adres = _context.Adressen.FirstOrDefault(a => a.AdresId == 1)
-            };
+            Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
+            var gebruiker = new Gebruiker(usr, "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", "Man", new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), "Lid");
             _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }

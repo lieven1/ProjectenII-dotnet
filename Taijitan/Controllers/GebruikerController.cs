@@ -40,12 +40,7 @@ namespace Taijitan.Controllers {
             return RedirectToAction(nameof(Edit));
         }
         private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker) {
-            gebruiker.Naam = model.Naam;
-            gebruiker.Voornaam = model.Voornaam;
-            gebruiker.Email = model.Email;
-            gebruiker.Geboortedatum = model.Geboortedatum;
-            gebruiker.Telefoonnummer = model.TelefoonNummer;
-            gebruiker.Adres = new Adres(model.Land, model.Postcode, model.Stad, model.Straat, model.Nummer);
+            gebruiker.WijzigGegevens(model.Naam, model.Voornaam, model.TelefoonNummer, model.Gsmnummer, model.Email, model.EmailOuders, model.Land, model.Postcode, model.Stad, model.Straat, model.Nummer);
         }
     }
 }

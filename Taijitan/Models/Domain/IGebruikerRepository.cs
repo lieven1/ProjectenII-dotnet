@@ -1,8 +1,10 @@
-﻿namespace Taijitan.Models.Domain
+﻿using System;
+
+namespace Taijitan.Models.Domain
 {
     public interface IGebruikerRepository
     {
         void SaveChanges();
-        Gebruiker GetBy(string email);
+        Gebruiker GetBy(String gebruikersnaam);
     }
 }

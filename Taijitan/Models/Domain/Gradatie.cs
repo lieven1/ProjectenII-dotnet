@@ -7,6 +7,7 @@ namespace Taijitan.Models.Domain
 {
     public class Gradatie
     {
+        public int GradatieId { get; private set; }
         // Graad in respectieve kyu/dan
         public int Graadnummer { get; private set; }
         // Kyu/Dan
