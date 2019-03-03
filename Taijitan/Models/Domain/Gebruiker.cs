@@ -1,89 +1,80 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Taijitan.Models.Domain
-{
-    public class Gebruiker
-    {
+namespace Taijitan.Models.Domain {
+    public class Gebruiker {
         #region Fields
-        private String _gebruikersnaam;
         private String _naam;
         private String _voornaam;
-        private DateTime _geboortedatum;
         private String _telefoonnummer;
+        private String _gsmnummer;
         private String _email;
+        private String _emailouders;
         #endregion
 
         #region Properties
-        public String Gebruikersnaam
-        {
-            get { return _gebruikersnaam; }
-            set
-            {
-                if (String.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Gebruikersnaam kan geen lege waarde bevatten.");
-                }
-                else
-                {
-                    _gebruikersnaam = value;
-                }
-            }
-        }
-
-        public String Naam
-        {
+        // Niet aanpasbaar
+        public String Rijksregisternummer { get; private set; }
+        // Niet aanpasbaar
+        public DateTime Inschrijvingsdatum { get; private set; }
+        public String Naam {
             get { return _naam; }
-            set
-            {
-                if (String.IsNullOrWhiteSpace(value))
-                {
+            set {
+                // Verplicht
+                if (String.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Naam mag geen lege waarde bevatten.");
-                }
-                else
-                {
+                } else {
                     _naam = value;
                 }
             }
         }
-        public String Voornaam
-        {
+        public String Voornaam {
             get { return _voornaam; }
-            set
-            {
-                if (String.IsNullOrWhiteSpace(value))
-                {
+            set {
+                // Verplicht
+                if (String.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Voornaam mag geen lege waarde bevatten.");
-                }
-                else
-                {
+                } else {
                     _voornaam = value;
                 }
             }
         }
-        public DateTime Geboortedatum
-        {
-            get { return _geboortedatum; }
-            set
-            {
-                if (value.CompareTo(DateTime.Today) >= 0)
-                {
-                    throw new ArgumentException("Geboortedatum kan niet in de toekomst liggen.");
-                }
-                else
-                {
-                    _geboortedatum = value;
-                }
-            }
-        }
+        // Niet aanpasbaar
+        public String Geslacht { get; private set; }
+        // Niet aanpasbaar
+        public DateTime Geboortedatum { get; private set; }
+        // Niet aanpasbaar
+        public String Geboorteplaats { get; private set; }
         public String Telefoonnummer
         {
             get { return _telefoonnummer; }
             set
             {
-                if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
+                // Niet verplicht
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    _telefoonnummer = null;
+                }
+                // Voldoet aan regels voor telefoonnummer
+                else if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
                 {
                     _telefoonnummer = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Ongeldige waarde voor telefoonnummer.");
+                }
+            }
+        }
+        public String Gsmnummer
+        {
+            get { return _gsmnummer; }
+            set
+            {
+                // Verplicht en voldoet aan regels voor telefoonnummer
+                if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
+                {
+                    _gsmnummer = value;
                 }
                 else
                 {
@@ -96,7 +87,8 @@ namespace Taijitan.Models.Domain
             get { return _email; }
             set
             {
-                if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
+                // Verplicht en voldoet aan regels voor Email
+                if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]+$"))
                 {
                     _email = value;
                 }
@@ -106,35 +98,65 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
-        public Adres Adres { get; set; }
+        public String EmailOuders
+        {
+            get { return _emailouders; }
+            set
+            {
+                // Niet verplicht
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    _emailouders = null;
+                }
+                // Voldoet aan regels voor Email
+                if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]+$"))
+                {
+                    _emailouders = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Ongeldige waarde voor e-mailadres.");
+                }
+            }
+        }
+        // Aanpasbaar via Adres.WijzigGegevens(...)
+        public Adres Adres { get; private set; }
+        // Niet aanpasbaar
+        public int Punten { get; private set; }
+        // Niet aanpasbaar
+        public Gradatie Gradatie { get; private set; }
         #endregion
 
         #region Constructor
-        public Gebruiker(String gebruikersnaam, String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, Adres adres)
-        {
-            this._gebruikersnaam = gebruikersnaam;
+        public Gebruiker(String rijksregisternummer, DateTime inschrijvingsdatum, String naam, String voornaam, String geslacht, DateTime geboortedatum, String geboorteplaats, String telefoonnummer, String gsmnummer, String email, String emailOuders, Adres adres, int punten, Gradatie gradatie) {
+            this.Rijksregisternummer = rijksregisternummer;
+            this.Inschrijvingsdatum = inschrijvingsdatum;
             this._naam = naam;
             this._voornaam = voornaam;
-            this._geboortedatum = geboortedatum;
+            this.Geslacht = geslacht;
+            this.Geboortedatum = geboortedatum;
+            this.Geboorteplaats = geboorteplaats;
             this._telefoonnummer = telefoonnummer;
+            this._gsmnummer = gsmnummer;
             this._email = email;
+            this._emailouders = emailOuders;
             this.Adres = adres;
+            this.Punten = punten;
+            this.Gradatie = gradatie;
         }
 
-        public Gebruiker()
-        {
-
+        public Gebruiker() {
         }
         #endregion
 
         #region Methods
-        public void WijzigGegevens(String naam, String voornaam, DateTime geboortedatum, String telefoonnummer, String email, String land, String postcode, String stad, String straat, String nummer)
-        {
+        public void WijzigGegevens(String naam, String voornaam, String telefoonnummer, String gsmnummer, String email, String emailOuders, String land, String postcode, String stad, String straat, String nummer) {
             this.Naam = naam;
             this.Voornaam = voornaam;
-            this.Geboortedatum = geboortedatum;
             this.Telefoonnummer = telefoonnummer;
+            this.Gsmnummer = gsmnummer;
             this.Email = email;
+            this.EmailOuders = emailOuders;
             this.Adres.WijzigGegevens(land, postcode, stad, straat, nummer);
         }
         #endregion
