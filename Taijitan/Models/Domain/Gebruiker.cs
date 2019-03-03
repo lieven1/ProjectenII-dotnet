@@ -14,6 +14,8 @@ namespace Taijitan.Models.Domain {
 
         #region Properties
         // Niet aanpasbaar
+        public String Gebruikersnaam { get; private set; }
+        // Niet aanpasbaar
         public String Rijksregisternummer { get; private set; }
         // Niet aanpasbaar
         public DateTime Inschrijvingsdatum { get; private set; }
@@ -128,7 +130,8 @@ namespace Taijitan.Models.Domain {
         #endregion
 
         #region Constructor
-        public Gebruiker(String rijksregisternummer, DateTime inschrijvingsdatum, String naam, String voornaam, String geslacht, DateTime geboortedatum, String geboorteplaats, String telefoonnummer, String gsmnummer, String email, String emailOuders, Adres adres, int punten, Gradatie gradatie) {
+        public Gebruiker(String gebruikersnaam, String rijksregisternummer, DateTime inschrijvingsdatum, String naam, String voornaam, String geslacht, DateTime geboortedatum, String geboorteplaats, String telefoonnummer, String gsmnummer, String email, String emailOuders, Adres adres, int punten, Gradatie gradatie) {
+            this.Gebruikersnaam = gebruikersnaam;
             this.Rijksregisternummer = rijksregisternummer;
             this.Inschrijvingsdatum = inschrijvingsdatum;
             this._naam = naam;

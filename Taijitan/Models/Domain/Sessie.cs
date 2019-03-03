@@ -14,7 +14,7 @@ namespace Taijitan.Models.Domain
         #region Properties
         public DateTime StartTijd { get; private set; }
         public DateTime EindTijd { get; private set; }
-        public List<Gebruiker> IngeschrevenLeden { get; }
+        public List<Gebruiker> IngeschrevenLeden { get; private set; }
         #endregion
 
         #region Constructor
