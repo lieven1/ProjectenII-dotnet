@@ -1,6 +1,15 @@
 ﻿@model Taijitan.Models.GebruikerViewModels.GebruikerEditViewModel
 
-<h4>Wijzig gegevens</h4>
+@{
+    if (TempData.ContainsKey("error"))
+    {
+        <div class="alert alert-danger">
+            @TempData["error"]
+        </div>
+    }
+}
+
+<h2>Wijzig gegevens</h2>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -66,12 +75,17 @@
                     <span asp-validation-for="Nummer" class="text-danger"></span>
                 </div>
             </fieldset>
-            
+
             <div class="form-group col-md-12 text-center">
-                <input type="submit" value="Save" class="btn btn-primary btn-lg" style="padding-left:6em;padding-right:6em;"/>
+                <a asp-controller="Gebruiker" asp-action="Index" class="btn btn-default btn-lg" style="padding-left:4em;padding-right:4em; margin-right:15px;">Annuleer</a>
+
+                <input type="submit" value="Opslaan" class="btn btn-primary btn-lg" style="padding-left:4em;padding-right:4em;" />
             </div>
         </form>
     </div>
+</div>
+<div class="alert alert-info">
+    Voor andere gegevens te wijzigen dient u contact op te nemen met een lesgever.
 </div>
 @section scripts {
     <script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>

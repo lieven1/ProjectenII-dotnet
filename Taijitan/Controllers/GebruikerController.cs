@@ -13,9 +13,10 @@ namespace Taijitan.Controllers {
         public GebruikerController(IGebruikerRepository gebruikerRepository) {
             this._gebruikerRepository = gebruikerRepository;
         }
-        
-        public IActionResult Index() {
-            return RedirectToAction(nameof(Edit));
+
+        [ServiceFilter(typeof(GebruikerFilter))]
+        public IActionResult Index(Gebruiker gebruiker) {
+            return View(gebruiker);
         }
         
         [HttpGet]
@@ -32,12 +33,12 @@ namespace Taijitan.Controllers {
             try {
                 MapGebruikerEditViewModelToGebruiker(model, gebruiker);
                 _gebruikerRepository.SaveChanges();
-                TempData["message"] = $"You successfully updated your data.";
+                TempData["message"] = $"Je hebt je gegevens succesvol bijgewerkt.";
             } catch {
-                TempData["error"] = "Sorry, something went wrong, the data was not edited...";
+                TempData["error"] = "Er vond een probleem plaats bij het wijzigen van je gegevens. Probeer later opnieuw.";
                 return RedirectToAction(nameof(Edit), model);
             }
-            return RedirectToAction(nameof(Edit));
+            return RedirectToAction(nameof(Index));
         }
         private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker) {
             gebruiker.WijzigGegevens(model.Naam, model.Voornaam, model.TelefoonNummer, model.Gsmnummer, model.Email, model.EmailOuders, model.Land, model.Postcode, model.Stad, model.Straat, model.Nummer);

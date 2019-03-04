@@ -1,8 +1,94 @@
-﻿
+﻿@model Taijitan.Models.Domain.Gebruiker
+
 @{
-    ViewData["Title"] = "Index";
+    // Bereken leeftijd
+    DateTime now = DateTime.Today;
+    int age = DateTime.Today.Year - Model.Geboortedatum.Year;
+    if (Model.Geboortedatum > now.AddYears(-age))
+    {
+        age--;
+    }
 }
 
-<h2>Hier wordt ingelogd</h2>
+<fieldset>
+    @{
+        if (TempData.ContainsKey("message"))
+        {
+            <div class="alert alert-success">
+                @TempData["message"]
+            </div>
+        }
+    }
+    <legend><h2>Overzicht gegevens</h2></legend>
+    <table class="table table-striped">
+        <thead class="bg-primary">
+            <tr class="bg-primary">
+                <td colspan="2"><b>Gebruiker</b></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <b>Naam: </b> @Model.Voornaam @Model.Naam
+            </td>
+            <td>
+                <b>Rijksregisternummer: </b> @Model.Rijksregisternummer
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Inschrijvingsdatum: </b> @Model.Inschrijvingsdatum.ToShortDateString()
+            </td>
+            <td>
+                <b>Geslacht: </b> @Model.Geslacht.ToString()
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Geboren: </b> @Model.Geboortedatum.ToShortDateString() te @Model.Geboorteplaats
+            </td>
+            <td>
+                <b>Leeftijd: </b> @age
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Telefoonnummer: </b> @Model.Telefoonnummer
+            </td>
+            <td>
+                <b>Gsmnummer: </b> @Model.Gsmnummer
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Email: </b> @Model.Email
+            </td>
+            <td>
+                <b>Email ouders: </b> @Model.EmailOuders
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Punten: </b> @Model.Punten
+            </td>
+            <td>
+                <b>Gradatie: </b> @Model.Gradatie
+            </td>
+        </tr>
+        <thead class="bg-primary">
+            <tr class="bg-primary">
+                <td colspan="2"><b>Adres</b></td>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                @Model.Adres.Straat @Model.Adres.Nummer <br />
+                @Model.Adres.Postcode @Model.Adres.Stad <br />
+                @Model.Adres.Land
+            </td>
+            <td class="text-center">
+                <a asp-controller="Gebruiker" asp-action="Edit" class="btn btn-primary btn-lg">Wijzig gegevens</a>
+            </td>
+        </tr>
+    </table>
+</fieldset>
 
-<a asp-controller="Gebruiker" asp-action="Edit" asp-route-id=1>Log in (Authenticatie nog niet geimplementeerd)</a>
