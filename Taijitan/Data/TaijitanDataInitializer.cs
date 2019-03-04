@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Data
 {
@@ -26,7 +27,7 @@ namespace Taijitan.Data
                 _context.Adressen.Add(adres1);
                 _context.SaveChanges();
 
-                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111112", new DateTime(2018, 05, 16),"Lee", "Bruce", "Man", new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), "Lid");
+                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111112", new DateTime(2018, 05, 16),"Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), TypeGebruiker.Lid);
                 _context.Gebruikers.Add(BruceLee);
                 _context.SaveChanges();
 
@@ -42,7 +43,7 @@ namespace Taijitan.Data
             await _userManager.CreateAsync(user, "P@ssword1");
 
             Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
-            var gebruiker = new Gebruiker(usr, "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", "Man", new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), "Lid");
+            var gebruiker = new Gebruiker(usr, "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), TypeGebruiker.Lid);
             _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }

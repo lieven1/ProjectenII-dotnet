@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Taijitan.Models.Domain.Databindings;
+using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Models.Domain {
-    public class Gebruiker {
+    public class Gebruiker : IdentityUser<Guid>{
         #region Fields
         private String _naam;
         private String _voornaam;
@@ -42,7 +46,7 @@ namespace Taijitan.Models.Domain {
             }
         }
         // Niet aanpasbaar
-        public String Geslacht { get; private set; }
+        public Geslacht Geslacht { get; private set; }
         // Niet aanpasbaar
         public DateTime Geboortedatum { get; private set; }
         // Niet aanpasbaar
@@ -128,11 +132,14 @@ namespace Taijitan.Models.Domain {
         // Niet aanpasbaar
         public Gradatie Gradatie { get; private set; }
         // Niet aanpasbaar - vb=" Beheerder , Lid "
-        public String Beschrijving { get; private set; }
+        public TypeGebruiker TypeGebruiker { get; private set; }
+
+
+        public List<LesmomentLeden> LesmomentLeden { get; set; }
         #endregion
 
         #region Constructor
-        public Gebruiker(String gebruikersnaam, String rijksregisternummer, DateTime inschrijvingsdatum, String naam, String voornaam, String geslacht, DateTime geboortedatum, String geboorteplaats, String telefoonnummer, String gsmnummer, String email, String emailOuders, Adres adres, int punten, Gradatie gradatie, String beschrijving) {
+        public Gebruiker(String gebruikersnaam, String rijksregisternummer, DateTime inschrijvingsdatum, String naam, String voornaam, Geslacht geslacht, DateTime geboortedatum, String geboorteplaats, String telefoonnummer, String gsmnummer, String email, String emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker) {
             this.Gebruikersnaam = gebruikersnaam;
             this.Rijksregisternummer = rijksregisternummer;
             this.Inschrijvingsdatum = inschrijvingsdatum;
@@ -148,7 +155,7 @@ namespace Taijitan.Models.Domain {
             this.Adres = adres;
             this.Punten = punten;
             this.Gradatie = gradatie;
-            this.Beschrijving = beschrijving;
+            this.TypeGebruiker = typeGebruiker;
         }
 
         public Gebruiker() {

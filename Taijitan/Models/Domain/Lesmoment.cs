@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taijitan.Models.Domain.Databindings;
 
 namespace Taijitan.Models.Domain
 {
@@ -11,26 +12,24 @@ namespace Taijitan.Models.Domain
         public int LesmomentId { get; private set; }
         public DateTime StartTijd { get; private set; }
         public DateTime EindTijd { get; private set; }
-        public List<Gebruiker> IngeschrevenLeden { get; private set; }
-        public List<Gebruiker> AanwezigeLeden { get; private set; }
+        public List<LesmomentLeden> Leden { get; private set; }
         #endregion
 
         #region Constructor
-        public Lesmoment(int lesmomentId, DateTime startTijd, DateTime eindTijd, List<Gebruiker> ingeschrevenLeden, List<Gebruiker> aanwezigeLeden)
+        public Lesmoment(int lesmomentId, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden)
         {
             this.LesmomentId = lesmomentId;
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
             // Maak nieuwe list als er geen list bestaat.
-            if (aanwezigeLeden?.Any() != true)
+            if (lesmomentLeden?.Any() != true)
             {
-                this.AanwezigeLeden = new List<Gebruiker>();
+                this.Leden = new List<LesmomentLeden>();
             }
             else
             {
-                this.AanwezigeLeden = aanwezigeLeden;
+                this.Leden = lesmomentLeden;
             }
-            this.IngeschrevenLeden = ingeschrevenLeden;
         }
 
         public Lesmoment() {
@@ -41,15 +40,22 @@ namespace Taijitan.Models.Domain
         #region Methods
         public void RegistreerLid(Gebruiker lid)
         {
-            AanwezigeLeden.Add(lid);
+            if(Leden.Exists(t => t.Gebruiker.Equals(lid)))
+            {
+                Leden.Single(t => t.Gebruiker.Equals(lid)).Aanwezig = true;
+            }
+            else
+            {
+                Leden.Add(new LesmomentLeden(this, lid));
+            }
         }
-        public List<Gebruiker> geefLedenBinnenSessie()
+        public List<Gebruiker> geefAanwezigeLeden()
         {
-            return AanwezigeLeden.Intersect(IngeschrevenLeden).ToList();
+            return Leden.Where(t => t.Aanwezig).Select(t => t.Gebruiker).ToList();
         } 
-        public List<Gebruiker> geefLedenBuitenSessie()
+        public List<Gebruiker> geefIngeschrevenLeden()
         {
-            return AanwezigeLeden.Except(this.IngeschrevenLeden).ToList();
+            return Leden.Where(t => t.Ingeschreven).Select(t => t.Gebruiker).ToList();
         }
         #endregion
     }
