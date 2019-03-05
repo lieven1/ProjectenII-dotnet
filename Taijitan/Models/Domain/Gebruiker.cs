@@ -133,9 +133,8 @@ namespace Taijitan.Models.Domain {
         public Gradatie Gradatie { get; private set; }
         // Niet aanpasbaar - vb=" Beheerder , Lid "
         public TypeGebruiker TypeGebruiker { get; private set; }
-
-
-        public List<LesmomentLeden> LesmomentLeden { get; set; }
+        // Property voor Intersectietabel
+        //public List<LesmomentLeden> LesmomentLeden { get; set; }
         #endregion
 
         #region Constructor

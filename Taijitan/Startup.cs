@@ -32,6 +32,7 @@ namespace Taijitan {
                 options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthorization(options => {
@@ -43,6 +44,7 @@ namespace Taijitan {
             services.AddScoped<GebruikerFilter>();
             services.AddScoped<TaijitanDataInitializer>();
             services.AddScoped<IGebruikerRepository, GebruikerRepository>();
+            services.AddScoped<ILesmomentRepository, LesmomentRepository>();
 
         }
 

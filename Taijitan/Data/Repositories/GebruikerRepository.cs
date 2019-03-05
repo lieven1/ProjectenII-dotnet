@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Data.Repositories
 {
@@ -15,10 +17,15 @@ namespace Taijitan.Data.Repositories
             _context = context;
             _gebruikers = _context.Gebruikers;
         }
+
+        public List<Gebruiker> GetAllLeden()
+        {
+            return this._gebruikers.Include(g => g.Adres).Where(g => g.TypeGebruiker.Equals(TypeGebruiker.Lid)).ToList();
+        }
+
         public Gebruiker GetBy(String gebruikersnaam)
         {
-            var result = _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam);
-            return result;
+            return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam); ;
         }
 
         public void SaveChanges()

@@ -2,6 +2,6 @@
 {
     public interface ILesmomentRepository
     {
-        // TO DO - Implement
+        void Save(Lesmoment lesmoment);
     }
 }

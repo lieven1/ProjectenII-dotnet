@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Taijitan.Models.Domain
 {
@@ -6,5 +7,6 @@ namespace Taijitan.Models.Domain
     {
         void SaveChanges();
         Gebruiker GetBy(String gebruikersnaam);
+        List<Gebruiker> GetAllLeden();
     }
 }

@@ -1,20 +1,24 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Repositories
 {
     public class LesmomentRepository : ILesmomentRepository
     {
-        private string connectionString = @"Data Source=LAPTOP-3NH1NFIB; Initial Catalog=TaijitanYoshinRyu; User ID=TaijitanAdmin; Password=a";
-        private SqlConnection connection;
-        private SqlDataAdapter adapter;
+        private readonly DbSet<Lesmoment> _lesmomenten;
+        private readonly ApplicationDbContext _context;
 
-        public LesmomentRepository()
+        public LesmomentRepository(ApplicationDbContext context)
         {
-            connection = new SqlConnection(connectionString);
-            adapter = new SqlDataAdapter();
+            _context = context;
+            //_lesmomenten = _context.Lesmomenten;
         }
 
-
+        public void Save(Lesmoment lesmoment)
+        {
+            _lesmomenten.Add(lesmoment);
+            _context.SaveChanges();
+        }
     }
 }
