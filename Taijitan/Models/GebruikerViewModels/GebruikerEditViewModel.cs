@@ -4,9 +4,15 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Models.GebruikerViewModels {
     public class GebruikerEditViewModel {
-        [Required(ErrorMessage = "Naam is verplicht.")]
+        [Required(ErrorMessage = "Naam is verplicht."), MaxLength(50)]
+        //naam begint met kleine letter of hoofdletter
+        //naam kan tekens (,.'-) bevatten
+        //naam kan uit meerdere woorden bestaan
+        [RegularExpression("^([A-Za-z]{1}[a-z ,.'-]+)+$", ErrorMessage = "Ongeldige waarde voor naam.")]
         public String Naam { get; set; }
-        [Required(ErrorMessage = "Voornaam is verplicht.")]
+        [Required(ErrorMessage = "Voornaam is verplicht."), MaxLength(50)]
+        //voornaam is zoals naam, maar moet met hoofdletter beginnen
+        [RegularExpression("^([A-Z]{1}[a-z ,.'-]+)+$", ErrorMessage = "Ongeldige waarde voor voornaam.")]
         public String Voornaam { get; set; }
         [Phone(ErrorMessage = "Ongeldige waarde voor telefoonnummer.")]
         [RegularExpression(@"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))", ErrorMessage = "Ongeldige waarde voor telefoonnummer.")]
