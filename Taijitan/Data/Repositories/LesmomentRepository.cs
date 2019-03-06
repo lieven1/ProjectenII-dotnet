@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Linq;
 using Taijitan.Models.Domain;
 
 namespace Taijitan.Data.Repositories
@@ -19,6 +20,11 @@ namespace Taijitan.Data.Repositories
         {
             _lesmomenten.Add(lesmoment);
             _context.SaveChanges();
+        }
+
+        public List<Lesmoment> GetAll()
+        {
+            return _lesmomenten.OrderBy(l => l.Datum).ToList();
         }
     }
 }
