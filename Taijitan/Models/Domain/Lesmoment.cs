@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Taijitan.Models.Domain.Databindings;
 
 namespace Taijitan.Models.Domain
@@ -15,11 +14,12 @@ namespace Taijitan.Models.Domain
 
         #region Properties
         public int LesmomentId { get; private set; }
-        public DateTime Datum {
+        public DateTime Datum
+        {
             get { return _datum; }
             private set
             {
-                if (DateTime.Now.CompareTo(value) >= 0)
+                if (DateTime.Now.CompareTo(value) < 0)
                 {
                     throw new ArgumentException("Een lesmoment in het verleden kan niet meer gestart worden.");
                 }
@@ -55,7 +55,8 @@ namespace Taijitan.Models.Domain
             this.LesmomentId = lesmomentId;
         }
 
-        public Lesmoment(DateTime datum, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden) {
+        public Lesmoment(DateTime datum, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden)
+        {
             this.Datum = datum;
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
@@ -69,7 +70,8 @@ namespace Taijitan.Models.Domain
                 this.Leden = lesmomentLeden;
             }
         }
-        public Lesmoment(DateTime startTijd, DateTime eindTijd, List<Gebruiker> leden){
+        public Lesmoment(DateTime startTijd, DateTime eindTijd, List<Gebruiker> leden)
+        {
             this.Datum = DateTime.Today;
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
@@ -77,7 +79,8 @@ namespace Taijitan.Models.Domain
             leden.ForEach(lid => Leden.Add(new LesmomentLeden(this, lid, true, false)));
         }
 
-        public Lesmoment() {
+        public Lesmoment()
+        {
 
         }
         #endregion
@@ -85,7 +88,7 @@ namespace Taijitan.Models.Domain
         #region Methods
         public void RegistreerLid(Gebruiker lid)
         {
-            if(Leden.Exists(t => t.Gebruiker.Equals(lid)))
+            if (Leden.Exists(t => t.Gebruiker.Equals(lid)))
             {
                 Leden.Single(t => t.Gebruiker.Equals(lid)).Aanwezig = true;
             }
@@ -98,7 +101,7 @@ namespace Taijitan.Models.Domain
         public List<Gebruiker> geefAanwezigeLeden()
         {
             return Leden.Where(t => t.Aanwezig).Select(t => t.Gebruiker).ToList();
-        } 
+        }
         public List<Gebruiker> geefIngeschrevenLeden()
         {
             return Leden.Where(t => t.Ingeschreven).Select(t => t.Gebruiker).ToList();
