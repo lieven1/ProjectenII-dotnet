@@ -9,6 +9,7 @@ namespace Taijitan.Models.Domain
     {
         #region Fields
         private DateTime _datum;
+        private DateTime _startTijd;
         private DateTime _eindTijd;
         #endregion
 
@@ -29,11 +30,25 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
-        public DateTime StartTijd { get; private set; }
+        public DateTime StartTijd
+        {
+            get { return _startTijd; }
+            private set
+            {
+                // Startijd van een les kan niet meer dan 2h in het verleden liggen
+                if (DateTime.Now.Subtract(value).TotalHours > 2)
+                {
+                    throw new ArgumentException("Een nieuw lesmoment kan niet langer dan twee uur geleden gestart zijn.");
+                }
+                else
+                {
+                    _startTijd = value;
+                }
+            }
+        }
         public DateTime EindTijd
         {
             get { return _eindTijd; }
-            // Startijd van een les kan niet meer dan 2h in het verleden liggen
             private set
             {
                 if (StartTijd.CompareTo(value) >= 0)
@@ -75,8 +90,17 @@ namespace Taijitan.Models.Domain
             this.Datum = DateTime.Today;
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
-            this.Leden = new List<LesmomentLeden>();
-            leden.ForEach(lid => Leden.Add(new LesmomentLeden(this, lid, true, false)));
+            if (leden == null)
+            {
+                throw new ArgumentNullException("De parameter leden mag niet null zijn.");
+            }
+            else
+            {
+                this.Leden = new List<LesmomentLeden>();
+                leden.ForEach(lid => Leden.Add(new LesmomentLeden(this, lid, true, false)));
+            }
+
+
         }
 
         public Lesmoment()
@@ -88,6 +112,12 @@ namespace Taijitan.Models.Domain
         #region Methods
         public void RegistreerLid(Gebruiker lid)
         {
+            // null check
+            if (lid == null)
+            {
+                throw new ArgumentNullException("De parameter mag niet null zijn.");
+            }
+
             if (Leden.Exists(t => t.Gebruiker.Equals(lid)))
             {
                 Leden.Single(t => t.Gebruiker.Equals(lid)).Aanwezig = true;
