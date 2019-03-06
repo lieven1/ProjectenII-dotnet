@@ -8,37 +8,63 @@ using Taijitan.Models.Domain.Enums;
 namespace Taijitan.Models.Domain {
     public class Gebruiker/* : IdentityUser<Guid>*/{
         #region Fields
-        private String _naam;
-        private String _voornaam;
-        private String _telefoonnummer;
-        private String _gsmnummer;
-        private String _email;
-        private String _emailouders;
+        private string _gebruikersnaam;
+        private string _naam;
+        private string _voornaam;
+        private string _telefoonnummer;
+        private string _gsmnummer;
+        private string _email;
+        private string _emailouders;
+        private string _rijksregisternummer;
+        private string _geboorteplaats;
+        private DateTime _geboortedatum;
         #endregion
 
         #region Properties
         // Niet aanpasbaar
-        public String Gebruikersnaam { get; private set; }
+        public string Gebruikersnaam {
+            get { return _gebruikersnaam; }
+            private set {
+                //verplicht
+                if (string.IsNullOrWhiteSpace(value)) {
+                    throw new ArgumentException("Gebruikersnaam mag geen lege waarde bevatten.");
+                } else {
+                    _gebruikersnaam = value;
+                }
+            }
+        }
         // Niet aanpasbaar
-        public String Rijksregisternummer { get; private set; }
+        public string Rijksregisternummer {
+            get { return _rijksregisternummer; }
+            private set {
+                //verplicht
+                if (string.IsNullOrWhiteSpace(value)) {
+                    throw new ArgumentException("Rijksregisternummer mag geen lege waarde bevatten.");
+                } else if (value.Length != 11) {
+                    throw new ArgumentException("Ongeldige waarde voor rijksregisternummer");
+                } else {
+                    _rijksregisternummer = value;
+                }
+            }
+        }
         // Niet aanpasbaar
         public DateTime Inschrijvingsdatum { get; private set; }
-        public String Naam {
+        public string Naam {
             get { return _naam; }
-            set {
+            private set {
                 // Verplicht
-                if (String.IsNullOrWhiteSpace(value)) {
+                if (string.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Naam mag geen lege waarde bevatten.");
                 } else {
                     _naam = value;
                 }
             }
         }
-        public String Voornaam {
+        public string Voornaam {
             get { return _voornaam; }
-            set {
+            private set {
                 // Verplicht
-                if (String.IsNullOrWhiteSpace(value)) {
+                if (string.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("Voornaam mag geen lege waarde bevatten.");
                 } else {
                     _voornaam = value;
@@ -48,16 +74,35 @@ namespace Taijitan.Models.Domain {
         // Niet aanpasbaar
         public Geslacht Geslacht { get; private set; }
         // Niet aanpasbaar
-        public DateTime Geboortedatum { get; private set; }
+        public DateTime Geboortedatum {
+            get { return _geboortedatum; }
+            private set {
+                // Verplicht
+                if (value.CompareTo(DateTime.Now) > 0) {
+                    throw new ArgumentException("ongeldige geboortedatum.");
+                } else {
+                    _geboortedatum = value;
+                }
+            }
+        }
         // Niet aanpasbaar
-        public String Geboorteplaats { get; private set; }
-        public String Telefoonnummer
+        public string Geboorteplaats {
+            get { return _geboorteplaats; }
+            private set {
+                // Verplicht
+                if (string.IsNullOrWhiteSpace(value)) {
+                    throw new ArgumentException("geboorteplaats mag geen lege waarde bevatten.");
+                } else {
+                    _geboorteplaats = value;
+                }
+            }
+        }
+        public string Telefoonnummer
         {
             get { return _telefoonnummer; }
-            set
-            {
+            private set {
                 // Niet verplicht
-                if (String.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     _telefoonnummer = null;
                 }
@@ -72,13 +117,15 @@ namespace Taijitan.Models.Domain {
                 }
             }
         }
-        public String Gsmnummer
+        public string Gsmnummer
         {
             get { return _gsmnummer; }
-            set
-            {
+            private set {
+                if (string.IsNullOrWhiteSpace(value)) {
+                    throw new ArgumentException("Gsmnummer moet ingevuld zijn.");
+                }
                 // Verplicht en voldoet aan regels voor telefoonnummer
-                if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
+                else if (Regex.IsMatch(value, @"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))"))
                 {
                     _gsmnummer = value;
                 }
@@ -88,13 +135,16 @@ namespace Taijitan.Models.Domain {
                 }
             }
         }
-        public String Email
+        public string Email
         {
             get { return _email; }
-            set
+            private set
             {
+                if (string.IsNullOrWhiteSpace(value)) {
+                    throw new ArgumentException("Email moet ingevuld zijn.");
+                }
                 // Verplicht en voldoet aan regels voor Email
-                if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]+$"))
+                else if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]+$"))
                 {
                     _email = value;
                 }
@@ -104,13 +154,13 @@ namespace Taijitan.Models.Domain {
                 }
             }
         }
-        public String EmailOuders
+        public string EmailOuders
         {
             get { return _emailouders; }
-            set
+            private set
             {
                 // Niet verplicht
-                if (String.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     _emailouders = null;
                 }
@@ -134,23 +184,23 @@ namespace Taijitan.Models.Domain {
         // Niet aanpasbaar - vb=" Beheerder , Lid "
         public TypeGebruiker TypeGebruiker { get; private set; }
         // Property voor Intersectietabel
-        public List<LesmomentLeden> Lesmomenten { get; set; }
+        public List<LesmomentLeden> Lesmomenten { get; private set; }
         #endregion
 
         #region Constructor
-        public Gebruiker(String gebruikersnaam, String rijksregisternummer, DateTime inschrijvingsdatum, String naam, String voornaam, Geslacht geslacht, DateTime geboortedatum, String geboorteplaats, String telefoonnummer, String gsmnummer, String email, String emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker) {
+        public Gebruiker(string gebruikersnaam, string rijksregisternummer, DateTime inschrijvingsdatum, string naam, string voornaam, Geslacht geslacht, DateTime geboortedatum, string geboorteplaats, string telefoonnummer, string gsmnummer, string email, string emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker) {
             this.Gebruikersnaam = gebruikersnaam;
             this.Rijksregisternummer = rijksregisternummer;
             this.Inschrijvingsdatum = inschrijvingsdatum;
-            this._naam = naam;
-            this._voornaam = voornaam;
+            this.Naam = naam;
+            this.Voornaam = voornaam;
             this.Geslacht = geslacht;
             this.Geboortedatum = geboortedatum;
             this.Geboorteplaats = geboorteplaats;
-            this._telefoonnummer = telefoonnummer;
-            this._gsmnummer = gsmnummer;
-            this._email = email;
-            this._emailouders = emailOuders;
+            this.Telefoonnummer = telefoonnummer;
+            this.Gsmnummer = gsmnummer;
+            this.Email = email;
+            this.EmailOuders = emailOuders;
             this.Adres = adres;
             this.Punten = punten;
             this.Gradatie = gradatie;
@@ -162,7 +212,7 @@ namespace Taijitan.Models.Domain {
         #endregion
 
         #region Methods
-        public void WijzigGegevens(String naam, String voornaam, String telefoonnummer, String gsmnummer, String email, String emailOuders, String land, String postcode, String stad, String straat, String nummer) {
+        public void WijzigGegevens(string naam, string voornaam, string telefoonnummer, string gsmnummer, string email, string emailOuders, string land, string postcode, string stad, string straat, string nummer) {
             this.Naam = naam;
             this.Voornaam = voornaam;
             this.Telefoonnummer = telefoonnummer;

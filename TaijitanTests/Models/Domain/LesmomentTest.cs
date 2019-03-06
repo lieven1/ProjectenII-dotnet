@@ -76,7 +76,7 @@ namespace TaijitanTests.Models.Domain
 
             Assert.Contains(_context.GebruikerInLijst, lesmoment.geefAanwezigeLeden());
             Assert.Single(lesmoment.geefIngeschrevenLeden());
-            Assert.Single(lesmoment.geefAanwezigeLeden())
+            Assert.Single(lesmoment.geefAanwezigeLeden());
         }
 
         #endregion
