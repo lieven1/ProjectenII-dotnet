@@ -18,7 +18,7 @@ namespace Taijitan.Controllers
         }
 
         //Beheerder maakt lesmoment
-        //[Authorize(Roles = "Beheerder")]
+        [Authorize(Policy = "Beheerder")]
         [HttpGet]
         public IActionResult MaakLesmoment()
         {
@@ -27,7 +27,7 @@ namespace Taijitan.Controllers
             return View(createView);
         }
 
-        //[Authorize(Roles = "Beheerder")]
+        [Authorize(Policy = "Beheerder")]
         [HttpPost]
         public IActionResult MaakLesmoment(LesmomentCreateViewModel createView)
         {
