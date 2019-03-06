@@ -30,7 +30,7 @@ namespace TaijitanTests.Models.Domain
         [Fact]
         public void MaakLesmomentAan_NullCheckGebruikers_ExceptionRaised()
         {
-            Assert.Throws<ArgumentException>(() => new Lesmoment(startTijd, eindTijd, null));
+            Assert.Throws<ArgumentNullException>(() => new Lesmoment(startTijd, eindTijd, null));
         }
 
         [Fact]
