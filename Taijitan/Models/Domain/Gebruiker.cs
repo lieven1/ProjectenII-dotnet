@@ -6,7 +6,7 @@ using Taijitan.Models.Domain.Databindings;
 using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Models.Domain {
-    public class Gebruiker : IdentityUser<Guid>{
+    public class Gebruiker/* : IdentityUser<Guid>*/{
         #region Fields
         private String _naam;
         private String _voornaam;
