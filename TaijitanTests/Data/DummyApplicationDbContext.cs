@@ -8,7 +8,7 @@ namespace TaijitanTests.Data
         private readonly IList<Gebruiker> _leden;
 
         //public IEnumerable<Gebruiker> leden => _leden;
-        //public Gebruiker BruceLee { get; }
+        public Gebruiker BruceLee { get; }
 
         //RegistratieControllerTest
         public List<Gebruiker> legeLijstGebruikers { get; }

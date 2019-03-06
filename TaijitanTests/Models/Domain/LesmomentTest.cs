@@ -76,7 +76,15 @@ namespace TaijitanTests.Models.Domain
 
             Assert.Contains(_context.GebruikerInLijst, lesmoment.geefAanwezigeLeden());
             Assert.Single(lesmoment.geefIngeschrevenLeden());
-            Assert.Single(lesmoment.geefAanwezigeLeden())
+            Assert.Single(lesmoment.geefAanwezigeLeden());
+        }
+
+        [Fact]
+        public void RegistreerLid_nullArgument_ExceptionRaised()
+        {
+            lesmoment = new Lesmoment(new DateTime(2020, 1, 1), new DateTime(2021, 1, 1), _context.Lijst1Gebruiker);
+
+            Assert.Throws<Exception>(() => lesmoment.RegistreerLid(null));
         }
 
         #endregion

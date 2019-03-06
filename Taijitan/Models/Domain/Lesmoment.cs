@@ -46,7 +46,7 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
-        public List<LesmomentLeden> Leden { get; private set; }
+        public List<LesmomentLeden> Leden { get; set; }
         #endregion
 
         #region Constructor
