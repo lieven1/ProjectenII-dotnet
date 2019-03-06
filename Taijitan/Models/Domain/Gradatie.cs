@@ -21,5 +21,8 @@ namespace Taijitan.Models.Domain
             this.Onderverdeling = onderverdeling;
             this.Naam = naam;
         }
+        public Gradatie() {
+
+        }
     }
 }

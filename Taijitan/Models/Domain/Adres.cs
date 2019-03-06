@@ -100,6 +100,9 @@ namespace Taijitan.Models.Domain
             this._straat = straat;
             this._nummer = nummer;
         }
+        public Adres() {
+
+        }
         #endregion
         
         #region Methods
