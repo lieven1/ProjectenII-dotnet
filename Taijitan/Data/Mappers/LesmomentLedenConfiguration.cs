@@ -10,9 +10,9 @@ namespace Taijitan.Data.Mappers
         public void Configure(EntityTypeBuilder<LesmomentLeden> builder)
         {
             builder.ToTable("LesmomentLeden");
-            builder.HasKey(t => new { t.LesmomentId, t.GebruikerId });
-            builder.HasOne(t => t.Lesmoment).WithMany(t => t.Leden).HasForeignKey(t => t.LesmomentId);
-            //builder.HasOne(t => t.Gebruiker).WithMany(t => t.LesmomentLeden).HasForeignKey(t => t.GebruikerId);
+            builder.HasKey(t => new { t.LesmomentId, t.Gebruikersnaam });
+            builder.HasOne(t => t.Lesmoment).WithMany(l => l.Leden).HasForeignKey(t => t.LesmomentId);
+            builder.HasOne(t => t.Gebruiker).WithMany(l => l.Lesmomenten).HasForeignKey(t => t.Gebruikersnaam);
             builder.Property(t => t.Ingeschreven).IsRequired();
             builder.Property(t => t.Aanwezig).IsRequired();
         }

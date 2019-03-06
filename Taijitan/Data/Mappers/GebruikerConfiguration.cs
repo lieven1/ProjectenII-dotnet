@@ -22,9 +22,9 @@ namespace Taijitan.Data.Mappers
             builder.Property(t => t.Email).IsRequired();
             builder.Property(t => t.EmailOuders);
             builder.Property(t => t.Punten);
+            builder.Property(t => t.TypeGebruiker).IsRequired();
             builder.HasOne(t => t.Adres).WithMany().IsRequired();
             builder.HasOne(t => t.Gradatie).WithMany().IsRequired();
-            builder.Property(t => t.TypeGebruiker).IsRequired();
         }
     }
 }

@@ -134,7 +134,7 @@ namespace Taijitan.Models.Domain {
         // Niet aanpasbaar - vb=" Beheerder , Lid "
         public TypeGebruiker TypeGebruiker { get; private set; }
         // Property voor Intersectietabel
-        //public List<LesmomentLeden> LesmomentLeden { get; set; }
+        public List<LesmomentLeden> Lesmomenten { get; set; }
         #endregion
 
         #region Constructor

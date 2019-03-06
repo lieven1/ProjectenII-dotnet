@@ -12,7 +12,7 @@ namespace Taijitan.Data.Repositories
         public LesmomentRepository(ApplicationDbContext context)
         {
             _context = context;
-            //_lesmomenten = _context.Lesmomenten;
+            _lesmomenten = _context.Lesmomenten;
         }
 
         public void Save(Lesmoment lesmoment)

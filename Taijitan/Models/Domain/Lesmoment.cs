@@ -76,6 +76,10 @@ namespace Taijitan.Models.Domain
             this.Leden = new List<LesmomentLeden>();
             leden.ForEach(lid => Leden.Add(new LesmomentLeden(this, lid, true, false)));
         }
+
+        public Lesmoment() {
+
+        }
         #endregion
 
         #region Methods
