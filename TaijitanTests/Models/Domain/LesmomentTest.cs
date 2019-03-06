@@ -13,9 +13,16 @@ namespace TaijitanTests.Models.Domain
         private readonly DummyDBcontext _context;
         private Lesmoment lesmoment;
 
+        // Een start- en eindtijd voor correcte initialisiatie Lesmoment object
+        private readonly DateTime startTijd;
+        private readonly DateTime eindTijd;
+
         public LesmomentTest()
         {
             _context = new DummyDBcontext();
+
+            startTijd = DateTime.Now.AddDays(5);
+            eindTijd = DateTime.Now.AddDays(6);
         }
 
         #region constructorTests
@@ -23,25 +30,25 @@ namespace TaijitanTests.Models.Domain
         [Fact]
         public void MaakLesmomentAan_NullCheckGebruikers_ExceptionRaised()
         {
-            Assert.Throws<ArgumentException>(() => new Lesmoment(new DateTime(2019, 1, 1), new DateTime(2020, 1, 1), null));
+            Assert.Throws<ArgumentException>(() => new Lesmoment(startTijd, eindTijd, null));
         }
 
         [Fact]
         public void MaakLesmomentAan_LegeGebruikers_Valid()
         {
-            Assert.Empty(new Lesmoment(new DateTime(2019, 1, 1), new DateTime(2020, 1, 1), _context.GeenGebruikers).Leden);
+            Assert.Empty(new Lesmoment(startTijd, eindTijd, _context.GeenGebruikers).Leden);
         }
 
         [Fact]
         public void MaakLesmomentAan_LaterStartDanEindTijd_ExceptionRaised()
         {
-            Assert.Throws<ArgumentException>(() => new Lesmoment(new DateTime(2020, 1, 1), new DateTime(2019, 1, 1), _context.Lijst1Gebruiker));
+            Assert.Throws<ArgumentException>(() => new Lesmoment(eindTijd, startTijd, _context.Lijst1Gebruiker));
         }
 
         [Fact]
         public void MaakLesmomentAan_AllesCorrect_Valid()
         {
-            var result = new Lesmoment(new DateTime(2020, 1, 1), new DateTime(2020, 1, 2), _context.Lijst1Gebruiker);
+            var result = new Lesmoment(startTijd, eindTijd, _context.Lijst1Gebruiker);
             Assert.IsType<Lesmoment>(result);
             Assert.Empty(result.geefAanwezigeLeden());
             Assert.Single(result.geefIngeschrevenLeden());
@@ -50,7 +57,15 @@ namespace TaijitanTests.Models.Domain
         [Fact]
         public void MaakLesmomentAan_StartijdInVerleden_ExceptionRaised()
         {
-            Assert.Throws<ArgumentException>(() => new Lesmoment(new DateTime(1900, 1, 1), new DateTime(1900, 2, 2), _context.Lijst1Gebruiker));
+            Assert.Throws<ArgumentException>(() => new Lesmoment(DateTime.Now.AddDays(-5), DateTime.Now.AddDays(-4), _context.Lijst1Gebruiker));
+        }
+
+        [Fact]
+        public void MaakLesmomentAan_StarttijdMeerDanTweeUurInVerleden_ExceptionRaised()
+        {
+            DateTime tooLongAgo = DateTime.Now.AddMinutes(-121);
+
+            Assert.Throws<ArgumentException>(() => new Lesmoment(tooLongAgo, eindTijd, _context.Lijst1Gebruiker));
         }
         #endregion
 
@@ -84,7 +99,7 @@ namespace TaijitanTests.Models.Domain
         {
             lesmoment = new Lesmoment(new DateTime(2020, 1, 1), new DateTime(2021, 1, 1), _context.Lijst1Gebruiker);
 
-            Assert.Throws<Exception>(() => lesmoment.RegistreerLid(null));
+            Assert.Throws<ArgumentNullException>(() => lesmoment.RegistreerLid(null));
         }
 
         #endregion
