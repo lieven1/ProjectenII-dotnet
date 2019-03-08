@@ -8,47 +8,21 @@ using Taijitan.Models.Domain.Enums;
 namespace Taijitan.Models.Domain {
     public class Gebruiker/* : IdentityUser<Guid>*/{
         #region Fields
-        private string _gebruikersnaam;
         private string _naam;
         private string _voornaam;
         private string _telefoonnummer;
         private string _gsmnummer;
         private string _email;
         private string _emailouders;
-        private string _rijksregisternummer;
-        private string _geboorteplaats;
-        private DateTime _geboortedatum;
         #endregion
 
         #region Properties
         // Niet aanpasbaar
-        public string Gebruikersnaam {
-            get { return _gebruikersnaam; }
-            private set {
-                //verplicht
-                if (string.IsNullOrWhiteSpace(value)) {
-                    throw new ArgumentException("Gebruikersnaam mag geen lege waarde bevatten.");
-                } else {
-                    _gebruikersnaam = value;
-                }
-            }
-        }
+        public string Gebruikersnaam { get; }
         // Niet aanpasbaar
-        public string Rijksregisternummer {
-            get { return _rijksregisternummer; }
-            private set {
-                //verplicht
-                if (string.IsNullOrWhiteSpace(value)) {
-                    throw new ArgumentException("Rijksregisternummer mag geen lege waarde bevatten.");
-                } else if (value.Length != 11) {
-                    throw new ArgumentException("Ongeldige waarde voor rijksregisternummer");
-                } else {
-                    _rijksregisternummer = value;
-                }
-            }
-        }
+        public string Rijksregisternummer { get; }
         // Niet aanpasbaar
-        public DateTime Inschrijvingsdatum { get; private set; }
+        public DateTime Inschrijvingsdatum { get; }
         public string Naam {
             get { return _naam; }
             private set {
@@ -72,31 +46,11 @@ namespace Taijitan.Models.Domain {
             }
         }
         // Niet aanpasbaar
-        public Geslacht Geslacht { get; private set; }
+        public Geslacht Geslacht { get; }
         // Niet aanpasbaar
-        public DateTime Geboortedatum {
-            get { return _geboortedatum; }
-            private set {
-                // Verplicht
-                if (value.CompareTo(DateTime.Now) > 0) {
-                    throw new ArgumentException("ongeldige geboortedatum.");
-                } else {
-                    _geboortedatum = value;
-                }
-            }
-        }
+        public DateTime Geboortedatum { get; }
         // Niet aanpasbaar
-        public string Geboorteplaats {
-            get { return _geboorteplaats; }
-            private set {
-                // Verplicht
-                if (string.IsNullOrWhiteSpace(value)) {
-                    throw new ArgumentException("geboorteplaats mag geen lege waarde bevatten.");
-                } else {
-                    _geboorteplaats = value;
-                }
-            }
-        }
+        public string Geboorteplaats { get; }
         public string Telefoonnummer
         {
             get { return _telefoonnummer; }
@@ -176,15 +130,15 @@ namespace Taijitan.Models.Domain {
             }
         }
         // Aanpasbaar via Adres.WijzigGegevens(...)
-        public Adres Adres { get; private set; }
+        public Adres Adres { get; }
         // Niet aanpasbaar
-        public int Punten { get; private set; }
+        public int Punten { get; }
         // Niet aanpasbaar
-        public Gradatie Gradatie { get; private set; }
+        public Gradatie Gradatie { get; }
         // Niet aanpasbaar - vb=" Beheerder , Lid "
-        public TypeGebruiker TypeGebruiker { get; private set; }
+        public TypeGebruiker TypeGebruiker { get; }
         // Property voor Intersectietabel
-        public List<LesmomentLeden> Lesmomenten { get; private set; }
+        public List<LesmomentLeden> Lesmomenten { get; }
         #endregion
 
         #region Constructor

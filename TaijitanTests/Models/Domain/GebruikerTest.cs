@@ -59,15 +59,6 @@ namespace TaijitanTests.Models.Domain {
                 TypeGebruiker.Lid));
         }
         #endregion
-        #region geboortedatum invalid
-        [Fact]
-        public void maakGebruiker_Invalid_GeboortedatumIsInToekomst_throwsArgumentException() {
-            Assert.Throws<ArgumentException>(() =>
-                new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, 
-                new DateTime(DateTime.Now.Year + 1, 1, 1),"Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 
-                0, gradatieMock.Object,TypeGebruiker.Lid));
-        }
-        #endregion
         #region email invalid
         [Fact]
         public void maakGebruiker_Invalid_EmailIsLeeg_throwsArgumentException() {
@@ -95,36 +86,6 @@ namespace TaijitanTests.Models.Domain {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, 
                 new DateTime(1999, 1, 1),"Gent", "00712345679", "0236587497", "test @test.com", "testouders@test.com", adresMock.Object, 
-                0, gradatieMock.Object,TypeGebruiker.Lid));
-        }
-        #endregion
-        #region rijksregister invalid
-        [Fact]
-        public void maakGebruiker_Invalid_RijksregisterLeeg_throwsArgumentException() {
-            Assert.Throws<ArgumentException>(() =>
-                new Gebruiker("usernametest", "", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, new DateTime(1999, 1, 1),
-                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, gradatieMock.Object,
-                TypeGebruiker.Lid));
-        }
-        [Fact]
-        public void maakGebruiker_Invalid_RijksregisterNull_throwsArgumentException() {
-            Assert.Throws<ArgumentException>(() =>
-                new Gebruiker("usernametest", null, DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, new DateTime(1999, 1, 1),
-                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, gradatieMock.Object,
-                TypeGebruiker.Lid));
-        }
-        [Fact]
-        public void maakGebruiker_Invalid_RijksregisterTeLang_throwsArgumentException() {
-            Assert.Throws<ArgumentException>(() =>
-                new Gebruiker("usernametest", "123123123123", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, 
-                new DateTime(1999, 1, 1),"Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 
-                0, gradatieMock.Object,TypeGebruiker.Lid));
-        }
-        [Fact]
-        public void maakGebruiker_Invalid_RijksregisterTeKort_throwsArgumentException() {
-            Assert.Throws<ArgumentException>(() =>
-                new Gebruiker("usernametest", "1231231231", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, 
-                new DateTime(1999, 1, 1),"Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 
                 0, gradatieMock.Object,TypeGebruiker.Lid));
         }
         #endregion

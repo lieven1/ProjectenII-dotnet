@@ -94,11 +94,11 @@ namespace Taijitan.Models.Domain
         #region Constructor
         public Adres(String land, String postcode, String stad, String straat, String nummer)
         {
-            this._land = land;
-            this._postcode = postcode;
-            this._stad = stad;
-            this._straat = straat;
-            this._nummer = nummer;
+            this.Land = land;
+            this.Postcode = postcode;
+            this.Stad = stad;
+            this.Straat = straat;
+            this.Nummer = nummer;
         }
         public Adres() {
 
