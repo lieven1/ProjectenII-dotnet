@@ -110,6 +110,14 @@ namespace Taijitan.Models.Domain
 
         }
 
+        public Lesmoment(DateTime datum, DateTime start, DateTime eind)
+        {
+            this.Datum = datum;
+            this.StartTijd = start;
+            this.EindTijd = eind;
+            this.Gestart = false;
+        }
+
         public Lesmoment()
         {
 
