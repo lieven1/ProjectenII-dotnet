@@ -11,6 +11,7 @@ namespace Taijitan.Models.Domain
         private DateTime _datum;
         private DateTime _startTijd;
         private DateTime _eindTijd;
+        private bool _gestart;
         #endregion
 
         #region Properties
@@ -61,6 +62,9 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
+
+        public bool Gestart { get { return _gestart; } private set { _gestart = value; } }
+
         public List<LesmomentLeden> Leden { get; set; }
         #endregion
 
@@ -68,6 +72,7 @@ namespace Taijitan.Models.Domain
         public Lesmoment(int lesmomentId, DateTime datum, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden) : this(datum, startTijd, eindTijd, lesmomentLeden)
         {
             this.LesmomentId = lesmomentId;
+            Gestart = false;
         }
 
         public Lesmoment(DateTime datum, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden)
@@ -75,6 +80,7 @@ namespace Taijitan.Models.Domain
             this.Datum = datum;
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
+            Gestart = false;
             // Maak nieuwe list als er geen list bestaat.
             if (lesmomentLeden?.Any() != true)
             {
@@ -90,6 +96,7 @@ namespace Taijitan.Models.Domain
             this.Datum = DateTime.Today;
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
+            Gestart = false;
             if (leden == null)
             {
                 throw new ArgumentNullException("De parameter leden mag niet null zijn.");
@@ -135,6 +142,11 @@ namespace Taijitan.Models.Domain
         public List<Gebruiker> geefIngeschrevenLeden()
         {
             return Leden.Where(t => t.Ingeschreven).Select(t => t.Gebruiker).ToList();
+        }
+
+        public void startLesmoment()
+        {
+            Gestart = true;
         }
         #endregion
     }
