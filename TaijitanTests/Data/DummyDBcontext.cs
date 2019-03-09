@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Databindings;
+using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.LesmomentViewModels;
 
 namespace TaijitanTests.Data
@@ -13,6 +15,8 @@ namespace TaijitanTests.Data
         public List<GebruikerVM> Lijst1GebruikerVM { get; }
         public Gebruiker GebruikerNietInLijst { get; }
         public Gebruiker GebruikerInLijst { get; }
+        public List<Lesmoment> Lesmomenten { get; }
+        public List<Lesmoment> GeenLesmomenten { get { return new List<Lesmoment>(); } }
 
 
         public DummyDBcontext()
@@ -26,6 +30,24 @@ namespace TaijitanTests.Data
 
             Lijst1GebruikerVM = new List<GebruikerVM>();
             Lijst1GebruikerVM.Add(new GebruikerVM(gebruiker1));
+
+
+            Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
+            Adres adres2 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
+
+            Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), TypeGebruiker.Lid);
+            Gebruiker Lid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-Dan"), TypeGebruiker.Lid);
+
+
+            // LesmomentController
+            LesmomentLeden lesmomentLedenBruceLee = new LesmomentLeden(BruceLee);
+            LesmomentLeden lesmomentLedenLid = new LesmomentLeden(Lid);
+            List<LesmomentLeden> lesmomentLeden = new List<LesmomentLeden>();
+            lesmomentLeden.Add(lesmomentLedenBruceLee);
+            lesmomentLeden.Add(lesmomentLedenLid);
+            Lesmoment lesmoment1 = new Lesmoment(DateTime.Now, new DateTime(2019, 3, 16, 14, 0, 0), new DateTime(2019, 3, 16, 18, 0, 0), lesmomentLeden);
+            Lesmomenten = new List<Lesmoment>();
+            Lesmomenten.Add(lesmoment1);
         }
     }
 }
