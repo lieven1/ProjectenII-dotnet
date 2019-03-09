@@ -1,0 +1,30 @@
+﻿@model Taijitan.Models.LesmomentViewModels.LesmomentGebruikerViewModel
+
+<h2>Sessie van @Model.Lesmoment.StartTijd.ToString()</h2>
+<h3>Leden</h3>
+<table class="table table-striped">
+    <thead class="bg-primary">
+        <tr class="bg-primary">
+            <td><b>Gebruikersnaam</b></td>
+            <td><b>Voornaam</b></td>
+            <td><b>Achternaam</b></td>
+            <td><b>Aanwezigheid</b></td>
+        </tr>
+    </thead>
+    @foreach (var item in Model.Lesmoment.Leden)
+    {
+        <tr>
+            <td>@item.Gebruiker.Gebruikersnaam </td>
+            <td>@item.Gebruiker.Voornaam </td>
+            <td>@item.Gebruiker.Naam </td>
+            @if (item.Aanwezig)
+            {
+                <td>Aanwezig</td>
+            }
+            else
+            {
+                <td><a class="btn btn-default" asp-controller="Lesmoment" asp-action="RegistreerAanwezigheid" asp-route-model=@Model>Registreer aanwezigheid</a></td>
+            }
+        </tr>
+    }
+</table>
