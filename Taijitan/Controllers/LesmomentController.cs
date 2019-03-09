@@ -21,8 +21,21 @@ namespace Taijitan.Controllers
             return View(lesmomenten.OrderBy(l => l.Datum));
         }
 
-        public IActionResult Get()
+        [HttpGet]
+        public IActionResult Start(int id)
         {
+            Lesmoment lesmoment = lesmomentRepository.GetById(id);
+            if (lesmoment != null)
+            {
+                lesmoment.startLesmoment();
+                return View(lesmoment);
+            }
+            else
+            {
+                // TODO
+                // er ging iets mis => error boodschap
+                throw new System.Exception("LesmomentID niet gevonden in DB.");
+            }
 
         }
     }
