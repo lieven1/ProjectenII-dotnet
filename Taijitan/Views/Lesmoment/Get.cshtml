@@ -23,8 +23,13 @@
             }
             else
             {
-                <td><a class="btn btn-default" asp-controller="Lesmoment" asp-action="RegistreerAanwezigheid" asp-route-model=@Model>Registreer aanwezigheid</a></td>
-            }
+                var parms = new Dictionary<string, string>{
+            { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() },
+            { "gebruikersnaam", Model.Gebruikersnaam }
+        };
+
+        <td><a class="btn btn-default" asp-route="registreeraanwezigheid" asp-all-route-data="parms">Registreer aanwezigheid</a></td>
+    }
         </tr>
     }
 </table>

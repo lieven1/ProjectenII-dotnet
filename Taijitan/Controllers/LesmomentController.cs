@@ -59,21 +59,22 @@ namespace Taijitan.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistreerAanwezigheid(LesmomentGebruikerViewModel model)
+        [Route("/Speaker/RegistreerAanwezigheid",
+       Name = "registreeraanwezigheid")]
+        public IActionResult RegistreerAanwezigheid(int id, string gebruikersnaam)
         {
-            if (model == null)
+            Lesmoment lesmoment = lesmomentRepository.GetById(id);
+            Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
+            if (lesmoment == null || gebruiker == null)
             {
                 //TODO error
                 return NotFound();
             }
             else
             {
-                Gebruiker gebruiker = gebruikerRepository.GetBy(model.Gebruikersnaam);
-                Lesmoment lesmoment = model.Lesmoment;
-
                 lesmoment.RegistreerLid(gebruiker);
-
-                return RedirectToAction(nameof(Get), model);
+                LesmomentGebruikerViewModel model = new LesmomentGebruikerViewModel(lesmoment);
+                return Get(model);
             }
         }
     }
