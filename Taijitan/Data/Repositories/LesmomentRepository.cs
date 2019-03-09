@@ -35,5 +35,10 @@ namespace Taijitan.Data.Repositories
 
             return lesmomenten;
         }
+
+        public Lesmoment GetById(int id)
+        {
+            return _lesmomenten.SingleOrDefault(l => l.LesmomentId == id);
+        }
     }
 }
