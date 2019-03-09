@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Taijitan.Models.Domain.Databindings
 {
@@ -21,7 +18,16 @@ namespace Taijitan.Models.Domain.Databindings
             this.Ingeschreven = ingeschreven;
             this.Aanwezig = aanwezig;
         }
-        public LesmomentLeden() {
+
+        public LesmomentLeden(Gebruiker gebruiker, Boolean ingeschreven = false, Boolean aanwezig = false)
+        {
+            this.Gebruiker = gebruiker;
+            this.Ingeschreven = ingeschreven;
+            this.Aanwezig = aanwezig;
+        }
+
+        public LesmomentLeden()
+        {
 
         }
     }
