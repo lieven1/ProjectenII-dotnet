@@ -25,6 +25,11 @@ namespace Taijitan.Data.Repositories
             _context.SaveChanges();
         }
 
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
         public List<Lesmoment> GetAll()
         {
             List<Lesmoment> lesmomenten = _lesmomenten.OrderBy(l => l.Datum).ToList();
@@ -38,7 +43,7 @@ namespace Taijitan.Data.Repositories
 
         public Lesmoment GetById(int id)
         {
-            return _lesmomenten.SingleOrDefault(l => l.LesmomentId == id);
+            return _lesmomenten.Include(lesm => lesm.Leden).ThenInclude(lid => lid.Gebruiker).SingleOrDefault(l => l.LesmomentId == id);
         }
     }
 }

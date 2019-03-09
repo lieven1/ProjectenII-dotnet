@@ -36,12 +36,13 @@ namespace Taijitan.Data
                 _context.Gebruikers.Add(Lid);
                 _context.SaveChanges();
 
-                LesmomentLeden lesmomentLedenBruceLee = new LesmomentLeden(BruceLee);
-                LesmomentLeden lesmomentLedenLid = new LesmomentLeden(Lid);
+                Lesmoment lesmoment1 = new Lesmoment(DateTime.Now, new DateTime(2019, 3, 16, 14, 0, 0), new DateTime(2019, 3, 16, 18, 0, 0));
+                LesmomentLeden lesmomentLedenBruceLee = new LesmomentLeden(lesmoment1, BruceLee);
+                LesmomentLeden lesmomentLedenLid = new LesmomentLeden(lesmoment1, Lid);
                 List<LesmomentLeden> lesmomentLeden = new List<LesmomentLeden>();
                 lesmomentLeden.Add(lesmomentLedenBruceLee);
                 lesmomentLeden.Add(lesmomentLedenLid);
-                Lesmoment lesmoment1 = new Lesmoment(DateTime.Now, new DateTime(2019, 3, 16, 14, 0, 0), new DateTime(2019, 3, 16, 18, 0, 0), lesmomentLeden);
+                lesmoment1.Leden = lesmomentLeden;
 
                 _context.Lesmomenten.Add(lesmoment1);
                 await InitializeUsers();

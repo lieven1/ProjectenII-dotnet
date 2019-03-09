@@ -13,6 +13,8 @@ namespace TaijitanTests.Controllers
         private readonly LesmomentController _controller;
         private readonly DummyDBcontext _context;
         private readonly Mock<ILesmomentRepository> _lesmomentRepository;
+        private readonly Mock<IGebruikerRepository> _gebruikerRepository;
+
 
         public LesmomentControllerTest()
         {
@@ -20,7 +22,7 @@ namespace TaijitanTests.Controllers
             _context = new DummyDBcontext();
             _lesmomentRepository = new Mock<ILesmomentRepository>();
 
-            _controller = new LesmomentController(_lesmomentRepository.Object);
+            _controller = new LesmomentController(_lesmomentRepository.Object, _gebruikerRepository.Object);
         }
 
         #region Index
