@@ -58,12 +58,13 @@ namespace Taijitan.Controllers
 
         }
 
-        [HttpPost]
-        [Route("/Taijitan/RegistreerAanwezigheid",
+
+        [Route("/Lesmoment/RegistreerAanwezigheid",
        Name = "registreeraanwezigheid")]
-        public IActionResult RegistreerAanwezigheid(int id, string gebruikersnaam)
+        public IActionResult RegistreerAanwezigheid(int lesmomentId, string gebruikersnaam)
         {
-            Lesmoment lesmoment = lesmomentRepository.GetById(id);
+            Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
+            lesmomentRepository.Save(lesmoment);
             Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
             if (lesmoment == null || gebruiker == null)
             {
@@ -73,6 +74,7 @@ namespace Taijitan.Controllers
             else
             {
                 lesmoment.RegistreerLid(gebruiker);
+
                 LesmomentGebruikerViewModel model = new LesmomentGebruikerViewModel(lesmoment);
                 return Get(model);
             }
