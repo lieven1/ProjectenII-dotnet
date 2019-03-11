@@ -59,7 +59,7 @@ namespace Taijitan.Controllers
         }
 
         [HttpPost]
-        [Route("/Speaker/RegistreerAanwezigheid",
+        [Route("/Taijitan/RegistreerAanwezigheid",
        Name = "registreeraanwezigheid")]
         public IActionResult RegistreerAanwezigheid(int id, string gebruikersnaam)
         {
