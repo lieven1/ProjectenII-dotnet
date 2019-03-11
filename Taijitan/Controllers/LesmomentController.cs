@@ -63,8 +63,7 @@ namespace Taijitan.Controllers
        Name = "registreeraanwezigheid")]
         public IActionResult RegistreerAanwezigheid(int lesmomentId, string gebruikersnaam)
         {
-            Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
-            lesmomentRepository.Save(lesmoment);
+            Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId); ;
             Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
             if (lesmoment == null || gebruiker == null)
             {
@@ -74,7 +73,7 @@ namespace Taijitan.Controllers
             else
             {
                 lesmoment.RegistreerLid(gebruiker);
-
+                lesmomentRepository.Save();
                 LesmomentGebruikerViewModel model = new LesmomentGebruikerViewModel(lesmoment);
                 return Get(model);
             }
