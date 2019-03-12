@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.LesmomentViewModels;
 
 namespace Taijitan.Controllers
@@ -63,7 +64,7 @@ namespace Taijitan.Controllers
        Name = "registreeraanwezigheid")]
         public IActionResult RegistreerAanwezigheid(int lesmomentId, string gebruikersnaam)
         {
-            Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId); ;
+            Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
             Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
             if (lesmoment == null || gebruiker == null)
             {
@@ -77,6 +78,14 @@ namespace Taijitan.Controllers
                 LesmomentGebruikerViewModel model = new LesmomentGebruikerViewModel(lesmoment);
                 return Get(model);
             }
+        }
+
+        public IActionResult RegistreerAanwezigheidNietIngeschreven(int id)
+        {
+            Lesmoment lesmoment = lesmomentRepository.GetById(id);
+            var IngeshrevenGebruikers = lesmoment.Leden.Select(l => l.Gebruikersnaam);
+            var gebruikers = gebruikerRepository.GetAllLeden().OrderBy(g => g.Gebruikersnaam).Where(g => !IngeshrevenGebruikers.Contains(g.Gebruikersnaam));
+            return View(new LesmomentNietIngeschrevenViewModel(gebruikers, lesmoment));
         }
     }
 }
