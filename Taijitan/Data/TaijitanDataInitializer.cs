@@ -36,15 +36,40 @@ namespace Taijitan.Data
                 _context.Gebruikers.Add(Lid);
                 _context.SaveChanges();
 
-                Lesmoment lesmoment1 = new Lesmoment(DateTime.Now, new DateTime(2019, 3, 16, 14, 0, 0), new DateTime(2019, 3, 16, 18, 0, 0));
-                LesmomentLeden lesmomentLedenBruceLee = new LesmomentLeden(lesmoment1, BruceLee);
-                LesmomentLeden lesmomentLedenLid = new LesmomentLeden(lesmoment1, Lid);
-                List<LesmomentLeden> lesmomentLeden = new List<LesmomentLeden>();
-                lesmomentLeden.Add(lesmomentLedenBruceLee);
-                lesmomentLeden.Add(lesmomentLedenLid);
-                lesmoment1.Leden = lesmomentLeden;
+                DateTime datum = DateTime.Now;
+                Lesmoment lesmoment1 = new Lesmoment(datum, datum.AddDays(1), datum.AddDays(1).AddHours(2));
+                Lesmoment lesmoment2 = new Lesmoment(datum, datum.AddDays(2), datum.AddDays(2).AddHours(2));
+                Lesmoment lesmoment3 = new Lesmoment(datum, datum.AddDays(3), datum.AddDays(3).AddHours(2));
+
+                LesmomentLeden lesmoment1LedenBruceLee = new LesmomentLeden(lesmoment1, BruceLee, true);
+                LesmomentLeden lesmoment1LedenLid = new LesmomentLeden(lesmoment1, Lid, true);
+                LesmomentLeden lesmoment2LedenBruceLee = new LesmomentLeden(lesmoment2, BruceLee, true);
+                LesmomentLeden lesmoment2LedenLid = new LesmomentLeden(lesmoment2, Lid, true);
+                LesmomentLeden lesmoment3LedenBruceLee = new LesmomentLeden(lesmoment3, BruceLee, true);
+                LesmomentLeden lesmoment3LedenLid = new LesmomentLeden(lesmoment3, Lid, true);
+
+                List<LesmomentLeden> lesmomentLeden1 = new List<LesmomentLeden>();
+                List<LesmomentLeden> lesmomentLeden2 = new List<LesmomentLeden>();
+                List<LesmomentLeden> lesmomentLeden3 = new List<LesmomentLeden>();
+
+                lesmomentLeden1.Add(lesmoment1LedenBruceLee);
+                lesmomentLeden1.Add(lesmoment1LedenLid);
+                lesmomentLeden2.Add(lesmoment2LedenBruceLee);
+                lesmomentLeden2.Add(lesmoment2LedenLid);
+                lesmomentLeden3.Add(lesmoment3LedenBruceLee);
+                lesmomentLeden3.Add(lesmoment3LedenLid);
+
+                lesmoment1.Leden = lesmomentLeden1;
+                lesmoment2.Leden = lesmomentLeden2;
+                lesmoment3.Leden = lesmomentLeden3;
+               
 
                 _context.Lesmomenten.Add(lesmoment1);
+                _context.Lesmomenten.Add(lesmoment2);
+                _context.Lesmomenten.Add(lesmoment3);
+
+                _context.SaveChanges();
+
                 await InitializeUsers();
             }
         }

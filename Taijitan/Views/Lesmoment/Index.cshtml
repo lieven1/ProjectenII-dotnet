@@ -11,15 +11,22 @@ else
     <table class="table table-striped">
         <thead class="bg-primary">
             <tr class="bg-primary">
-                <td colspan="2"><b>Datum</b></td>
+                <td><b>Datum</b></td>
+                <td><b>Van</b></td>
+                <td colspan="2"><b>Tot</b></td>
             </tr>
         </thead>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Datum.ToString()</td>
-                <td><a class="btn btn-default" asp-controller="Lesmoment" asp-action="Start" asp-route-id="@item.LesmomentId">Start Sessie</a></td>
-            </tr>
+        <tr>
+            <td>@item.StartTijd.ToString("dd/MM/yyyy")</td>
+            <td>@item.StartTijd.ToString("HH:mm")</td>
+            <td>@item.EindTijd.ToString("HH:mm")</td>
+            <td><a class="btn btn-default" asp-controller="Lesmoment" asp-action="Start" asp-route-id="@item.LesmomentId">Neem aanwezigheden op</a></td>
+        </tr>
         }
     </table>
 }
+    <div class="form-group col-md-12 text-center">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-default">Keer Terug</a>
+    </div>
