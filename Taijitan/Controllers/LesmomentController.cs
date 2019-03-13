@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
@@ -18,37 +20,38 @@ namespace Taijitan.Controllers
             this.gebruikerRepository = gebruikerRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Aanwezigheden()
         {
-            List<Lesmoment> lesmomenten = lesmomentRepository.GetAll();
+            Lesmoment lesmoment = geefLesmomenten(l => l.Gestart).FirstOrDefault();
+            if (lesmoment == null) {
+                TempData["error"] = "Er is geen lesmoment gestart. Probeer opnieuw wanneer er een lesmoment gestart is.";
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
 
-            return View(lesmomenten.OrderBy(l => l.Datum));
+            return View("Aanwezigheden", new LesmomentGebruikerViewModel(lesmoment));
         }
 
-        [HttpGet]
-        public IActionResult Get(LesmomentGebruikerViewModel model)
-        {
-            if (model == null)
-            {
-                // iets ging mis TODO
-                return NotFound();
+        [Authorize(Policy = "Beheerder")]
+        public IActionResult StartLesmoment() {
+            List<Lesmoment> lesmomenten = geefLesmomenten();
+            List<Lesmoment> lesmomentenGestart = geefLesmomenten(l => l.Gestart);
+            if (lesmomentenGestart.Count > 0 && lesmomentenGestart[0].EindTijd.CompareTo(DateTime.Now) > 0) { //eindtijd is later dan nu => lesmoment is nog bezig
+                TempData["error"] = "Er is al een lesmoment bezig.";
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
-            else
-            {
-                return View("Get", model);
-            }
+            return View(lesmomenten.OrderBy(l => l.Datum));
         }
 
 
         public IActionResult Start(int id)
         {
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
-            LesmomentGebruikerViewModel model = new LesmomentGebruikerViewModel(lesmoment);
 
             if (lesmoment != null)
             {
                 lesmoment.startLesmoment();
-                return Get(model);
+                lesmomentRepository.Save();
+                return Aanwezigheden();
             }
             else
             {
@@ -75,8 +78,7 @@ namespace Taijitan.Controllers
             {
                 lesmoment.RegistreerLid(gebruiker);
                 lesmomentRepository.Save();
-                LesmomentGebruikerViewModel model = new LesmomentGebruikerViewModel(lesmoment);
-                return Get(model);
+                return Aanwezigheden();
             }
         }
 
@@ -90,6 +92,14 @@ namespace Taijitan.Controllers
 
         public IActionResult RegistreerAanwezigheidProefles(int id) {
             return View(new LesmomentdProeflesViewModel(lesmomentRepository.GetById(id)));
+        }
+
+        public List<Lesmoment> geefLesmomenten(Func<Lesmoment,bool> predicate = null) {
+            if (predicate == null) {
+                return lesmomentRepository.GetAll();
+            } else {
+                return lesmomentRepository.GetAll().Where(predicate).ToList();
+            }
         }
 
     }
