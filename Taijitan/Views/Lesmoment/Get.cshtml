@@ -31,6 +31,6 @@
 </table>
 <div class="form-group col-md-12 text-center">
     <a asp-controller="Lesmoment" asp-action="Index" class="btn btn-default">Keer terug</a>
-    <a asp-controller="Lesmoment" asp-action="" class="btn btn-info">Ik volg een proefles</a>
+    <a asp-controller="Lesmoment" asp-action="RegistreerAanwezigheidProefles" asp-route-id="@Model.Lesmoment.LesmomentId" class="btn btn-info">Ik volg een proefles</a>
     <a asp-controller="Lesmoment" asp-action="RegistreerAanwezigheidNietIngeschreven" asp-route-id="@Model.Lesmoment.LesmomentId" class="btn btn-info">Ik volg een les buiten mijn formule</a>
 </div>

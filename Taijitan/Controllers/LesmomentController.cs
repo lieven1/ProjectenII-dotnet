@@ -87,5 +87,10 @@ namespace Taijitan.Controllers
             var gebruikers = gebruikerRepository.GetAllLeden().OrderBy(g => g.Gebruikersnaam).Where(g => !IngeshrevenGebruikers.Contains(g.Gebruikersnaam));
             return View(new LesmomentNietIngeschrevenViewModel(gebruikers, lesmoment));
         }
+
+        public IActionResult RegistreerAanwezigheidProefles(int id) {
+            return View(new LesmomentdProeflesViewModel(lesmomentRepository.GetById(id)));
+        }
+
     }
 }
