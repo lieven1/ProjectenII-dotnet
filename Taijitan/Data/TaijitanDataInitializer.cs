@@ -42,6 +42,7 @@ namespace Taijitan.Data
                 Lesmoment lesmoment1 = new Lesmoment(datum, datum.AddDays(1), datum.AddDays(1).AddHours(2));
                 Lesmoment lesmoment2 = new Lesmoment(datum, datum.AddDays(2), datum.AddDays(2).AddHours(2));
                 Lesmoment lesmoment3 = new Lesmoment(datum, datum.AddDays(3), datum.AddDays(3).AddHours(2));
+                Lesmoment lesmoment4 = new Lesmoment(datum, datum.AddSeconds(30), datum.AddSeconds(60));
 
                 LesmomentLeden lesmoment1LedenBruceLee = new LesmomentLeden(lesmoment1, BruceLee, true);
                 LesmomentLeden lesmoment1LedenLid = new LesmomentLeden(lesmoment1, Lid, true);
@@ -49,10 +50,13 @@ namespace Taijitan.Data
                 LesmomentLeden lesmoment2LedenLid = new LesmomentLeden(lesmoment2, Lid, true);
                 LesmomentLeden lesmoment3LedenBruceLee = new LesmomentLeden(lesmoment3, BruceLee, true);
                 LesmomentLeden lesmoment3LedenLid = new LesmomentLeden(lesmoment3, Lid, true);
+                LesmomentLeden lesmoment4LedenBruceLee = new LesmomentLeden(lesmoment4, BruceLee, true);
+                LesmomentLeden lesmoment4LedenLid = new LesmomentLeden(lesmoment4, Lid, true);
 
                 List<LesmomentLeden> lesmomentLeden1 = new List<LesmomentLeden>();
                 List<LesmomentLeden> lesmomentLeden2 = new List<LesmomentLeden>();
                 List<LesmomentLeden> lesmomentLeden3 = new List<LesmomentLeden>();
+                List<LesmomentLeden> lesmomentLeden4 = new List<LesmomentLeden>();
 
                 lesmomentLeden1.Add(lesmoment1LedenBruceLee);
                 lesmomentLeden1.Add(lesmoment1LedenLid);
@@ -60,15 +64,19 @@ namespace Taijitan.Data
                 lesmomentLeden2.Add(lesmoment2LedenLid);
                 lesmomentLeden3.Add(lesmoment3LedenBruceLee);
                 lesmomentLeden3.Add(lesmoment3LedenLid);
+                lesmomentLeden4.Add(lesmoment4LedenBruceLee);
+                lesmomentLeden4.Add(lesmoment4LedenLid);
 
                 lesmoment1.Leden = lesmomentLeden1;
                 lesmoment2.Leden = lesmomentLeden2;
                 lesmoment3.Leden = lesmomentLeden3;
-               
+                lesmoment4.Leden = lesmomentLeden4;
+
 
                 _context.Lesmomenten.Add(lesmoment1);
                 _context.Lesmomenten.Add(lesmoment2);
                 _context.Lesmomenten.Add(lesmoment3);
+                _context.Lesmomenten.Add(lesmoment4);
 
                 _context.SaveChanges();
 
