@@ -14,7 +14,7 @@
     @foreach (var item in Model.Lesmoment.Leden.OrderBy(l => l.Gebruikersnaam))
     {
         <tr>
-            <td>@item.Gebruiker.Gebruikersnaam </td>
+            <td>@item.Gebruikersnaam </td>
             <td>@item.Gebruiker.Voornaam </td>
             <td>@item.Gebruiker.Naam </td>
             @if (item.Aanwezig)
