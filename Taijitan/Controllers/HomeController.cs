@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Taijitan.Models;
 
 namespace Taijitan.Controllers {
     public class HomeController : Controller {
-        public IActionResult Index() {
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public HomeController(SignInManager<IdentityUser> signInManager)
+        {
+            this._signInManager = signInManager;
+        }
+        public ViewResult Index() {
+            if (User.Identity.IsAuthenticated)
+                _signInManager.SignOutAsync().Wait();
             return View();
         }
         
