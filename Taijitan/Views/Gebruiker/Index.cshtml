@@ -1,4 +1,7 @@
 ﻿@model Taijitan.Models.Domain.Gebruiker
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
 
 @{
     // Bereken leeftijd
@@ -88,9 +91,18 @@
             </td>
         </tr>
     </table>
-    <div class="form-group col-md-12 text-center">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-default btn-lg">Keer Terug</a>
-        <a asp-controller="Gebruiker" asp-action="Edit" class="btn btn-primary btn-lg">Wijzig gegevens</a>
+    <div class="form-group col-md-12">
+        @* <a asp-controller="Home" asp-action="Index" class="btn btn-default btn-lg">Keer Terug</a> *@
+        <a asp-controller="Gebruiker" asp-action="Edit" class="btn btn-primary btn-lg text-left">Wijzig gegevens</a>
+      
+    </div>
+    <div class="form-group col-md-12">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
+                <button type="submit" class="btn btn-default">Keer Terug</button>
+            </form>
+        }
     </div>
 </fieldset>
 
