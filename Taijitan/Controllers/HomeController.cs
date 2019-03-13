@@ -9,15 +9,15 @@ using Taijitan.Models;
 
 namespace Taijitan.Controllers {
     public class HomeController : Controller {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        //private readonly SignInManager<IdentityUser> _signInManager;
 
-        public HomeController(SignInManager<IdentityUser> signInManager)
+        public HomeController(/*SignInManager<IdentityUser> signInManager*/)
         {
-            this._signInManager = signInManager;
+            //this._signInManager = signInManager;
         }
         public ViewResult Index() {
-            if (User.Identity.IsAuthenticated)
-                _signInManager.SignOutAsync().Wait();
+            //if (User.Identity.IsAuthenticated)
+            //    _signInManager.SignOutAsync().Wait();
             return View();
         }
         

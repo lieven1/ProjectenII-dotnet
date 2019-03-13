@@ -32,7 +32,7 @@ namespace Taijitan.Controllers
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
             lesmoment.ZetActief(true);
             lesmomentRepository.Save();
-            return RedirectToAction(nameof(BeheerLesmoment));
+            return RedirectToAction(nameof(ToonActieveLesmomenten));
         }
 
         public IActionResult StopLesmoment(int id)
@@ -43,6 +43,7 @@ namespace Taijitan.Controllers
             return RedirectToAction(nameof(BeheerLesmoment));
         }
 
+        [Authorize(Policy = "Beheerder")]
         public IActionResult ToonActieveLesmomenten()
         {
             return View("ToonActieveLesmomenten", new LesmomentActiefViewModel(geefLesmomenten(l => l.Actief == true)));

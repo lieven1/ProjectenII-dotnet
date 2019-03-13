@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<Taijitan.Models.Domain.Lesmoment>
 @using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
+@*@inject SignInManager<IdentityUser> SignInManager*@
 
 <h2>Geplande lesmomenten</h2>
 
-@if (Model.Count() == 0)
-{
+@if (Model.Count() == 0) {
     <p>Er zijn geen geplande lesmomenten</p>
-}
-else
-{
+} else {
     <table class="table table-striped">
         <thead class="bg-primary">
             <tr class="bg-primary">
@@ -19,29 +16,30 @@ else
                 <td colspan="2"><b>Tot</b></td>
             </tr>
         </thead>
-        @foreach (var item in Model)
-        {
+        @foreach (var item in Model) {
             <tr>
                 <td>@item.StartTijd.ToString("dd/MM/yyyy")</td>
                 <td>@item.StartTijd.ToString("HH:mm")</td>
                 <td>@item.EindTijd.ToString("HH:mm")</td>
-                @if (item.Actief != true)
-                {
+                @if (item.Actief != true) {
                     <td><a class="btn btn-default btn-primary" asp-controller="Lesmoment" asp-action="StartLesmoment" asp-route-id="@item.LesmomentId">Start lesmoment</a></td>
-                }
-                else
-                {
+                } else {
                     <td><a class="btn btn-default btn-info" asp-controller="Lesmoment" asp-action="StopLesmoment" asp-route-id="@item.LesmomentId">Stop lesmoment</a></td>
                 }
             </tr>
         }
     </table>
 }
+
 <div class="form-group col-md-12 text-center">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm"    >
-            <button type="submit" class="btn btn-default">Keer Terug</button>
-        </form>
-    }
+    <a asp-controller="Home" asp-action="Index" class="btn btn-default">Keer Terug</a>
 </div>
+
+@*<div class="form-group col-md-12 text-center">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm"    >
+                <button type="submit" class="btn btn-default">Keer Terug</button>
+            </form>
+        }
+    </div>*@
