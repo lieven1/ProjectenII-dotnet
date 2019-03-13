@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Collections;
 using System.Collections.Generic;
 using Taijitan.Controllers;
 using Taijitan.Models.Domain;
+using Taijitan.Models.LesmomentViewModels;
 using TaijitanTests.Data;
 using Xunit;
 
@@ -21,34 +23,101 @@ namespace TaijitanTests.Controllers
 
             _context = new DummyDBcontext();
             _lesmomentRepository = new Mock<ILesmomentRepository>();
+            _gebruikerRepository = new Mock<IGebruikerRepository>();
 
             _controller = new LesmomentController(_lesmomentRepository.Object, _gebruikerRepository.Object);
         }
 
-        #region Index
+        #region BeheerLesmoment
         [Fact]
-        // null test, welk gedrag willen we? Standaard error view?
-
-        public void Index_LoadGeenLesmomenten_Valid()
+        public void BeheerLesmoment_LoadGeenLesmomenten_Valid()
         {
             _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.GeenLesmomenten);
             var actionResult = _controller.BeheerLesmoment() as ViewResult;
-            var model = actionResult?.Model as List<Lesmoment>;
-            //Assert.IsType<IEnumerable<Lesmoment>>(actionResult?.Model);
-            Assert.Empty(model);
+            var model = actionResult?.Model;
+            Assert.IsAssignableFrom<IEnumerable<Lesmoment>>(model);
+            Assert.Empty((IEnumerable)model);
         }
 
         [Fact]
-        public void Index_LoadWelLesmomenten_Valid()
+        public void BeheerLesmoment_LoadWelLesmomenten_Valid()
         {
             _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.Lesmomenten);
             var actionResult = _controller.BeheerLesmoment() as ViewResult;
-            var model = actionResult?.Model as List<Lesmoment>;
-            //Assert.IsType<List<Lesmoment>>(actionResult?.Model);
-            Assert.Equal(model.Count, _context.Lesmomenten.Count);
+            var model = actionResult?.Model;
+            Assert.IsAssignableFrom<IEnumerable<Lesmoment>>(model);
+            Assert.NotEmpty((IEnumerable)model);
         }
 
         #endregion
 
+        #region startEnStopLesmoment
+        [Fact]
+        public void StartLesmoment_NV_Valid()
+        {
+            _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
+            var result = _controller.StartLesmoment(_context.LesmomentValid.LesmomentId) as RedirectToActionResult;
+            Assert.Equal(nameof(_controller.BeheerLesmoment), result.ActionName);
+        }
+
+        [Fact]
+        public void StoptLesmoment_NV_Valid()
+        {
+            _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
+            var result = _controller.StopLesmoment(_context.LesmomentValid.LesmomentId) as RedirectToActionResult;
+            Assert.Equal(nameof(_controller.BeheerLesmoment), result.ActionName);
+        }
+
+        #endregion
+
+        #region RegistreerAanwezigheid
+        [Fact]
+        public void RegistreerAanwezigheid_invalidArguments_Valid()
+        {
+            _gebruikerRepository.Setup(v => v.GetBy("-1")).Returns((Gebruiker)null);
+            _lesmomentRepository.Setup(v => v.GetById(-1)).Returns((Lesmoment)null);
+            var result = _controller.RegistreerAanwezigheid(-1, "-1") as RedirectToActionResult;
+            Assert.Equal(nameof(_controller.ToonActieveLesmomenten), result.ActionName);
+        }
+
+        [Fact]
+        public void RegistreerAanwezigheid_validArguments_Valid()
+        {
+            _gebruikerRepository.Setup(v => v.GetBy(_context.GebruikerInLesmomentLedenVanLesmomentValid.Gebruikersnaam)).Returns(_context.GebruikerInLesmomentLedenVanLesmomentValid);
+            _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
+            var actionResult = _controller.RegistreerAanwezigheid(_context.LesmomentValid.LesmomentId, _context.GebruikerInLesmomentLedenVanLesmomentValid.Gebruikersnaam) as ViewResult;
+            Assert.IsType<LesmomentGebruikerViewModel>(actionResult?.Model);
+        }
+
+        #endregion
+
+        #region Aanwezigheden
+        [Fact]
+        public void Aanwezigheden_invalidArguments_Valid()
+        {
+            _lesmomentRepository.Setup(v => v.GetById(-1)).Returns((Lesmoment)null);
+            var actionResult = _controller.Aanwezigheden(-1) as ViewResult;
+            Assert.IsType<LesmomentGebruikerViewModel>(actionResult?.Model);
+        }
+
+        [Fact]
+        public void Aanwezigheden_validArguments_Valid()
+        {
+            _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
+            var actionResult = _controller.Aanwezigheden(_context.LesmomentValid.LesmomentId) as ViewResult;
+            Assert.IsType<LesmomentGebruikerViewModel>(actionResult?.Model);
+        }
+
+        #endregion
+
+        #region RegistreerAanwezigheidNietIngeschreven
+        [Fact]
+        public void RegistreerAanwezigheidNietIngeschreven_invalidArguments_Valid()
+        {
+            _lesmomentRepository.Setup(v => v.GetById(-1)).Returns((Lesmoment)null);
+            var result = _controller.RegistreerAanwezigheid(-1, "-1") as RedirectToActionResult;
+            Assert.Equal(nameof(_controller.ToonActieveLesmomenten), result.ActionName);
+        }
+        #endregion
     }
 }
