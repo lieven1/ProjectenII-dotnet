@@ -156,6 +156,11 @@ namespace Taijitan.Models.Domain
             Actief = actief;
         }
 
+        public bool EersteHelftIsVoorbij()
+        {
+            return _startTijd.Add(_eindTijd.Subtract(_startTijd) / 2).CompareTo(DateTime.Now) < 0;
+        }
+
         #endregion
     }
 }

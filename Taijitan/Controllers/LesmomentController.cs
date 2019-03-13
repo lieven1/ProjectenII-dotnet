@@ -21,26 +21,30 @@ namespace Taijitan.Controllers
         }
 
         [Authorize(Policy = "Beheerder")]
-        public IActionResult  BeheerLesmoment() {
+        public IActionResult BeheerLesmoment()
+        {
             List<Lesmoment> lesmomenten = geefLesmomenten();
             return View(lesmomenten.OrderBy(l => l.Datum));
         }
 
-        public IActionResult StartLesmoment(int id) {
+        public IActionResult StartLesmoment(int id)
+        {
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
             lesmoment.ZetActief(true);
             lesmomentRepository.Save();
             return RedirectToAction(nameof(BeheerLesmoment));
         }
 
-        public IActionResult StopLesmoment(int id) {
+        public IActionResult StopLesmoment(int id)
+        {
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
             lesmoment.ZetActief(false);
             lesmomentRepository.Save();
             return RedirectToAction(nameof(BeheerLesmoment));
         }
 
-        public IActionResult ToonActieveLesmomenten() {
+        public IActionResult ToonActieveLesmomenten()
+        {
             return View("ToonActieveLesmomenten", new LesmomentActiefViewModel(geefLesmomenten(l => l.Actief == true)));
         }
 
@@ -77,8 +81,13 @@ namespace Taijitan.Controllers
             Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
             if (lesmoment == null || gebruiker == null)
             {
-                //TODO error
-                return NotFound();
+                TempData["error"] = "Er is een fout opgetreden. Het lesmoment of de gebruiker is niet gevonden.";
+                return RedirectToAction(nameof(ToonActieveLesmomenten));
+            }
+            else if (lesmoment.EersteHelftIsVoorbij())
+            {
+                TempData["error"] = "De eerste helft van het lesmoment is al voorbij, u kan zelf niet meer aanwezig melden";
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
             else
             {
@@ -96,14 +105,19 @@ namespace Taijitan.Controllers
             return View(new LesmomentNietIngeschrevenViewModel(gebruikers, lesmoment));
         }
 
-        public IActionResult RegistreerAanwezigheidProefles(int id) {
+        public IActionResult RegistreerAanwezigheidProefles(int id)
+        {
             return View(new LesmomentdProeflesViewModel(lesmomentRepository.GetById(id)));
         }
 
-        public List<Lesmoment> geefLesmomenten(Func<Lesmoment,bool> predicate = null) {
-            if (predicate == null) {
+        public List<Lesmoment> geefLesmomenten(Func<Lesmoment, bool> predicate = null)
+        {
+            if (predicate == null)
+            {
                 return lesmomentRepository.GetAll();
-            } else {
+            }
+            else
+            {
                 return lesmomentRepository.GetAll().Where(predicate).ToList();
             }
         }
