@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
-using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.LesmomentViewModels;
 
 namespace Taijitan.Controllers
@@ -81,7 +80,6 @@ namespace Taijitan.Controllers
             Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
             if (lesmoment == null || gebruiker == null)
             {
-                TempData["error"] = "Er is een fout opgetreden. Het lesmoment of de gebruiker is niet gevonden.";
                 return RedirectToAction(nameof(ToonActieveLesmomenten));
             }
             else if (lesmoment.EersteHelftIsVoorbij())
@@ -100,6 +98,10 @@ namespace Taijitan.Controllers
         public IActionResult RegistreerAanwezigheidNietIngeschreven(int id)
         {
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
+            if (lesmoment == null)
+            {
+                return RedirectToAction(nameof(ToonActieveLesmomenten));
+            }
             var IngeshrevenGebruikers = lesmoment.Leden.Select(l => l.Gebruikersnaam);
             var gebruikers = gebruikerRepository.GetAllLeden().OrderBy(g => g.Gebruikersnaam).Where(g => !IngeshrevenGebruikers.Contains(g.Gebruikersnaam));
             return View(new LesmomentNietIngeschrevenViewModel(gebruikers, lesmoment));
