@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Taijitan.Models.Domain;
 
 namespace Taijitan.Models.LesmomentViewModels
@@ -24,11 +21,16 @@ namespace Taijitan.Models.LesmomentViewModels
         //email pre/post @ kan . of - en letters bevatten en minstens 1 karakter
         [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]+$", ErrorMessage = "Ongeldige waarde voor e-mailadres.")]
         public String Email { get; set; }
-        public Lesmoment Lesmoment{ get; set; }
+        public int LesmomentId { get; set; }
 
         public LesmomentdProeflesViewModel(Lesmoment lesmoment)
         {
-            this.Lesmoment = lesmoment;
+            this.LesmomentId = lesmoment.LesmomentId;
+        }
+
+        public LesmomentdProeflesViewModel()
+        {
+
         }
     }
 }
