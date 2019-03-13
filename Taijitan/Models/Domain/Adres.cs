@@ -34,13 +34,13 @@ namespace Taijitan.Models.Domain
             get { return _postcode; }
             private set
             {
-                if(Regex.IsMatch(value, @"^\d{4}$"))
+                if(String.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, @"^\d{4}$"))
                 {
-                    _postcode = value;
+                    throw new ArgumentException("Ongeldige waarde voor postcode.");
                 }
                 else
                 {
-                    throw new ArgumentException("Ongeldige waarde voor postcode.");
+                    _postcode = value;
                 }
             }
         }

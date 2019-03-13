@@ -34,8 +34,8 @@ namespace Taijitan
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                   @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=taijitan;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                   //@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=taijitan;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
