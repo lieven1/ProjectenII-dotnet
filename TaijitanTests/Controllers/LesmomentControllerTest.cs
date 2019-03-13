@@ -32,7 +32,7 @@ namespace TaijitanTests.Controllers
         public void Index_LoadGeenLesmomenten_Valid()
         {
             _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.GeenLesmomenten);
-            var actionResult = _controller.Index() as ViewResult;
+            var actionResult = _controller.BeheerLesmoment() as ViewResult;
             var model = actionResult?.Model as List<Lesmoment>;
             //Assert.IsType<IEnumerable<Lesmoment>>(actionResult?.Model);
             Assert.Empty(model);
@@ -42,7 +42,7 @@ namespace TaijitanTests.Controllers
         public void Index_LoadWelLesmomenten_Valid()
         {
             _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.Lesmomenten);
-            var actionResult = _controller.Index() as ViewResult;
+            var actionResult = _controller.BeheerLesmoment() as ViewResult;
             var model = actionResult?.Model as List<Lesmoment>;
             //Assert.IsType<List<Lesmoment>>(actionResult?.Model);
             Assert.Equal(model.Count, _context.Lesmomenten.Count);
