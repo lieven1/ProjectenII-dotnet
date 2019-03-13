@@ -47,6 +47,7 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
+
         public DateTime EindTijd
         {
             get { return _eindTijd; }
@@ -155,6 +156,10 @@ namespace Taijitan.Models.Domain
         public void startLesmoment()
         {
             Gestart = true;
+        }
+
+        public bool eersteHelftIsVoorbij() {
+            return _startTijd.Add(_eindTijd.Subtract(_startTijd) / 2).CompareTo(DateTime.Now) < 0;
         }
         #endregion
     }

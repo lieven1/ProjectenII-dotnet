@@ -7,22 +7,18 @@ using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.LesmomentViewModels;
 
-namespace Taijitan.Controllers
-{
-    public class LesmomentController : Controller
-    {
+namespace Taijitan.Controllers {
+    public class LesmomentController : Controller {
         private ILesmomentRepository lesmomentRepository;
         private IGebruikerRepository gebruikerRepository;
 
-        public LesmomentController(ILesmomentRepository lesmomentRepository, IGebruikerRepository gebruikerRepository)
-        {
+        public LesmomentController(ILesmomentRepository lesmomentRepository, IGebruikerRepository gebruikerRepository) {
             this.lesmomentRepository = lesmomentRepository;
             this.gebruikerRepository = gebruikerRepository;
         }
 
-        public IActionResult Aanwezigheden()
-        {
-            Lesmoment lesmoment = geefLesmomenten(l => l.Gestart).FirstOrDefault();
+        public IActionResult Aanwezigheden() {
+            Lesmoment lesmoment = geefLesmomenten(l => l.Gestart && l.EindTijd.CompareTo(DateTime.Now) > 0).FirstOrDefault(); // is gestart en eindtijd is nog niet overschreden
             if (lesmoment == null) {
                 TempData["error"] = "Er is geen lesmoment gestart. Probeer opnieuw wanneer er een lesmoment gestart is.";
                 return RedirectToRoute(new { controller = "Home", action = "Index" });
@@ -43,18 +39,14 @@ namespace Taijitan.Controllers
         }
 
 
-        public IActionResult Start(int id)
-        {
+        public IActionResult Start(int id) {
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
 
-            if (lesmoment != null)
-            {
+            if (lesmoment != null) {
                 lesmoment.startLesmoment();
                 lesmomentRepository.Save();
                 return Aanwezigheden();
-            }
-            else
-            {
+            } else {
                 // TODO
                 // er ging iets mis => error boodschap duidelijker
                 return NotFound();
@@ -62,28 +54,25 @@ namespace Taijitan.Controllers
 
         }
 
-
         [Route("/Lesmoment/RegistreerAanwezigheid",
        Name = "registreeraanwezigheid")]
-        public IActionResult RegistreerAanwezigheid(int lesmomentId, string gebruikersnaam)
-        {
+        public IActionResult RegistreerAanwezigheid(int lesmomentId, string gebruikersnaam) {
             Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
             Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
-            if (lesmoment == null || gebruiker == null)
-            {
-                //TODO error
-                return NotFound();
-            }
-            else
-            {
+            if (lesmoment == null || gebruiker == null) {
+                TempData["error"] = "Er is een fout opgetreden. Het lesmoment of de gebruiker is niet gevonden.";
+                return RedirectToAction("Aanwezigheden");
+            } else if (lesmoment.eersteHelftIsVoorbij()) {
+                TempData["error"] = "De eerste helft van het lesmoment is al voorbij.";
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            } else {
                 lesmoment.RegistreerLid(gebruiker);
                 lesmomentRepository.Save();
                 return Aanwezigheden();
             }
         }
 
-        public IActionResult RegistreerAanwezigheidNietIngeschreven(int id)
-        {
+        public IActionResult RegistreerAanwezigheidNietIngeschreven(int id) {
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
             var IngeshrevenGebruikers = lesmoment.Leden.Select(l => l.Gebruikersnaam);
             var gebruikers = gebruikerRepository.GetAllLeden().OrderBy(g => g.Gebruikersnaam).Where(g => !IngeshrevenGebruikers.Contains(g.Gebruikersnaam));
@@ -94,7 +83,7 @@ namespace Taijitan.Controllers
             return View(new LesmomentdProeflesViewModel(lesmomentRepository.GetById(id)));
         }
 
-        public List<Lesmoment> geefLesmomenten(Func<Lesmoment,bool> predicate = null) {
+        public List<Lesmoment> geefLesmomenten(Func<Lesmoment, bool> predicate = null) {
             if (predicate == null) {
                 return lesmomentRepository.GetAll();
             } else {
