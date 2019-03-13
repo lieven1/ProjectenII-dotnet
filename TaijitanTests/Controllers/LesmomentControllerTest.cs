@@ -53,15 +53,15 @@ namespace TaijitanTests.Controllers
 
         #region startEnStopLesmoment
         [Fact]
-        public void StartLesmoment_NV_Valid()
+        public void StartLesmoment_NV_Valid_gaatNaarActieveLesmomenten()
         {
             _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
             var result = _controller.StartLesmoment(_context.LesmomentValid.LesmomentId) as RedirectToActionResult;
-            Assert.Equal(nameof(_controller.BeheerLesmoment), result.ActionName);
+            Assert.Equal(nameof(_controller.ToonActieveLesmomenten), result.ActionName);
         }
 
         [Fact]
-        public void StoptLesmoment_NV_Valid()
+        public void StoptLesmoment_NV_Valid_gaatNaarBeheerLesmoment()
         {
             _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
             var result = _controller.StopLesmoment(_context.LesmomentValid.LesmomentId) as RedirectToActionResult;
