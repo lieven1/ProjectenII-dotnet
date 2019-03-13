@@ -28,6 +28,12 @@ namespace Taijitan.Data.Repositories
             return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam); ;
         }
 
+        public void Save(Gebruiker gebruiker)
+        {
+            _gebruikers.Add(gebruiker);
+            _context.SaveChanges();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

@@ -107,10 +107,25 @@ namespace Taijitan.Controllers
             return View(new LesmomentNietIngeschrevenViewModel(gebruikers, lesmoment));
         }
 
+        [HttpGet]
         public IActionResult RegistreerAanwezigheidProefles(int id)
         {
             return View(new LesmomentdProeflesViewModel(lesmomentRepository.GetById(id)));
         }
+
+        [HttpPost]
+        public IActionResult RegistreerAanwezigheidProefles(LesmomentdProeflesViewModel model)
+        {
+            Lesmoment lesmoment = lesmomentRepository.GetById(model.LesmomentId);
+
+            Gebruiker gebruiker = lesmomentdProeflesViewModelToGebruiker(model);
+            gebruikerRepository.Save(gebruiker);
+
+            lesmoment.RegistreerLid(gebruiker);
+            lesmomentRepository.Save();
+            return Aanwezigheden(model.LesmomentId);
+        }
+
 
         public List<Lesmoment> geefLesmomenten(Func<Lesmoment, bool> predicate = null)
         {
@@ -122,6 +137,11 @@ namespace Taijitan.Controllers
             {
                 return lesmomentRepository.GetAll().Where(predicate).ToList();
             }
+        }
+
+        private Gebruiker lesmomentdProeflesViewModelToGebruiker(LesmomentdProeflesViewModel model)
+        {
+            return new Gebruiker("proefles-" + DateTime.Now.TimeOfDay + "-" + model.Naam + "-" + model.Voornaam, "25632112569", DateTime.Now, model.Naam, model.Voornaam, Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", model.Email, "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, new Gradatie(1, "", "name"), Taijitan.Models.Domain.Enums.TypeGebruiker.Lid);
         }
 
     }
