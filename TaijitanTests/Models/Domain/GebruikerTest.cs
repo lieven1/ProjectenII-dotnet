@@ -7,10 +7,8 @@ using Xunit;
 namespace TaijitanTests.Models.Domain {
     public class GebruikerTest {
         private Mock<Adres> adresMock;
-        private Mock<Gradatie> gradatieMock;
         public GebruikerTest() {
             this.adresMock = new Mock<Adres>();
-            this.gradatieMock = new Mock<Gradatie>();
         }
         #region constructor tests
         #region valid tests
@@ -18,7 +16,7 @@ namespace TaijitanTests.Models.Domain {
         public void maakGebruiker_valid() {
             var gebruiker = new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man,
                 new DateTime(1999, 1, 1), "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object,
-                0, gradatieMock.Object, TypeGebruiker.Lid);
+                0, Gradatie.GoKyu, TypeGebruiker.Lid);
             Assert.IsType<Gebruiker>(gebruiker);
             Assert.Equal("usernametest", gebruiker.Gebruikersnaam);
             Assert.Equal("naamtest", gebruiker.Naam);
@@ -33,13 +31,13 @@ namespace TaijitanTests.Models.Domain {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "", "voornaamtest",
                 Geslacht.Man, new DateTime(1999, 1, 1), "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com",
-                adresMock.Object, 0, gradatieMock.Object, TypeGebruiker.Lid));
+                adresMock.Object, 0, Gradatie.HachiDan, TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_NaamIsNull_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, null, "voornaamtest", Geslacht.Man, new DateTime(1999, 1, 1),
-                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, gradatieMock.Object,
+                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, Gradatie.JuDan,
                 TypeGebruiker.Lid));
         }
         #endregion
@@ -48,14 +46,14 @@ namespace TaijitanTests.Models.Domain {
         public void maakGebruiker_Invalid_VoornaamIsLeeg_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "", Geslacht.Man, new DateTime(1999, 1, 1),
-                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, gradatieMock.Object,
+                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, Gradatie.JuniDan,
                 TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_VoornaamIsNull_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", null, Geslacht.Man, new DateTime(1999, 1, 1),
-                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, gradatieMock.Object,
+                "Gent", "00712345679", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 0, Gradatie.NiDan,
                 TypeGebruiker.Lid));
         }
         #endregion
@@ -65,28 +63,28 @@ namespace TaijitanTests.Models.Domain {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest",
                 Geslacht.Man, new DateTime(1999, 1, 1), "Gent", "00712345679", "0236587497", "", "testouders@test.com",
-                adresMock.Object, 0, gradatieMock.Object, TypeGebruiker.Lid));
+                adresMock.Object, 0, Gradatie.RokkuKyu, TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_EmailIsNull_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest",
                 Geslacht.Man, new DateTime(1999, 1, 1), "Gent", "00712345679", "0236587497", null, "testouders@test.com",
-                adresMock.Object, 0, gradatieMock.Object, TypeGebruiker.Lid));
+                adresMock.Object, 0, Gradatie.SanKyu, TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_EmailFoutFormaat_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, 
                 new DateTime(1999, 1, 1),"Gent", "00712345679", "0236587497", "test@test..com", "testouders@test.com", adresMock.Object, 
-                0, gradatieMock.Object,TypeGebruiker.Lid));
+                0, Gradatie.RokkuDan,TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_EmailMetSpatie_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, 
                 new DateTime(1999, 1, 1),"Gent", "00712345679", "0236587497", "test @test.com", "testouders@test.com", adresMock.Object, 
-                0, gradatieMock.Object,TypeGebruiker.Lid));
+                0, Gradatie.ShichiDan,TypeGebruiker.Lid));
         }
         #endregion
         #region telefoonnummer/gsmnummer invalid
@@ -95,28 +93,28 @@ namespace TaijitanTests.Models.Domain {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man, 
                 new DateTime(1999, 1, 1),"Gent", "123", "0236587497", "test@test.com", "testouders@test.com", adresMock.Object, 
-                0, gradatieMock.Object,TypeGebruiker.Lid));
+                0, Gradatie.YonKyu,TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_GsmNummerLeeg_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man,
                 new DateTime(1999, 1, 1), "Gent", "00712345679", "", "test@test.com", "testouders@test.com", adresMock.Object,
-                0, gradatieMock.Object, TypeGebruiker.Lid));
+                0, Gradatie.ShichiDan, TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_GsmNummerNull_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man,
                 new DateTime(1999, 1, 1), "Gent", "00712345679", null, "test@test.com", "testouders@test.com", adresMock.Object,
-                0, gradatieMock.Object, TypeGebruiker.Lid));
+                0, Gradatie.YonDan, TypeGebruiker.Lid));
         }
         [Fact]
         public void maakGebruiker_Invalid_GsmNummerFoutFormaat_throwsArgumentException() {
             Assert.Throws<ArgumentException>(() =>
                 new Gebruiker("usernametest", "12312312312", DateTime.Now, "naamtest", "voornaamtest", Geslacht.Man,
                 new DateTime(1999, 1, 1), "Gent", "00712345679", "123", "test@test.com", "testouders@test.com", adresMock.Object,
-                0, gradatieMock.Object, TypeGebruiker.Lid));
+                0, Gradatie.SanKyu, TypeGebruiker.Lid));
         }
         #endregion
         #endregion
