@@ -30,9 +30,9 @@ namespace Taijitan.Data
                 _context.Adressen.Add(adres1);
                 _context.Adressen.Add(adres2);
 
-                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), TypeGebruiker.Lid);
-                Gebruiker Lid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-Dan"), TypeGebruiker.Lid);
-                Gebruiker Lid2 = new Gebruiker("Doc", "12345678912", new DateTime(2018, 02, 12), "Johny", "Medicine", Geslacht.Man, new DateTime(1970, 3, 24), "Antwerpen", "0525252526", "0479076259", "doc@MartialArt.com", "docsMom@MartialArt.com", adres2, 101, new Gradatie(1, "Kyo", "Sho-Dan"), TypeGebruiker.Lid);
+                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, Gradatie.SanDan, TypeGebruiker.Lid);
+                Gebruiker Lid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, Gradatie.RokkuKyu, TypeGebruiker.Lid);
+                Gebruiker Lid2 = new Gebruiker("Doc", "12345678912", new DateTime(2018, 02, 12), "Johny", "Medicine", Geslacht.Man, new DateTime(1970, 3, 24), "Antwerpen", "0525252526", "0479076259", "doc@MartialArt.com", "docsMom@MartialArt.com", adres2, 101, Gradatie.ShichiDan, TypeGebruiker.Lid);
                 _context.Gebruikers.Add(BruceLee);
                 _context.Gebruikers.Add(Lid);
                 _context.Gebruikers.Add(Lid2);
@@ -98,7 +98,7 @@ namespace Taijitan.Data
             await _userManager.CreateAsync(user, "P@ssword1");
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "gebruiker"));
             Adres adres1 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
-            var gebruiker = new Gebruiker(usr, "11111545645", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-Dan"), TypeGebruiker.Lid);
+            var gebruiker = new Gebruiker(usr, "11111545645", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, Gradatie.ShoDan, TypeGebruiker.Lid);
             _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }
@@ -112,7 +112,7 @@ namespace Taijitan.Data
 
 
             Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
-            var gebruiker = new Gebruiker(usr, "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, new Gradatie(1, "Kyo", "Sho-kyo"), TypeGebruiker.Beheerder);
+            var gebruiker = new Gebruiker(usr, "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, Gradatie.YonDan, TypeGebruiker.Beheerder);
             _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }

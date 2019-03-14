@@ -3,6 +3,7 @@
     public enum TypeGebruiker
     {
         Beheerder = 1,
-        Lid = 2
+        Lid = 2,
+        Proefgebruiker = 3
     }
 }
