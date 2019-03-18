@@ -8,5 +8,6 @@ namespace Taijitan.Models.Domain
         void Save(Lesmoment lesmoment);
         List<Lesmoment> GetAll();
         Lesmoment GetById(int id);
+        void GenereerLesmomentDag();
     }
 }

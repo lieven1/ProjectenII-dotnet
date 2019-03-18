@@ -152,11 +152,17 @@ namespace Taijitan.Models.Domain
         public Gradatie Gradatie { get; private set; }
         // Niet aanpasbaar - vb=" Beheerder , Lid "
         public TypeGebruiker TypeGebruiker { get; private set; }
+        // Niet aanpasbaar
+        public Lesformule Lesformule { get; private set; }
         // Property voor Intersectietabel
         public List<LesmomentLeden> Lesmomenten { get; private set; }
         #endregion
 
         #region Constructor
+        public Gebruiker(string gebruikersnaam, string rijksregisternummer, DateTime inschrijvingsdatum, string naam, string voornaam, Geslacht geslacht, DateTime geboortedatum, string geboorteplaats, string telefoonnummer, string gsmnummer, string email, string emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker, Lesformule lesformule) : this(gebruikersnaam, rijksregisternummer, inschrijvingsdatum, naam, voornaam, geslacht, geboortedatum, geboorteplaats, telefoonnummer, gsmnummer, email, emailOuders, adres, punten, gradatie, typeGebruiker)
+        {
+            this.Lesformule = lesformule;
+        }
         public Gebruiker(string gebruikersnaam, string rijksregisternummer, DateTime inschrijvingsdatum, string naam, string voornaam, Geslacht geslacht, DateTime geboortedatum, string geboorteplaats, string telefoonnummer, string gsmnummer, string email, string emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker)
         {
             this.Gebruikersnaam = gebruikersnaam;

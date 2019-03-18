@@ -160,7 +160,6 @@ namespace Taijitan.Models.Domain
         {
             return _startTijd.Add(_eindTijd.Subtract(_startTijd) / 2).CompareTo(DateTime.Now) < 0;
         }
-
         #endregion
     }
 }

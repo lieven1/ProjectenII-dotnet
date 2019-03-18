@@ -24,6 +24,7 @@ namespace Taijitan.Data.Mappers
             builder.Property(t => t.Punten);
             builder.Property(t => t.Gradatie);
             builder.Property(t => t.TypeGebruiker).IsRequired();
+            builder.Property(t => t.Lesformule);
             builder.HasOne(t => t.Adres).WithMany().IsRequired();
         }
     }

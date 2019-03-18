@@ -13,11 +13,13 @@ namespace Taijitan.Data
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILesmomentRepository _lesmomentRepository;
 
-        public TaijitanDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public TaijitanDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager, ILesmomentRepository lesmomentRepository)
         {
             _context = context;
             _userManager = userManager;
+            _lesmomentRepository = lesmomentRepository;
         }
 
         public async Task InitializeData()
@@ -30,14 +32,15 @@ namespace Taijitan.Data
                 _context.Adressen.Add(adres1);
                 _context.Adressen.Add(adres2);
 
-                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, Gradatie.SanDan, TypeGebruiker.Lid);
-                Gebruiker Lid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, Gradatie.RokkuKyu, TypeGebruiker.Lid);
-                Gebruiker Lid2 = new Gebruiker("Doc", "12345678912", new DateTime(2018, 02, 12), "Johny", "Medicine", Geslacht.Man, new DateTime(1970, 3, 24), "Antwerpen", "0525252526", "0479076259", "doc@MartialArt.com", "docsMom@MartialArt.com", adres2, 101, Gradatie.ShichiDan, TypeGebruiker.Lid);
+                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, Gradatie.SanDan, TypeGebruiker.Lid, Lesformule.Dinsdag);
+                Gebruiker Lid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, Gradatie.RokkuKyu, TypeGebruiker.Lid, Lesformule.DinsdagZaterdag);
+                Gebruiker Lid2 = new Gebruiker("Doc", "12345678912", new DateTime(2018, 02, 12), "Johny", "Medicine", Geslacht.Man, new DateTime(1970, 3, 24), "Antwerpen", "0525252526", "0479076259", "doc@MartialArt.com", "docsMom@MartialArt.com", adres2, 101, Gradatie.ShichiDan, TypeGebruiker.Lid, Lesformule.Woensdag);
                 _context.Gebruikers.Add(BruceLee);
                 _context.Gebruikers.Add(Lid);
                 _context.Gebruikers.Add(Lid2);
                 _context.SaveChanges();
 
+                /*
                 DateTime datum = DateTime.Now;
                 Lesmoment lesmoment1 = new Lesmoment(datum, datum.AddDays(1), datum.AddDays(1).AddHours(2));
                 Lesmoment lesmoment2 = new Lesmoment(datum, datum.AddDays(2), datum.AddDays(2).AddHours(2));
@@ -77,6 +80,8 @@ namespace Taijitan.Data
                 _context.Lesmomenten.Add(lesmoment2);
                 _context.Lesmomenten.Add(lesmoment3);
                 _context.Lesmomenten.Add(lesmoment4);
+                */
+                _lesmomentRepository.GenereerLesmomentDag();
 
                 _context.SaveChanges();
 

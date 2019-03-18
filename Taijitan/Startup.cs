@@ -11,6 +11,7 @@ using Taijitan.Data;
 using Taijitan.Data.Repositories;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
+using Taijitan.ScheduledTasks;
 
 namespace Taijitan
 {
@@ -82,6 +83,7 @@ namespace Taijitan
                     template: "{controller=Home}/{action=Index}");
             });
             dataInitializer.InitializeData().Wait();
+            //JobScheduler.StartAsync();
         }
     }
 }
