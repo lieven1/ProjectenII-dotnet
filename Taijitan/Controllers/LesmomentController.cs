@@ -8,6 +8,7 @@ using Taijitan.Models.LesmomentViewModels;
 
 namespace Taijitan.Controllers
 {
+    [Authorize]
     public class LesmomentController : Controller
     {
         private ILesmomentRepository lesmomentRepository;

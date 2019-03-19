@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
@@ -9,16 +11,30 @@ namespace Taijitan.Controllers {
     [Authorize]
     public class GebruikerController : Controller {
         private IGebruikerRepository _gebruikerRepository;
+        private UserManager<IdentityUser> _userManager;
 
-        public GebruikerController(IGebruikerRepository gebruikerRepository) {
+        public GebruikerController(IGebruikerRepository gebruikerRepository, UserManager<IdentityUser> userManager) {
             this._gebruikerRepository = gebruikerRepository;
+            this._userManager = userManager;
         }
 
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Index(Gebruiker gebruiker) {
             return View(gebruiker);
         }
-        
+
+        public IActionResult Login()
+        {
+            return View(_gebruikerRepository.GetAllLeden());
+        }
+
+        [HttpPost]
+        public IActionResult Login(String gebruiker)
+        {
+            HttpContext.Session.SetString("Gebruiker", gebruiker);
+            return RedirectToAction("Gebruiker", "Home");
+        }
+
         [HttpGet]
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Edit(Gebruiker gebruiker) {
