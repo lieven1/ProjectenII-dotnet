@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Taijitan.Controllers
 {
+    [Authorize]
     public class LesmateriaalController : Controller
     {
         private object @object;

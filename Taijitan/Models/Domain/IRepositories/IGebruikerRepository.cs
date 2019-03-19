@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Models.Domain
 {

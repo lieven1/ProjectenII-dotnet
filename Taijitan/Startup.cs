@@ -48,8 +48,11 @@ namespace Taijitan
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             services.AddScoped<GebruikerFilter>();
+            services.AddScoped<AspUserToGebruiker>();
             services.AddScoped<TaijitanDataInitializer>();
             services.AddScoped<IGebruikerRepository, GebruikerRepository>();
             services.AddScoped<ILesmomentRepository, LesmomentRepository>();
@@ -76,6 +79,7 @@ namespace Taijitan
 
             app.UseAuthentication();
 
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

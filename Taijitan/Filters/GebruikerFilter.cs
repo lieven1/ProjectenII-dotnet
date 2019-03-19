@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Taijitan.Models.Domain;
 
 namespace Taijitan.Filters {
@@ -10,7 +11,7 @@ namespace Taijitan.Filters {
         }
 
         public override void OnActionExecuting(ActionExecutingContext context) {
-            context.ActionArguments["gebruiker"] = context.HttpContext.User.Identity.IsAuthenticated ? _gebruikerRepository.GetBy(context.HttpContext.User.Identity.Name) : null;
+            context.ActionArguments["gebruiker"] = context.HttpContext.User.Identity.IsAuthenticated ? _gebruikerRepository.GetBy(context.HttpContext.Session.GetString("Gebruiker")) : null;
             base.OnActionExecuting(context);
         }
     }
