@@ -8,7 +8,6 @@ namespace Taijitan.Models.Domain
     public class Lesmoment
     {
         #region Fields
-        private DateTime _datum;
         private DateTime _startTijd;
         private DateTime _eindTijd;
         private bool _actief;
@@ -16,21 +15,7 @@ namespace Taijitan.Models.Domain
 
         #region Properties
         public int LesmomentId { get; private set; }
-        public DateTime Datum
-        {
-            get { return _datum; }
-            private set
-            {
-                if (DateTime.Now.CompareTo(value) < 0)
-                {
-                    throw new ArgumentException("Een lesmoment in het verleden kan niet meer gestart worden.");
-                }
-                else
-                {
-                    _datum = value;
-                }
-            }
-        }
+
         public DateTime StartTijd
         {
             get { return _startTijd; }
@@ -69,15 +54,13 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Constructor
-        public Lesmoment(int lesmomentId, DateTime datum, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden) : this(datum, startTijd, eindTijd, lesmomentLeden)
+        public Lesmoment(int lesmomentId, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden) : this(startTijd, eindTijd, lesmomentLeden)
         {
             this.LesmomentId = lesmomentId;
-            Actief = false;
         }
 
-        public Lesmoment(DateTime datum, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden)
+        public Lesmoment(DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden)
         {
-            this.Datum = datum;
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
             Actief = false;
@@ -91,28 +74,20 @@ namespace Taijitan.Models.Domain
                 this.Leden = lesmomentLeden;
             }
         }
-        public Lesmoment(DateTime startTijd, DateTime eindTijd, List<Gebruiker> leden)
-        {
-            this.Datum = DateTime.Today;
+        public Lesmoment(DateTime startTijd, DateTime eindTijd, List<Gebruiker> leden) {
             this.StartTijd = startTijd;
             this.EindTijd = eindTijd;
             Actief = false;
-            if (leden == null)
-            {
+            if (leden == null) {
                 throw new ArgumentNullException("De parameter leden mag niet null zijn.");
-            }
-            else
-            {
+            } else {
                 this.Leden = new List<LesmomentLeden>();
                 leden.ForEach(lid => Leden.Add(new LesmomentLeden(this, lid, true, false)));
             }
-
-
         }
 
-        public Lesmoment(DateTime datum, DateTime start, DateTime eind)
+        public Lesmoment(DateTime start, DateTime eind)
         {
-            this.Datum = datum;
             this.StartTijd = start;
             this.EindTijd = eind;
             this.Actief = false;
@@ -152,7 +127,7 @@ namespace Taijitan.Models.Domain
             return Leden.Where(t => t.Ingeschreven).Select(t => t.Gebruiker).ToList();
         }
 
-        public void ZetActief(Boolean actief) {
+        public void ZetActief(bool actief) {
             Actief = actief;
         }
 

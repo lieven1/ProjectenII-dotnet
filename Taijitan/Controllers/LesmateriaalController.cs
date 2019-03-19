@@ -9,7 +9,13 @@ namespace Taijitan.Controllers
 {
     public class LesmateriaalController : Controller
     {
-        public IActionResult Index()
+        private object @object;
+
+        public LesmateriaalController(object @object) {
+            this.@object = @object;
+        }
+
+        public IActionResult Index(string gebruikersnaam)
         {
             // TO DO - Implement
             return View();

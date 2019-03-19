@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Databindings;
 using TaijitanTests.Data;
 using Xunit;
 
@@ -30,7 +32,7 @@ namespace TaijitanTests.Models.Domain
         [Fact]
         public void MaakLesmomentAan_NullCheckGebruikers_ExceptionRaised()
         {
-            Assert.Throws<ArgumentNullException>(() => new Lesmoment(startTijd, eindTijd, null));
+            Assert.Throws<ArgumentNullException>(() => new Lesmoment(startTijd, eindTijd, (List<Gebruiker>)null));
         }
 
         [Fact]

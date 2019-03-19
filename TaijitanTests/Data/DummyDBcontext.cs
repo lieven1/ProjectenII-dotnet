@@ -16,10 +16,10 @@ namespace TaijitanTests.Data
         public Gebruiker GebruikerNietInLijst { get; }
         public Gebruiker GebruikerInLijst { get; }
         public Lesmoment LesmomentValid { get; }
+        public Lesmoment LesmomentActief { get; }
         public Gebruiker GebruikerInLesmomentLedenVanLesmomentValid { get; }
         public List<Lesmoment> Lesmomenten { get; }
         public List<Lesmoment> GeenLesmomenten { get { return new List<Lesmoment>(); } }
-
 
         public DummyDBcontext()
         {
@@ -47,9 +47,12 @@ namespace TaijitanTests.Data
             List<LesmomentLeden> lesmomentLeden = new List<LesmomentLeden>();
             lesmomentLeden.Add(lesmomentLedenBruceLee);
             lesmomentLeden.Add(lesmomentLedenLid);
-            LesmomentValid = new Lesmoment(DateTime.Now, new DateTime(2019, 3, 16, 14, 0, 0), new DateTime(2019, 3, 16, 18, 0, 0), lesmomentLeden);
+            LesmomentValid = new Lesmoment(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2), lesmomentLeden);
+            LesmomentActief = new Lesmoment(DateTime.Now, DateTime.Now.AddHours(2), lesmomentLeden);
+            LesmomentActief.ZetActief(true);
             Lesmomenten = new List<Lesmoment>();
             Lesmomenten.Add(LesmomentValid);
+            Lesmomenten.Add(LesmomentActief);
         }
     }
 }

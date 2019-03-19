@@ -23,7 +23,7 @@ namespace Taijitan.Controllers
         public IActionResult BeheerLesmoment()
         {
             List<Lesmoment> lesmomenten = geefLesmomenten();
-            return View(lesmomenten.OrderBy(l => l.Datum));
+            return View(lesmomenten.OrderBy(l => l.StartTijd.Date));
         }
 
         public IActionResult StartLesmoment(int id)
@@ -45,7 +45,7 @@ namespace Taijitan.Controllers
         [Authorize(Policy = "Beheerder")]
         public IActionResult ToonActieveLesmomenten()
         {
-            return View("ToonActieveLesmomenten", new LesmomentActiefViewModel(geefLesmomenten(l => l.Actief == true)));
+            return View("ToonActieveLesmomenten", new LesmomentActiefViewModel(geefLesmomenten(l => l.Actief)));
         }
 
         public IActionResult Aanwezigheden(int id)
@@ -54,6 +54,14 @@ namespace Taijitan.Controllers
             return View("Aanwezigheden", new LesmomentGebruikerViewModel(lesmoment));
         }
 
+        public IActionResult Aanwezigen() {
+            Lesmoment lesmoment = geefLesmomenten(l => l.Actief).FirstOrDefault();
+            if(lesmoment == null) {
+                TempData["error"] = "Er is geen lesmoment bezig.";
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Aanwezigen", new LesmomentGebruikerViewModel(lesmoment));
+        }
 
         public IActionResult Start(int id)
         {
@@ -144,6 +152,5 @@ namespace Taijitan.Controllers
         {
             return new Gebruiker("proefles-" + DateTime.Now.TimeOfDay + "-" + model.Naam + "-" + model.Voornaam, "25632112569", DateTime.Now, model.Naam, model.Voornaam, Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", model.Email, "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Models.Domain.Enums.Gradatie.GoDan, Taijitan.Models.Domain.Enums.TypeGebruiker.Lid);
         }
-
     }
 }

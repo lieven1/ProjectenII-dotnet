@@ -14,7 +14,6 @@ namespace Taijitan.Data.Mappers
         {
             builder.ToTable("Lesmoment");
             builder.HasKey(t => t.LesmomentId);
-            builder.Property(t => t.Datum).IsRequired();
             builder.Property(t => t.StartTijd).IsRequired();
             builder.Property(t => t.EindTijd).IsRequired();
         }

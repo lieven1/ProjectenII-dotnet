@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Taijitan.Controllers;
@@ -20,12 +23,19 @@ namespace TaijitanTests.Controllers
 
         public LesmomentControllerTest()
         {
-
+            var mockHttpContext = new Mock<HttpContext>();
+            var tempDataProvider = new Mock<SessionStateTempDataProvider>();
             _context = new DummyDBcontext();
             _lesmomentRepository = new Mock<ILesmomentRepository>();
             _gebruikerRepository = new Mock<IGebruikerRepository>();
 
-            _controller = new LesmomentController(_lesmomentRepository.Object, _gebruikerRepository.Object);
+            _controller = new LesmomentController(_lesmomentRepository.Object, _gebruikerRepository.Object) {
+                ControllerContext = new ControllerContext {
+                    HttpContext = mockHttpContext.Object
+                },
+                TempData = new TempDataDictionary(mockHttpContext.Object, tempDataProvider.Object)
+            };
+            _controller.TempData.Add("error", new TempDataAttribute());
         }
 
         #region BeheerLesmoment
@@ -108,6 +118,23 @@ namespace TaijitanTests.Controllers
             Assert.IsType<LesmomentGebruikerViewModel>(actionResult?.Model);
         }
 
+        #endregion
+
+        #region Aanwezigen
+        [Fact]
+        public void Aanwezigen_Valid() {
+            _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.Lesmomenten);
+            var actionResult = _controller.Aanwezigen() as ViewResult;
+            Assert.IsType<LesmomentGebruikerViewModel>(actionResult?.Model);
+        }
+
+        [Fact]
+        public void Aanwezigen_geenLesmoment_gaatNaarIndex() {
+            _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.GeenLesmomenten);
+            var actionResult = _controller.Aanwezigen() as RedirectToActionResult;
+            Assert.Equal("Index", actionResult?.ActionName);
+            Assert.True(_controller.TempData.ContainsKey("error"));
+        }
         #endregion
 
         #region RegistreerAanwezigheidNietIngeschreven

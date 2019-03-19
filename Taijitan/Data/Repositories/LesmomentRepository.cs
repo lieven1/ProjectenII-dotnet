@@ -36,7 +36,7 @@ namespace Taijitan.Data.Repositories
 
         public List<Lesmoment> GetAll()
         {
-            List<Lesmoment> lesmomenten = _lesmomenten.OrderBy(l => l.Datum).ToList();
+            List<Lesmoment> lesmomenten = _lesmomenten.OrderBy(l => l.StartTijd.Date).ToList();
             foreach (var l in lesmomenten)
             {
                 l.Leden = _lesmomentLeden.Include(lid => lid.Gebruiker).Where(m => m.LesmomentId == l.LesmomentId).ToList();
