@@ -7,15 +7,13 @@ using Taijitan.Models.Domain.Enums;
 namespace Taijitan.Models.Domain
 {
     public class Lesmateriaal {
-        // TO DO - Implement
-        private string v1;
-        private string v2;
-
+        private string _naam;
+        private string _type;
         public Gradatie Graad { get; private set; }
 
-        public Lesmateriaal(string v1, string v2, Gradatie graad) {
-            this.v1 = v1;
-            this.v2 = v2;
+        public Lesmateriaal(string naam, string type, Gradatie graad) {
+            this._naam = naam;
+            this._type = type;
             this.Graad = graad;
         }
     }

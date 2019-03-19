@@ -66,11 +66,8 @@ namespace TaijitanTests.Data
             Lesmateriaal.Add(lesmateriaal1);
             Lesmateriaal.Add(lesmateriaal2);
 
-            Thema thema1 = new Thema("handworpen");
-            thema1.voegLesMateriaalToe(lesmateriaal1);
-            thema1.voegLesMateriaalToe(lesmateriaal2);
-            Thema thema2 = new Thema("standen");
-            thema2.voegLesMateriaalToe(lesmateriaal3);
+            Thema thema1 = new Thema("handworpen", new List<Lesmateriaal> { lesmateriaal1, lesmateriaal2 });
+            Thema thema2 = new Thema("standen", new List<Lesmateriaal> { lesmateriaal3 });
             Themas = new List<Thema>();
             Themas.Add(thema1);
             Themas.Add(thema2);

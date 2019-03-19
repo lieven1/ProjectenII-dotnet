@@ -11,11 +11,9 @@ namespace Taijitan.Controllers {
     [Authorize]
     public class GebruikerController : Controller {
         private IGebruikerRepository _gebruikerRepository;
-        private UserManager<IdentityUser> _userManager;
 
-        public GebruikerController(IGebruikerRepository gebruikerRepository, UserManager<IdentityUser> userManager) {
+        public GebruikerController(IGebruikerRepository gebruikerRepository) {
             this._gebruikerRepository = gebruikerRepository;
-            this._userManager = userManager;
         }
 
         [ServiceFilter(typeof(GebruikerFilter))]
