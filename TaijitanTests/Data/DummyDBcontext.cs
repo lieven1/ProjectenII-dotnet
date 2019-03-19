@@ -20,11 +20,13 @@ namespace TaijitanTests.Data
         public Gebruiker GebruikerInLesmomentLedenVanLesmomentValid { get; }
         public List<Lesmoment> Lesmomenten { get; }
         public List<Lesmoment> GeenLesmomenten { get { return new List<Lesmoment>(); } }
+        public List<Thema> Themas { get; }
+        public List<Lesmateriaal> Lesmateriaal { get; }
 
         public DummyDBcontext()
         {
-            Gebruiker gebruiker1 = new Gebruiker("username1", "25632112569", DateTime.Now, "name1", "first name1", Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.HachiDan, Taijitan.Models.Domain.Enums.TypeGebruiker.Lid);
-            GebruikerNietInLijst = new Gebruiker("username2", "25632100000", DateTime.Now, "name2", "first name2", Taijitan.Models.Domain.Enums.Geslacht.Vrouw, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.JuichiDan, Taijitan.Models.Domain.Enums.TypeGebruiker.Lid);
+            Gebruiker gebruiker1 = new Gebruiker("username1", "25632112569", DateTime.Now, "name1", "first name1", Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.HachiDan, TypeGebruiker.Lid);
+            GebruikerNietInLijst = new Gebruiker("username2", "25632100000", DateTime.Now, "name2", "first name2", Taijitan.Models.Domain.Enums.Geslacht.Vrouw, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.JuichiDan, TypeGebruiker.Lid);
             GebruikerInLijst = gebruiker1;
 
             Lijst1Gebruiker = new List<Gebruiker>();
@@ -47,12 +49,31 @@ namespace TaijitanTests.Data
             List<LesmomentLeden> lesmomentLeden = new List<LesmomentLeden>();
             lesmomentLeden.Add(lesmomentLedenBruceLee);
             lesmomentLeden.Add(lesmomentLedenLid);
+
             LesmomentValid = new Lesmoment(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2), lesmomentLeden);
             LesmomentActief = new Lesmoment(DateTime.Now, DateTime.Now.AddHours(2), lesmomentLeden);
             LesmomentActief.ZetActief(true);
             Lesmomenten = new List<Lesmoment>();
             Lesmomenten.Add(LesmomentValid);
             Lesmomenten.Add(LesmomentActief);
+
+            //LesmateriaalController
+            
+            Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1", "video", Gradatie.GoKyu);
+            Lesmateriaal lesmateriaal2 = new Lesmateriaal("handworpen2", "video", Gradatie.JuniDan);
+            Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen1", "video", Gradatie.JuniDan);
+            Lesmateriaal = new List<Lesmateriaal>();
+            Lesmateriaal.Add(lesmateriaal1);
+            Lesmateriaal.Add(lesmateriaal2);
+
+            Thema thema1 = new Thema("handworpen");
+            thema1.voegLesMateriaalToe(lesmateriaal1);
+            thema1.voegLesMateriaalToe(lesmateriaal2);
+            Thema thema2 = new Thema("standen");
+            thema2.voegLesMateriaalToe(lesmateriaal3);
+            Themas = new List<Thema>();
+            Themas.Add(thema1);
+            Themas.Add(thema2);
         }
     }
 }
