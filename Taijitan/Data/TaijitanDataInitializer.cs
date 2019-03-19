@@ -40,12 +40,12 @@ namespace Taijitan.Data
                 _context.Gebruikers.Add(Lid2);
                 _context.SaveChanges();
 
-                /*
+                
                 DateTime datum = DateTime.Now;
-                Lesmoment lesmoment1 = new Lesmoment(datum, datum.AddDays(1), datum.AddDays(1).AddHours(2));
-                Lesmoment lesmoment2 = new Lesmoment(datum, datum.AddDays(2), datum.AddDays(2).AddHours(2));
-                Lesmoment lesmoment3 = new Lesmoment(datum, datum.AddDays(3), datum.AddDays(3).AddHours(2));
-                Lesmoment lesmoment4 = new Lesmoment(datum, datum.AddSeconds(30), datum.AddSeconds(60));
+                Lesmoment lesmoment1 = new Lesmoment(datum.AddDays(1), datum.AddDays(1).AddHours(2));
+                Lesmoment lesmoment2 = new Lesmoment(datum.AddDays(2), datum.AddDays(2).AddHours(2));
+                Lesmoment lesmoment3 = new Lesmoment(datum.AddDays(3), datum.AddDays(3).AddHours(2));
+                Lesmoment lesmoment4 = new Lesmoment(datum.AddSeconds(30), datum.AddSeconds(60));
 
                 LesmomentLeden lesmoment1LedenBruceLee = new LesmomentLeden(lesmoment1, BruceLee, true);
                 LesmomentLeden lesmoment1LedenLid = new LesmomentLeden(lesmoment1, Lid, true);
@@ -80,8 +80,8 @@ namespace Taijitan.Data
                 _context.Lesmomenten.Add(lesmoment2);
                 _context.Lesmomenten.Add(lesmoment3);
                 _context.Lesmomenten.Add(lesmoment4);
-                */
-                _lesmomentRepository.GenereerLesmomentDag();
+                
+                //_lesmomentRepository.GenereerLesmomentDag();
 
                 _context.SaveChanges();
 

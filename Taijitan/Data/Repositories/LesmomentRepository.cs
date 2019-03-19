@@ -70,7 +70,7 @@ namespace Taijitan.Data.Repositories
                 // Dinsdag
                 case 2:
                     start = now.Date + new TimeSpan(18, 00, 00);
-                    end = now.Date + new TimeSpan(20, 00, 00);
+                    end = now.Date + new TimeSpan(19, 00, 00);
                     _lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
                         g => g.Lesformule.Equals(Lesformule.DinsdagZaterdag) ||
                         g.Lesformule.Equals(Lesformule.DinsdagDonderdag) ||

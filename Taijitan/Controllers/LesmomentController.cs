@@ -32,7 +32,7 @@ namespace Taijitan.Controllers
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
             lesmoment.ZetActief(true);
             lesmomentRepository.Save();
-            return RedirectToAction(nameof(ToonActieveLesmomenten));
+            return RedirectToAction(nameof(Aanwezigheden));
         }
 
         public IActionResult StopLesmoment(int id)
@@ -43,15 +43,19 @@ namespace Taijitan.Controllers
             return RedirectToAction(nameof(BeheerLesmoment));
         }
 
-        [Authorize(Policy = "Beheerder")]
-        public IActionResult ToonActieveLesmomenten()
-        {
-            return View("ToonActieveLesmomenten", new LesmomentActiefViewModel(geefLesmomenten(l => l.Actief)));
-        }
+        //[Authorize(Policy = "Beheerder")]
+        //public IActionResult ToonActieveLesmomenten()
+        //{
+        //    return View("ToonActieveLesmomenten", new LesmomentActiefViewModel(geefLesmomenten(l => l.Actief)));
+        //}
 
-        public IActionResult Aanwezigheden(int id)
+        public IActionResult Aanwezigheden()
         {
-            Lesmoment lesmoment = lesmomentRepository.GetById(id);
+            Lesmoment lesmoment = geefLesmomenten(l => l.Actief).FirstOrDefault();
+            if (lesmoment == null) {
+                TempData["error"] = "Er is geen lesmoment bezig.";
+                return RedirectToAction("Index", "Home");
+            }
             return View("Aanwezigheden", new LesmomentGebruikerViewModel(lesmoment));
         }
 
@@ -64,22 +68,22 @@ namespace Taijitan.Controllers
             return View("Aanwezigen", new LesmomentGebruikerViewModel(lesmoment));
         }
 
-        public IActionResult Start(int id)
-        {
-            Lesmoment lesmoment = lesmomentRepository.GetById(id);
+        //public IActionResult Start(int id)
+        //{
+        //    Lesmoment lesmoment = lesmomentRepository.GetById(id);
 
-            if (lesmoment != null)
-            {
-                return Aanwezigheden(lesmoment.LesmomentId);
-            }
-            else
-            {
-                // TODO
-                // er ging iets mis => error boodschap duidelijker
-                return NotFound();
-            }
+        //    if (lesmoment != null)
+        //    {
+        //        return Aanwezigheden(lesmoment.LesmomentId);
+        //    }
+        //    else
+        //    {
+        //        // TODO
+        //        // er ging iets mis => error boodschap duidelijker
+        //        return NotFound();
+        //    }
 
-        }
+        //}
 
 
         [Route("/Lesmoment/RegistreerAanwezigheid",
@@ -90,7 +94,7 @@ namespace Taijitan.Controllers
             Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
             if (lesmoment == null || gebruiker == null)
             {
-                return RedirectToAction(nameof(ToonActieveLesmomenten));
+                return RedirectToAction(nameof(Aanwezigheden));
             }
             else if (lesmoment.EersteHelftIsVoorbij())
             {
@@ -101,7 +105,7 @@ namespace Taijitan.Controllers
             {
                 lesmoment.RegistreerLid(gebruiker);
                 lesmomentRepository.Save();
-                return Aanwezigheden(lesmoment.LesmomentId);
+                return Aanwezigheden();
             }
         }
 
@@ -110,7 +114,7 @@ namespace Taijitan.Controllers
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
             if (lesmoment == null)
             {
-                return RedirectToAction(nameof(ToonActieveLesmomenten));
+                return RedirectToAction(nameof(Aanwezigheden));
             }
             var IngeshrevenGebruikers = lesmoment.Leden.Select(l => l.Gebruikersnaam);
             var gebruikers = gebruikerRepository.GetAllLeden().OrderBy(g => g.Gebruikersnaam).Where(g => !IngeshrevenGebruikers.Contains(g.Gebruikersnaam));
@@ -133,7 +137,7 @@ namespace Taijitan.Controllers
 
             lesmoment.RegistreerLid(gebruiker);
             lesmomentRepository.Save();
-            return Aanwezigheden(model.LesmomentId);
+            return Aanwezigheden();
         }
 
 

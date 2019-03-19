@@ -63,11 +63,11 @@ namespace TaijitanTests.Controllers
 
         #region startEnStopLesmoment
         [Fact]
-        public void StartLesmoment_NV_Valid_gaatNaarActieveLesmomenten()
+        public void StartLesmoment_NV_Valid_gaatNaarAanwezigheden()
         {
             _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
             var result = _controller.StartLesmoment(_context.LesmomentValid.LesmomentId) as RedirectToActionResult;
-            Assert.Equal(nameof(_controller.ToonActieveLesmomenten), result.ActionName);
+            Assert.Equal(nameof(_controller.Aanwezigheden), result.ActionName);
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace TaijitanTests.Controllers
             _gebruikerRepository.Setup(v => v.GetBy("-1")).Returns((Gebruiker)null);
             _lesmomentRepository.Setup(v => v.GetById(-1)).Returns((Lesmoment)null);
             var result = _controller.RegistreerAanwezigheid(-1, "-1") as RedirectToActionResult;
-            Assert.Equal(nameof(_controller.ToonActieveLesmomenten), result.ActionName);
+            Assert.Equal(nameof(_controller.Aanwezigheden), result.ActionName);
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace TaijitanTests.Controllers
         public void Aanwezigheden_invalidArguments_Valid()
         {
             _lesmomentRepository.Setup(v => v.GetById(-1)).Returns((Lesmoment)null);
-            var actionResult = _controller.Aanwezigheden(-1) as ViewResult;
+            var actionResult = _controller.Aanwezigheden() as ViewResult;
             Assert.IsType<LesmomentGebruikerViewModel>(actionResult?.Model);
         }
 
@@ -114,7 +114,7 @@ namespace TaijitanTests.Controllers
         public void Aanwezigheden_validArguments_Valid()
         {
             _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
-            var actionResult = _controller.Aanwezigheden(_context.LesmomentValid.LesmomentId) as ViewResult;
+            var actionResult = _controller.Aanwezigheden() as ViewResult;
             Assert.IsType<LesmomentGebruikerViewModel>(actionResult?.Model);
         }
 
@@ -143,7 +143,7 @@ namespace TaijitanTests.Controllers
         {
             _lesmomentRepository.Setup(v => v.GetById(-1)).Returns((Lesmoment)null);
             var result = _controller.RegistreerAanwezigheid(-1, "-1") as RedirectToActionResult;
-            Assert.Equal(nameof(_controller.ToonActieveLesmomenten), result.ActionName);
+            Assert.Equal(nameof(_controller.Aanwezigheden), result.ActionName);
         }
         #endregion
     }
