@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.Domain.IRepositories;
 
 namespace Taijitan.Controllers {
+    [Authorize]
     public class LesmateriaalController : Controller
     {
         private ILesmateriaalRepository _lesmateriaalRepo;
