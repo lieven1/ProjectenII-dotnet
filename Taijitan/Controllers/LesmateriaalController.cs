@@ -7,6 +7,7 @@ using Taijitan.Filters;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.Domain.IRepositories;
+using Taijitan.Models.LesmateriaalViewModels;
 
 namespace Taijitan.Controllers {
     [Authorize]
@@ -31,21 +32,15 @@ namespace Taijitan.Controllers {
             }
             return View(graden);
         }
-
-        public IActionResult KiesGraad(int graad) {
-            HttpContext.Session.SetInt32("Graad", graad);
-            return RedirectToAction("ThemaOverzicht");
-        }
         
-        public IActionResult ThemaOverzicht() {
-            var graad = HttpContext.Session.GetInt32("Graad");
+        public IActionResult ThemaOverzicht(int graad) {
             var themas = _themaRepo.GetAll().FindAll(thema => thema.Lesmateriaal.Any(l => l.Graad.Equals((Gradatie)graad)));
-            return View(themas);
+            var themaViewModel = new ThemaViewModel(graad, themas);
+            return View(themaViewModel);
         }
 
-        public IActionResult LesmateriaalOverzicht(int themaId) {
+        public IActionResult LesmateriaalOverzicht(int themaId, int graad) {
             var thema = _themaRepo.GetBy(themaId);
-            var graad = HttpContext.Session.GetInt32("Graad");
             var lesmateriaal = _themaRepo.GetLesmateriaal(thema, (Gradatie)graad);
             return View(lesmateriaal);
         }

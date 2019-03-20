@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Taijitan.Models.Domain.Lesmateriaal>
+
+<fieldset>
+    <h2>Overzicht lesmateriaal</h2>
+    <table class="table table-striped">
+        <thead class="bg-primary">
+            <tr class="bg-primary">
+                <td colspan="2"><b>Lesmateriaal</b></td>
+            </tr>
+        </thead>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    <b>Naam: </b> @item.Naam
+                    <b>Type: </b> @item.Type
+                </td>
+
+                <td><a class="btn btn-default" asp-action="Lesmateriaal">Bekijk lesmateriaal</a></td>
+            </tr>
+        }
+    </table>
+    <div class="form-group col-md-12">
+        @{
+            var graadInt = Convert.ChangeType(Model.FirstOrDefault().Graad, TypeCode.Int32);
+            var parms = new Dictionary<string, string> {{ "graad", graadInt.ToString() } };
+        }
+        <a asp-controller="lesmateriaal" asp-action="themaoverzicht" asp-all-route-data="parms" class="btn btn-default btn-lg">Keer Terug</a>
+
+    </div>
+</fieldset>

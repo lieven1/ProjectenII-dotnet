@@ -8,6 +8,7 @@ using Taijitan.Controllers;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.Domain.IRepositories;
+using Taijitan.Models.LesmateriaalViewModels;
 using TaijitanTests.Data;
 using Xunit;
 
@@ -40,10 +41,10 @@ namespace TaijitanTests.Controllers {
         [Fact]
         public void ToonThemas_GeeftThemasGraad() {
             _themaRepo.Setup(tr => tr.GetAll()).Returns(_context.Themas);
-            var result = _controller.KiesGraad((int)Gradatie.GoKyu) as ViewResult;
-            var model = (IEnumerable<Thema>)result.Model;
-            Assert.Contains(_context.Themas[0], model);
-            Assert.DoesNotContain(_context.Themas[1], model);
+            var result = _controller.ThemaOverzicht((int)Gradatie.GoKyu) as ViewResult;
+            var model = (ThemaViewModel)result.Model;
+            Assert.Contains(_context.Themas[0], model.Themas);
+            Assert.DoesNotContain(_context.Themas[1], model.Themas);
         }
 
         [Fact]
@@ -51,9 +52,12 @@ namespace TaijitanTests.Controllers {
             var thema = _context.Themas[0];
             var graad = Gradatie.GoKyu;
             var lesmateriaal = thema.Lesmateriaal.Where(l => l.Graad.Equals(graad)).ToList();
+
+            _themaRepo.Setup(tr => tr.GetBy(thema.ThemaId)).Returns(thema);
             _themaRepo.Setup(tr => tr.GetLesmateriaal(thema, graad))
                 .Returns(lesmateriaal);
-            var result = _controller.LesmateriaalOverzicht(thema.ThemaId) as ViewResult;
+
+            var result = _controller.LesmateriaalOverzicht(thema.ThemaId, (int)Convert.ChangeType(graad,TypeCode.Int32)) as ViewResult;
             var model = (IEnumerable<Lesmateriaal>)result.Model;
             Assert.Equal(lesmateriaal, model);
         }
