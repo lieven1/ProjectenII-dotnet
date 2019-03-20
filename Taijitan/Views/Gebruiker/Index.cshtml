@@ -6,7 +6,7 @@
 @{
     // Bereken leeftijd
     DateTime now = DateTime.Today;
-    int age = DateTime.Today.Year - Model.Geboortedatum.Year;
+    int age = new DateTime(DateTime.Today.Subtract(Model.Geboortedatum).Ticks).Year;
     if (Model.Geboortedatum > now.AddYears(-age))
     {
         age--;

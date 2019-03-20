@@ -9,13 +9,15 @@
             </tr>
         </thead>
         @foreach (var item in Model) {
-            var graadInt = Convert.ChangeType(item, TypeCode.Int32);
             var graadNaam = item.ToString();
+            var graadint = Convert.ChangeType(item, TypeCode.Int32);
+            var parms = new Dictionary<string, string> { { "graad", graadint.ToString() } };
             <tr>
                 <td>
                     <b>Naam: </b> @graadNaam
                 </td>
-                <td><a class="btn btn-default" asp-action="ThemaOverzicht" asp-route-id="@graadInt">Kies graad</a></td>
+
+                <td><a class="btn btn-default" asp-action="KiesGraad" asp-all-route-data="@parms">Kies graad</a></td>
             </tr>
         }
     </table>

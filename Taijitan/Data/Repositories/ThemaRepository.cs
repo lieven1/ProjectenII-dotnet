@@ -20,8 +20,8 @@ namespace Taijitan.Data.Repositories {
             return _themas.Include(t => t.Lesmateriaal).ToList();
         }
 
-        public Thema GetBy(string name) {
-            return _themas.Include(t => t.Lesmateriaal).FirstOrDefault(t => t.Naam == name);
+        public Thema GetBy(int id) {
+            return _themas.Include(t => t.Lesmateriaal).FirstOrDefault(t => t.ThemaId == id);
         }
 
         public List<Lesmateriaal> GetLesmateriaal(Thema thema, Gradatie graad) {

@@ -7,13 +7,17 @@ namespace Taijitan.Models.Domain {
         public string Naam { get; private set; }
         public List<Lesmateriaal> Lesmateriaal { get; private set; }
 
-        public Thema(string naam) {
-            this.Naam = naam;
-            this.Lesmateriaal = new List<Lesmateriaal>();
+        public Thema(int id, string naam, List<Lesmateriaal> lesmateriaal) : this(naam, lesmateriaal) {
+            this.ThemaId = id;
         }
+
         public Thema(string naam, List<Lesmateriaal> lesmateriaal) {
             this.Naam = naam;
-            this.Lesmateriaal = lesmateriaal;
+            if (lesmateriaal == null) {
+                this.Lesmateriaal = new List<Lesmateriaal>();
+            } else {
+                this.Lesmateriaal = lesmateriaal;
+            }
         }
         public Thema() {
 

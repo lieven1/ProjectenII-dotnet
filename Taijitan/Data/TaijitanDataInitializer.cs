@@ -50,7 +50,7 @@ namespace Taijitan.Data
                 DateTime datum = DateTime.Now;
                 Lesmoment lesmoment1 = new Lesmoment(datum.AddDays(1), datum.AddDays(1).AddHours(2));
                 Lesmoment lesmoment2 = new Lesmoment(datum.AddDays(2), datum.AddDays(2).AddHours(2));
-                Lesmoment lesmoment4 = new Lesmoment(datum.AddSeconds(30), datum.AddSeconds(60));
+                Lesmoment lesmoment4 = new Lesmoment(datum.AddMinutes(1), datum.AddMinutes(1).AddHours(1));
 
                 LesmomentLeden lesmoment1LedenBruceLee = new LesmomentLeden(lesmoment1, BruceLee, true);
                 LesmomentLeden lesmoment1LedenLid = new LesmomentLeden(lesmoment1, Lid, true);

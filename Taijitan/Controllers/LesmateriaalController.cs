@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
@@ -31,13 +32,20 @@ namespace Taijitan.Controllers {
             return View(graden);
         }
 
-        //graad wordt meegegeven uit view GraadOverzicht of methode GraadOverzicht
-        public IActionResult ThemaOverzicht(int graad) {
+        public IActionResult KiesGraad(int graad) {
+            HttpContext.Session.SetInt32("Graad", graad);
+            return RedirectToAction("ThemaOverzicht");
+        }
+        
+        public IActionResult ThemaOverzicht() {
+            var graad = HttpContext.Session.GetInt32("Graad");
             var themas = _themaRepo.GetAll().FindAll(thema => thema.Lesmateriaal.Any(l => l.Graad.Equals((Gradatie)graad)));
             return View(themas);
         }
 
-        public IActionResult LesmateriaalOverzicht(Thema thema, int graad) {
+        public IActionResult LesmateriaalOverzicht(int themaId) {
+            var thema = _themaRepo.GetBy(themaId);
+            var graad = HttpContext.Session.GetInt32("Graad");
             var lesmateriaal = _themaRepo.GetLesmateriaal(thema, (Gradatie)graad);
             return View(lesmateriaal);
         }

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Taijitan.Models.Domain.Thema>
+
+<fieldset>
+    <h2>Overzicht themas</h2>
+    <table class="table table-striped">
+        <thead class="bg-primary">
+            <tr class="bg-primary">
+                <td colspan="2"><b>Themas</b></td>
+            </tr>
+        </thead>
+        @foreach (var item in Model) {
+            var id = item.ThemaId;
+            var parms = new Dictionary<string, string> { { "themaId", id.ToString() } };
+            <tr>
+                <td>
+                    <b>Naam: </b> @item.Naam
+                </td>
+
+                <td><a class="btn btn-default" asp-action="LesmateriaalOverzicht" asp-all-route-data="@parms">Kies thema</a></td>
+            </tr>
+        }
+    </table>
+    <div class="form-group col-md-12">
+        <a asp-controller="gebruiker" asp-action="leeromgeving" class="btn btn-default btn-lg">Keer Terug</a>
+
+    </div>
+</fieldset>
