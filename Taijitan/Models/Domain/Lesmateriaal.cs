@@ -7,14 +7,19 @@ using Taijitan.Models.Domain.Enums;
 namespace Taijitan.Models.Domain
 {
     public class Lesmateriaal {
-        private string _naam;
-        private string _type;
+
+        public int LesmateriaalId { get; set; }
+        public string Naam { get; private set; }
+        public string Type { get; private set; }
         public Gradatie Graad { get; private set; }
 
         public Lesmateriaal(string naam, string type, Gradatie graad) {
-            this._naam = naam;
-            this._type = type;
+            this.Naam = naam;
+            this.Type = type;
             this.Graad = graad;
+        }
+        public Lesmateriaal() {
+
         }
     }
 }

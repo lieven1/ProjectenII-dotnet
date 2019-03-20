@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.GebruikerViewModels;
 
 namespace Taijitan.Controllers {
@@ -20,17 +21,27 @@ namespace Taijitan.Controllers {
         public IActionResult Index(Gebruiker gebruiker) {
             return View(gebruiker);
         }
+        
+        //public IActionResult Login()
+        //{
+        //    return View(_gebruikerRepository.GetAllLeden());
+        //}
 
-        public IActionResult Login()
+        //gebruiker (gebruikersnaam) wordt meegegeven uit View Aanwezigen (LesmomentController)
+        public IActionResult Login(string gebruikersnaam)
         {
-            return View(_gebruikerRepository.GetAllLeden());
+            HttpContext.Session.SetString("Gebruiker", gebruikersnaam);
+            var gebruiker = _gebruikerRepository.GetBy(gebruikersnaam);
+            return RedirectToAction("Leeromgeving", "Gebruiker", new { gebruiker });
         }
 
-        [HttpPost]
-        public IActionResult Login(String gebruiker)
-        {
-            HttpContext.Session.SetString("Gebruiker", gebruiker);
-            return RedirectToAction("Gebruiker", "Home");
+        public IActionResult Logout() {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Aanwezigen", "Lesmoment");
+        }
+        
+        public IActionResult Leeromgeving() {
+            return View();
         }
 
         [HttpGet]

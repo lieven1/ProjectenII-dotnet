@@ -11,6 +11,7 @@ using Taijitan.Data;
 using Taijitan.Data.Repositories;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.IRepositories;
 using Taijitan.ScheduledTasks;
 
 namespace Taijitan
@@ -56,7 +57,8 @@ namespace Taijitan
             services.AddScoped<TaijitanDataInitializer>();
             services.AddScoped<IGebruikerRepository, GebruikerRepository>();
             services.AddScoped<ILesmomentRepository, LesmomentRepository>();
-
+            services.AddScoped<IThemaRepository, ThemaRepository>();
+            services.AddScoped<ILesmateriaalRepository, LesmateriaalRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

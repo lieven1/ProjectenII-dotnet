@@ -12,6 +12,8 @@ namespace Taijitan.Data
         public DbSet<Lesmoment> Lesmomenten { get; set; }
         public DbSet<Adres> Adressen { get; set; }
         public DbSet<LesmomentLeden> LesmomentLeden { get; set; }
+        public DbSet<Thema> Themas { get; set; }
+        public DbSet<Lesmateriaal> Lesmateriaal { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)
@@ -25,6 +27,8 @@ namespace Taijitan.Data
             builder.ApplyConfiguration(new AdresConfiguration());
             builder.ApplyConfiguration(new LesmomentConfiguration());
             builder.ApplyConfiguration(new LesmomentLedenConfiguration());
+            builder.ApplyConfiguration(new ThemaConfiguration());
+            builder.ApplyConfiguration(new LesmateriaalConfiguration());
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)   //zelf server link instellen --> met sqlserver express niet nodig(zie slide 18)

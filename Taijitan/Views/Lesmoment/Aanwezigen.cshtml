@@ -27,7 +27,7 @@
                 @{
                     var parms = new Dictionary<string, string> { { "gebruikersnaam", @item.Gebruiker.Gebruikersnaam } };
                 }
-                <td><a class="btn btn-default" asp-controller="home" asp-action="gebruiker" asp-all-route-data="parms">Leeromgeving</a></td>
+                <td><a class="btn btn-default" asp-controller="Gebruiker" asp-action="Login" asp-all-route-data="parms">Leeromgeving</a></td>
             </tr>
         }
     }

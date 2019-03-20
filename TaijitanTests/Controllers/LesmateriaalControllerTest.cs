@@ -29,7 +29,7 @@ namespace TaijitanTests.Controllers {
         
         [Fact]
         public void Index_GeeftGradenGebruiker() {
-            var result = _controller.Index(_gebruiker1.Gradatie.GetHashCode()) as ViewResult;
+            var result = _controller.GraadOverzicht(_gebruiker1) as ViewResult;
             var model = (IEnumerable<Gradatie>)result.Model;
             var lijst = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>().ToList().Where(g => g.CompareTo(_gebruiker1.Gradatie) <= 0);
             Assert.Equal(lijst, model);

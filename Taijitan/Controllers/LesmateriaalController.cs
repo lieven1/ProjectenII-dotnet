@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Taijitan.Filters;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.Domain.IRepositories;
@@ -18,12 +19,19 @@ namespace Taijitan.Controllers {
             this._themaRepo = themaRepo;
         }
 
-        public IActionResult Index(int gradatie)
+        [ServiceFilter(typeof(GebruikerFilter))]
+        public IActionResult GraadOverzicht(Gebruiker gebruiker)
         {
-            var graden = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>().ToList().Where(g => g.CompareTo((Gradatie)gradatie) <= 0);
+            var gradatie = gebruiker.Gradatie;
+            var graden = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>().ToList().Where(g => g.CompareTo(gradatie) <= 0)
+                .OrderByDescending(graad => Convert.ChangeType(graad,TypeCode.Int32));
+            if (graden.Count() == 1) {
+                return RedirectToAction("ThemaOverzicht", gradatie);
+            }
             return View(graden);
         }
 
+        //graad wordt meegegeven uit view GraadOverzicht of methode GraadOverzicht
         public IActionResult ThemaOverzicht(int graad) {
             var themas = _themaRepo.GetAll().FindAll(thema => thema.Lesmateriaal.Any(l => l.Graad.Equals((Gradatie)graad)));
             return View(themas);

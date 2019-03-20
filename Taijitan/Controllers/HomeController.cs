@@ -11,7 +11,7 @@ namespace Taijitan.Controllers
     public class HomeController : Controller
     {
         [Authorize]
-        [ServiceFilter(typeof(AspUserToGebruiker))]
+        //[ServiceFilter(typeof(AspUserToGebruiker))]
         public IActionResult Index(/*Gebruiker gebruiker*/) {
             return View();
             //if (User.IsInRole("gebruiker"))
@@ -26,17 +26,7 @@ namespace Taijitan.Controllers
             //return RedirectToAction(nameof(Error));
         }
 
-        public IActionResult Gebruiker(string gebruikersnaam)
-        {
-            //TempData["beheerder"] = User.IsInRole("beheerder");
-            HttpContext.Session.SetString("Gebruiker", gebruikersnaam);
-            return View();
-        }
-
-        public IActionResult Logout() {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Aanwezigen", "Lesmoment");
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
