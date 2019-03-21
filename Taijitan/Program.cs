@@ -7,13 +7,11 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Taijitan.ScheduledTasks;
 
 namespace Taijitan {
     public static class Program {
         public static void Main(string[] args)
         {
-            JobScheduler.StartAsync();
             CreateWebHostBuilder(args).Build().Run();
         }
 
