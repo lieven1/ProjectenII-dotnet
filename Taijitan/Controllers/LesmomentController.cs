@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.LesmomentViewModels;
 
 namespace Taijitan.Controllers
@@ -52,16 +53,30 @@ namespace Taijitan.Controllers
         public IActionResult Aanwezigheden()
         {
             Lesmoment lesmoment = geefLesmomenten(l => l.Actief).FirstOrDefault();
-            if (lesmoment == null) {
+            if (lesmoment == null)
+            {
                 TempData["error"] = "Er is geen lesmoment bezig.";
                 return RedirectToAction("Index", "Home");
             }
-            return View("Aanwezigheden", new LesmomentGebruikerViewModel(lesmoment));
+            return View("Aanwezigheden", new LesmomentAlgemeenViewModel(lesmoment, lesformulesMetGebruikers()));
         }
 
-        public IActionResult Aanwezigen() {
+        [Route("/Lesmoment/GebruikersPerFormule", Name = "gebruikersperformule")]
+        public IActionResult GebruikersPerFormule(int lesmomentId, string lesformule)
+        {
+            Lesformule formule = (Lesformule)Enum.Parse(typeof(Lesformule), lesformule);
+            Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
+
+            List<Gebruiker> gebruikers = gebruikerRepository.GetAllLedenInFormule(formule);
+
+            return View(new LesmomentGebruikersInFormuleViewModel(lesmoment, formule, gebruikers));
+        }
+
+        public IActionResult Aanwezigen()
+        {
             Lesmoment lesmoment = geefLesmomenten(l => l.Actief).FirstOrDefault();
-            if(lesmoment == null) {
+            if (lesmoment == null)
+            {
                 TempData["error"] = "Er is geen lesmoment bezig.";
                 return RedirectToAction("Index", "Home");
             }
@@ -155,7 +170,14 @@ namespace Taijitan.Controllers
 
         private Gebruiker lesmomentdProeflesViewModelToGebruiker(LesmomentdProeflesViewModel model)
         {
-            return new Gebruiker("proefles-" + DateTime.Now.TimeOfDay + "-" + model.Naam + "-" + model.Voornaam, "25632112569", DateTime.Now, model.Naam, model.Voornaam, Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", model.Email, "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Models.Domain.Enums.Gradatie.GoDan, Taijitan.Models.Domain.Enums.TypeGebruiker.Lid);
+            return new Gebruiker(DateTime.Now, TypeGebruiker.Proefgebruiker, "proefles-" + DateTime.Now.TimeOfDay + "-" + model.Naam + "-" + model.Voornaam, model.Naam, model.Voornaam, model.Email, model.Telefoonnummer);
+        }
+
+        private HashSet<Lesformule> lesformulesMetGebruikers()
+        {
+            HashSet<Lesformule> lesformules = new HashSet<Lesformule>();
+            gebruikerRepository.GetAllLeden().ForEach(g => lesformules.Add(g.Lesformule));
+            return lesformules;
         }
     }
 }
