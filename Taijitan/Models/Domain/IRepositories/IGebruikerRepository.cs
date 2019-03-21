@@ -10,5 +10,6 @@ namespace Taijitan.Models.Domain
         void Save(Gebruiker gebruiker);
         Gebruiker GetBy(String gebruikersnaam);
         List<Gebruiker> GetAllLeden();
+        List<Gebruiker> GetAllLedenInFormule(Lesformule formule);
     }
 }

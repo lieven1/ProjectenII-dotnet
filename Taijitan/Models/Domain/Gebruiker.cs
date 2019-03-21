@@ -134,7 +134,7 @@ namespace Taijitan.Models.Domain
                     _emailouders = null;
                 }
                 // Voldoet aan regels voor Email
-                if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]+$"))
+                else if (Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w-]+$"))
                 {
                     _emailouders = value;
                 }
@@ -181,6 +181,17 @@ namespace Taijitan.Models.Domain
             this.Punten = punten;
             this.Gradatie = gradatie;
             this.TypeGebruiker = typeGebruiker;
+        }
+
+        public Gebruiker(DateTime inschrijvingsdatum, TypeGebruiker type, string gebruikersnaam, string naam, string voornaam, string email, string telefoonnummer)
+        {
+            this.Inschrijvingsdatum = inschrijvingsdatum;
+            this.Gebruikersnaam = gebruikersnaam;
+            this.Naam = naam;
+            this.Voornaam = voornaam;
+            this.Email = email;
+            this.Telefoonnummer = telefoonnummer;
+            this.TypeGebruiker = type;
         }
 
         public Gebruiker()
