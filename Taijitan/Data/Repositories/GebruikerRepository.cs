@@ -23,6 +23,11 @@ namespace Taijitan.Data.Repositories
             return this._gebruikers.Include(g => g.Adres).Where(g => g.TypeGebruiker.Equals(TypeGebruiker.Lid)).ToList();
         }
 
+        public List<Gebruiker> GetAllLedenInFormule(Lesformule formule)
+        {
+            return this._gebruikers.Include(g => g.Adres).Where(g => g.TypeGebruiker.Equals(TypeGebruiker.Lid) && g.Lesformule.Equals(formule)).ToList();
+        }
+
         public Gebruiker GetBy(String gebruikersnaam)
         {
             return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam); ;

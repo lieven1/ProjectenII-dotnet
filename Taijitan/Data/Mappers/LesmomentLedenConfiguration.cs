@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Databindings;
 
 namespace Taijitan.Data.Mappers
@@ -15,6 +14,7 @@ namespace Taijitan.Data.Mappers
             builder.HasOne(t => t.Gebruiker).WithMany(l => l.Lesmomenten).HasForeignKey(t => t.Gebruikersnaam);
             builder.Property(t => t.Ingeschreven).IsRequired();
             builder.Property(t => t.Aanwezig).IsRequired();
+            builder.Property(t => t.Formule);
         }
     }
 }
