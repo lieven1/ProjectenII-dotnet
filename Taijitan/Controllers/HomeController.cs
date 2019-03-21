@@ -11,19 +11,18 @@ namespace Taijitan.Controllers
     public class HomeController : Controller
     {
         [Authorize]
-        //[ServiceFilter(typeof(AspUserToGebruiker))]
-        public IActionResult Index(/*Gebruiker gebruiker*/) {
-            return View();
-            //if (User.IsInRole("gebruiker"))
-            //{
-            //    HttpContext.Session.SetString("Gebruiker", gebruiker.Gebruikersnaam);
-            //    return RedirectToAction(nameof(Gebruiker));
-            //}
-            //else if(User.IsInRole("beheerder"))
-            //{
-            //    return View();
-            //}
-            //return RedirectToAction(nameof(Error));
+        [ServiceFilter(typeof(AspUserToGebruiker))]
+        public IActionResult Index(Gebruiker gebruiker) {
+            if (User.IsInRole("gebruiker"))
+            {
+                HttpContext.Session.SetString("Gebruiker", gebruiker.Gebruikersnaam);
+                return RedirectToAction("leeromgeving", "gebruiker");
+            }
+            else if(User.IsInRole("beheerder"))
+            {
+                return View();
+            }
+            return RedirectToAction(nameof(Error));
         }
 
         

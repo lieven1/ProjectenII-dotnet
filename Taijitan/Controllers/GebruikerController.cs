@@ -1,11 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
-using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.GebruikerViewModels;
 
 namespace Taijitan.Controllers {
@@ -41,6 +38,7 @@ namespace Taijitan.Controllers {
         }
         
         public IActionResult Leeromgeving() {
+            TempData["beheerder"] = User.IsInRole("beheerder");
             return View();
         }
 
