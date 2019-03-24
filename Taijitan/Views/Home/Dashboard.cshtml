@@ -3,6 +3,18 @@
         margin-bottom: 120px;
     }
 
+    .header-image>div>h1 {
+        position: relative;
+        top: -200px;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        height: 100px;
+        text-align: center;
+        font-size: 6em;
+        font-weight: bold;
+    }
+
     .img-dashbboard {
         max-width: 200px;
     }
@@ -12,12 +24,14 @@
     }
 </style>
 
-<img class="img-fluid header-image" src="~/images/slide.jpg" />
+<div class="header-image">
+    <img class="img-fluid" src="~/images/slide.jpg" />
+    <div><h1 class="text-light">Welkom @TempData["gebruiker"]</h1></div>
+</div>
 <div class="container">
-    <h2>Welkom @TempData["gebruiker"]</h2>
     <div class="row">
         <div class="col col-dashboard">
-            <a asp-controller="Lesmoment" asp-action="BeheerLesmoment" class="btn btn-primary btn-lg">
+            <a asp-controller="Gebruiker" asp-action="Index" class="btn btn-primary btn-lg">
                 <img src="~/images/gebruiker.png" class="img-fluid img-dashbboard"><br />
                 Gegevens
             </a>
