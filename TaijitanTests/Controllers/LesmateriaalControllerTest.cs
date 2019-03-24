@@ -51,11 +51,10 @@ namespace TaijitanTests.Controllers {
         public void ToonLesmateriaal_GeeftLesmateriaalThemaGraad() {
             var thema = _context.Themas[0];
             var graad = Gradatie.GoKyu;
-            var lesmateriaal = thema.Lesmateriaal.Where(l => l.Graad.Equals(graad)).ToList();
+            var lesmateriaal = _context.Lesmateriaal.Where(l => l.Graad.Equals(graad)).ToList();
 
             _themaRepo.Setup(tr => tr.GetBy(thema.ThemaId)).Returns(thema);
-            _themaRepo.Setup(tr => tr.GetLesmateriaal(thema, graad))
-                .Returns(lesmateriaal);
+            _lesmateriaalRepo.Setup(lr => lr.GetAll()).Returns(_context.Lesmateriaal);
 
             var result = _controller.LesmateriaalOverzicht(thema.ThemaId, (int)Convert.ChangeType(graad,TypeCode.Int32)) as ViewResult;
             var model = (IEnumerable<Lesmateriaal>)result.Model;

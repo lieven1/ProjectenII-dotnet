@@ -21,13 +21,6 @@ namespace Taijitan.Models.Domain.Databindings
             this.Aanwezig = aanwezig;
         }
 
-        public LesmomentLeden(Gebruiker gebruiker, Boolean ingeschreven = false, Boolean aanwezig = false)
-        {
-            this.Gebruiker = gebruiker;
-            this.Ingeschreven = ingeschreven;
-            this.Aanwezig = aanwezig;
-        }
-
         public LesmomentLeden()
         {
 

@@ -7,26 +7,21 @@ using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Databindings;
 using Taijitan.Models.Domain.Enums;
 
-namespace Taijitan.Data
-{
-    public class TaijitanDataInitializer
-    {
+namespace Taijitan.Data {
+    public class TaijitanDataInitializer {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILesmomentRepository _lesmomentRepository;
 
-        public TaijitanDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager, ILesmomentRepository lesmomentRepository)
-        {
+        public TaijitanDataInitializer(ApplicationDbContext context, UserManager<IdentityUser> userManager, ILesmomentRepository lesmomentRepository) {
             _context = context;
             _userManager = userManager;
             _lesmomentRepository = lesmomentRepository;
         }
 
-        public async Task InitializeData()
-        {
+        public async Task InitializeData() {
             _context.Database.EnsureDeleted();
-            if (_context.Database.EnsureCreated())
-            {
+            if (_context.Database.EnsureCreated()) {
                 Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
                 Adres adres2 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
                 _context.Adressen.Add(adres1);
@@ -74,25 +69,71 @@ namespace Taijitan.Data
                 lesmoment2.Leden = lesmomentLeden2;
                 lesmoment4.Leden = lesmomentLeden4;
 
-
                 _context.Lesmomenten.Add(lesmoment1);
                 _context.Lesmomenten.Add(lesmoment2);
                 _context.Lesmomenten.Add(lesmoment4);
                 _context.SaveChanges();
 
-                Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1_GoKyu", "video", Gradatie.GoKyu);
-                Lesmateriaal lesmateriaal2 = new Lesmateriaal("standen1_GoKyu", "video", Gradatie.GoKyu);
-                Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen2_NiKyu", "foto", Gradatie.NiKyu);
-                Lesmateriaal lesmateriaal4 = new Lesmateriaal("handworpen2_JuniDan", "tekst", Gradatie.JuniDan);
+                Thema thema = new Thema("handworpen");
+                Thema thema2 = new Thema("standen");
+                _context.Themas.Add(thema);
+                _context.Themas.Add(thema2);
+                _context.SaveChanges();
+
+                Foto foto1 = new Foto("achterwaartse_stand_1", "jpg");
+                Foto foto2 = new Foto("achterwaartse_stand_2", "jpg");
+                Foto foto3 = new Foto("achterwaartse_stand_3", "jpg");
+                _context.Fotos.Add(foto1);
+                _context.Fotos.Add(foto2);
+                _context.Fotos.Add(foto3);
+                _context.SaveChanges();
+
+                string loremIpsum = "Lorem ipsum dolor sit amet, has reque suscipiantur ad, an duo hinc habeo omnes, ex eam eirmod probatus. Vis cu dicant vocibus urbanitas, nostro facilisi eu nam, vim an aeque adolescens. Nec consequat moderatius ex. Eruditi graecis blandit vix eu, vel aperiri praesent id, ancillae scribentur ex eos.";
+                string videoId = "pD3T7WNsw6k";
+                Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1_GoKyu", Gradatie.GoKyu, thema, loremIpsum, videoId);
+                Lesmateriaal lesmateriaal2 = new Lesmateriaal("standen1_GoKyu", Gradatie.GoKyu, thema2, loremIpsum, videoId);
+                Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen2_NiKyu", Gradatie.NiKyu, thema2, loremIpsum, videoId);
+                Lesmateriaal lesmateriaal4 = new Lesmateriaal("handworpen2_JuniDan", Gradatie.JuniDan, thema, loremIpsum, videoId);
+                
+
+                FotoLesmateriaal fotoLesmateriaal1_1 = new FotoLesmateriaal(lesmateriaal1, foto1);
+                FotoLesmateriaal fotoLesmateriaal1_2 = new FotoLesmateriaal(lesmateriaal1, foto2);
+                FotoLesmateriaal fotoLesmateriaal1_3 = new FotoLesmateriaal(lesmateriaal1, foto3);
+                FotoLesmateriaal fotoLesmateriaal2_1 = new FotoLesmateriaal(lesmateriaal2, foto1);
+                FotoLesmateriaal fotoLesmateriaal2_2 = new FotoLesmateriaal(lesmateriaal2, foto2);
+                FotoLesmateriaal fotoLesmateriaal2_3 = new FotoLesmateriaal(lesmateriaal2, foto3);
+                FotoLesmateriaal fotoLesmateriaal3_1 = new FotoLesmateriaal(lesmateriaal3, foto1);
+                FotoLesmateriaal fotoLesmateriaal3_2 = new FotoLesmateriaal(lesmateriaal3, foto2);
+                FotoLesmateriaal fotoLesmateriaal3_3 = new FotoLesmateriaal(lesmateriaal3, foto3);
+                FotoLesmateriaal fotoLesmateriaal4_1 = new FotoLesmateriaal(lesmateriaal4, foto1);
+                FotoLesmateriaal fotoLesmateriaal4_2 = new FotoLesmateriaal(lesmateriaal4, foto2);
+                FotoLesmateriaal fotoLesmateriaal4_3 = new FotoLesmateriaal(lesmateriaal4, foto3);
+
+                List<FotoLesmateriaal> fotoLesmateriaal1 = new List<FotoLesmateriaal>();
+                fotoLesmateriaal1.Add(fotoLesmateriaal1_1);
+                fotoLesmateriaal1.Add(fotoLesmateriaal1_2);
+                fotoLesmateriaal1.Add(fotoLesmateriaal1_3);
+                List<FotoLesmateriaal> fotoLesmateriaal2 = new List<FotoLesmateriaal>();
+                fotoLesmateriaal2.Add(fotoLesmateriaal2_1);
+                fotoLesmateriaal2.Add(fotoLesmateriaal2_2);
+                fotoLesmateriaal2.Add(fotoLesmateriaal2_3);
+                List<FotoLesmateriaal> fotoLesmateriaal3 = new List<FotoLesmateriaal>();
+                fotoLesmateriaal3.Add(fotoLesmateriaal3_1);
+                fotoLesmateriaal3.Add(fotoLesmateriaal3_2);
+                fotoLesmateriaal3.Add(fotoLesmateriaal3_3);
+                List<FotoLesmateriaal> fotoLesmateriaal4 = new List<FotoLesmateriaal>();
+                fotoLesmateriaal4.Add(fotoLesmateriaal4_1);
+                fotoLesmateriaal4.Add(fotoLesmateriaal4_2);
+                fotoLesmateriaal4.Add(fotoLesmateriaal4_3);
+                lesmateriaal1.Fotos = fotoLesmateriaal1;
+                lesmateriaal2.Fotos = fotoLesmateriaal2;
+                lesmateriaal3.Fotos = fotoLesmateriaal3;
+                lesmateriaal4.Fotos = fotoLesmateriaal4;
+                
                 _context.Lesmateriaal.Add(lesmateriaal1);
                 _context.Lesmateriaal.Add(lesmateriaal2);
                 _context.Lesmateriaal.Add(lesmateriaal3);
                 _context.Lesmateriaal.Add(lesmateriaal4);
-                _context.SaveChanges();
-                Thema thema = new Thema("handworpen", new List<Lesmateriaal> { lesmateriaal1, lesmateriaal4 });
-                Thema thema2 = new Thema("standen", new List<Lesmateriaal> { lesmateriaal2, lesmateriaal3 });
-                _context.Themas.Add(thema);
-                _context.Themas.Add(thema2);
                 _context.SaveChanges();
 
                 //_lesmomentRepository.GenereerLesmomentDag();
@@ -102,14 +143,12 @@ namespace Taijitan.Data
             }
         }
 
-        private async Task InitializeUsers()
-        {
+        private async Task InitializeUsers() {
             await InitializeLid();
             await InitializeBeheerder();
         }
 
-        private async Task InitializeLid()
-        {
+        private async Task InitializeLid() {
             string email = "lid@taijitan.be";
             string usr = "lid";
             IdentityUser user = new IdentityUser { UserName = usr, Email = email };
@@ -122,8 +161,7 @@ namespace Taijitan.Data
             _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }
-        private async Task InitializeBeheerder()
-        {
+        private async Task InitializeBeheerder() {
             string email = "taijitan@taijitan.be";
             string usr = "taijitan";
             IdentityUser user = new IdentityUser { UserName = usr, Email = email };
