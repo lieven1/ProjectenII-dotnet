@@ -1,0 +1,52 @@
+﻿<style>
+    .header-image {
+        margin-bottom: 120px;
+    }
+
+    .img-dashbboard {
+        max-width: 200px;
+    }
+
+    .col-dashboard {
+        text-align: center;
+    }
+</style>
+
+<img class="img-fluid header-image" src="~/images/slide.jpg" />
+<div class="container">
+    <h2>Welkom @TempData["gebruiker"]</h2>
+    <div class="row">
+        <div class="col col-dashboard">
+            <a asp-controller="Lesmoment" asp-action="BeheerLesmoment" class="btn btn-primary btn-lg">
+                <img src="~/images/gebruiker.png" class="img-fluid img-dashbboard"><br />
+                Gegevens
+            </a>
+        </div>
+        <div class="col col-dashboard">
+            <a asp-controller="Lesmoment" asp-action="RegistreerAanwezigheid" class="btn btn-primary btn-lg">
+                <img src="~/images/checkbox.png" class="img-fluid img-dashbboard"><br />
+                Lesmateriaal
+            </a>
+        </div>
+        @if (TempData["leeromgeving"].Equals(true))
+        {
+            <div class="col col-dashboard">
+                <a asp-controller="Lesmoment" asp-action="Aanwezigheden" class="btn btn-primary btn-lg">
+                    <img src="~/images/logout.png" class="img-fluid img-dashbboard"><br />
+                    Logout
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="col col-dashboard">
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <img src="~/images/logout.png" class="img-fluid img-dashbboard"><br />
+                        Logout
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+</div>
