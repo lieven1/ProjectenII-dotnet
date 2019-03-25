@@ -32,6 +32,12 @@ namespace Taijitan.Controllers
             return RedirectToAction(nameof(Dashboard));
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Aanwezigheden", "Lesmoment");
+        }
+
         public IActionResult Dashboard()
         {
             TempData["leeromgeving"] = User.IsInRole("beheerder");

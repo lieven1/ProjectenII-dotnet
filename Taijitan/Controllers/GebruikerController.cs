@@ -19,12 +19,6 @@ namespace Taijitan.Controllers {
             return View(gebruiker);
         }
 
-
-        public IActionResult Logout() {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Aanwezigen", "Lesmoment");
-        }
-
         [HttpGet]
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Edit(Gebruiker gebruiker) {
