@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Taijitan.Models.Domain.Lesmateriaal>
+
+<form>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="gradatie"></label>
+            <select id="gradatieInt" name="gradatieInt" asp-items="@(ViewData["Graden"] as SelectList)" class="form-control">
+                <option value="">-- alle graden --</option>
+            </select>
+            <label for="thema"></label>
+            <select id="ThemaId" name="themaId" asp-items="@(ViewData["Themas"] as SelectList)" class="form-control">
+                <option value="">-- alle themas --</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-default">Zoek</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titel</th>
+            <th>Beschrijving</th>
+            <th>Graad</th>
+            <th>Thema</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            var id = item.LesmateriaalId.ToString();
+            var beschrijving = "";
+            if (item.Beschrijving != null) {
+                beschrijving = new String(item.Beschrijving.Length > 73 ? item.Beschrijving.Take<char>(70).Append('.').Append('.').Append('.').ToArray() : item.Beschrijving.ToCharArray());
+            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+                <td style="width:500px">
+                    @Html.DisplayFor(modelItem => beschrijving)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Graad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Thema.Naam)
+                </td>
+                <td>
+                    <a asp-action="Lesmateriaal" asp-route-id="@id">Bekijk lesmateriaal</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="form-group col-md-12">
+    <a asp-controller="home" asp-action="dashboard" class="btn btn-default btn-lg">Keer Terug</a>
+
+</div>

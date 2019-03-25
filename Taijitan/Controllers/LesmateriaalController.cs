@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Enums;
@@ -22,29 +24,37 @@ namespace Taijitan.Controllers
         }
 
         [ServiceFilter(typeof(GebruikerFilter))]
-        public IActionResult GraadOverzicht(Gebruiker gebruiker)
-        {
-            var gradatie = gebruiker.Gradatie;
-            var graden = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>().ToList().Where(g => g.CompareTo(gradatie) <= 0)
-                .OrderByDescending(graad => Convert.ChangeType(graad,TypeCode.Int32));
-            if (graden.Count() == 1) {
-                return RedirectToAction("ThemaOverzicht", gradatie);
+        public IActionResult Overzicht(Gebruiker gebruiker, int gradatieInt = 0, int themaId = 0) {
+            IEnumerable<Lesmateriaal> lesmateriaal;
+            var gradatieGebruiker = gebruiker.Gradatie;
+            if (gradatieInt == 0 && themaId == 0) {
+                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker);
+            } else if (gradatieInt == 0 && themaId != 0) {
+                var thema = _themaRepo.GetBy(themaId);
+                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker && l.Thema == thema);
+            } else if(themaId == 0 && gradatieInt != 0) {
+                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt);
+            } else {
+                var thema = _themaRepo.GetBy(themaId);
+                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt && l.Thema == thema);
             }
-            return View(graden);
-        }
-        
-        public IActionResult ThemaOverzicht(int graad) {
-            var lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)graad);
-            var themas = lesmateriaal.Select<Lesmateriaal, Thema>(l => l.Thema).Distinct().ToList();
-            var themaViewModel = new ThemaViewModel(graad, themas);
-            return View(themaViewModel);
+            ViewData["Graden"] = MapGradenNaarSelectList(gradatieGebruiker, gradatieInt);
+            ViewData["Themas"] = MapThemasNaarSelectList(themaId);
+            return View(lesmateriaal);
         }
 
-        public IActionResult LesmateriaalOverzicht(int themaId, int graad) {
-            var thema = _themaRepo.GetBy(themaId);
-            var lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Thema.ThemaId == themaId && 
-                                                            (int)Convert.ChangeType(l.Graad, TypeCode.Int32) == graad);
-            return View(lesmateriaal);
+        private SelectList MapThemasNaarSelectList(int selected) {
+            var themas = _themaRepo.GetAll().OrderBy(t => t.Naam);
+            return new SelectList(themas,
+                "ThemaId", "Naam", selected);
+        }
+
+        private SelectList MapGradenNaarSelectList(Gradatie gradatieGebruiker, int selected) {
+            var graden = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>()
+                .Select(g => new GradatieViewModel((int)Convert.ChangeType(g,TypeCode.Int32))).ToList()
+                .Where(g => g.gradatie.CompareTo(gradatieGebruiker) <= 0);
+            return new SelectList(graden,
+                "graadInt", "gradatie", selected);
         }
 
         public IActionResult Lesmateriaal(int id) {
