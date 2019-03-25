@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Taijitan.Models.Domain.Databindings;
 using Taijitan.Models.Domain.Enums;
 
-namespace Taijitan.Models.Domain {
+namespace Taijitan.Models.Domain
+{
     public class Lesmateriaal {
-
         public int LesmateriaalId { get; private set; }
         public string Naam { get; private set; }
         public string Beschrijving { get; private set; }
@@ -27,8 +24,7 @@ namespace Taijitan.Models.Domain {
             if (fotos != null)
                 this.Fotos = fotos;
         }
-        public Lesmateriaal() {
 
-        }
+        public Lesmateriaal() {}
     }
 }

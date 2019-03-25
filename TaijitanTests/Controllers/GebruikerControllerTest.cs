@@ -52,12 +52,6 @@ namespace TaijitanTests.Controllers {
             GebruikerEditViewModel gebruikerVM = (action as ViewResult)?.Model as GebruikerEditViewModel;
             Assert.Equal("name1", gebruikerVM?.Naam);
         }
-
-        [Fact]
-        public void Edit_GebruikerNull_ReturnsNotFound() {
-            IActionResult action = _controller.Edit(null);
-            Assert.IsType<NotFoundResult>(action);
-        }
         #endregion
 
         #region -- Edit POST --

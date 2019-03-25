@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Taijitan.Models.Domain.Databindings {
+﻿namespace Taijitan.Models.Domain.Databindings
+{
     public class FotoLesmateriaal {
         public int LesmateriaalId { get; set; }
         public Lesmateriaal Lesmateriaal { get; set; }
@@ -15,8 +11,6 @@ namespace Taijitan.Models.Domain.Databindings {
             this.Foto = foto;
         }
 
-        public FotoLesmateriaal() {
-
-        }
+        public FotoLesmateriaal() {}
     }
 }

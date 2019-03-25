@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Taijitan.Filters;
@@ -11,7 +10,8 @@ using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.Domain.IRepositories;
 using Taijitan.Models.LesmateriaalViewModels;
 
-namespace Taijitan.Controllers {
+namespace Taijitan.Controllers
+{
     [Authorize]
     public class LesmateriaalController : Controller
     {

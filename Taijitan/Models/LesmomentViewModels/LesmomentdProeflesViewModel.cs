@@ -35,9 +35,6 @@ namespace Taijitan.Models.LesmomentViewModels
             this.LesmomentId = lesmoment.LesmomentId;
         }
 
-        public LesmomentdProeflesViewModel()
-        {
-
-        }
+        public LesmomentdProeflesViewModel(){}
     }
 }

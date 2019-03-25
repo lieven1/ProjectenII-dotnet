@@ -1,11 +1,9 @@
 ﻿using CloudinaryDotNet;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Taijitan.Models.Domain.Databindings;
 
-namespace Taijitan.Models.Domain {
+namespace Taijitan.Models.Domain
+{
     public class Foto {
         public int id { get; private set; }
         public string bestandsnaam { get; set; }
@@ -19,8 +17,6 @@ namespace Taijitan.Models.Domain {
             this.extensie = extensie;
         }
 
-        public Foto() {
-
-        }
+        public Foto() {}
     }
 }

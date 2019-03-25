@@ -88,10 +88,7 @@ namespace Taijitan.Models.Domain
             this.Actief = false;
         }
 
-        public Lesmoment()
-        {
-
-        }
+        public Lesmoment(){}
         #endregion
 
         #region Methods
@@ -113,10 +110,12 @@ namespace Taijitan.Models.Domain
                 Leden.Add(new LesmomentLeden(this, lid, false, true));
             }
         }
+
         public List<Gebruiker> geefAanwezigeLeden()
         {
             return Leden.Where(t => t.Aanwezig).Select(t => t.Gebruiker).ToList();
         }
+
         public List<Gebruiker> geefIngeschrevenLeden()
         {
             return Leden.Where(t => t.Ingeschreven).Select(t => t.Gebruiker).ToList();

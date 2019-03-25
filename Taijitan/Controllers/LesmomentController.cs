@@ -9,7 +9,7 @@ using Taijitan.Models.LesmomentViewModels;
 
 namespace Taijitan.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Beheerder")]
     public class LesmomentController : Controller
     {
         private ILesmomentRepository lesmomentRepository;
@@ -20,8 +20,7 @@ namespace Taijitan.Controllers
             this.lesmomentRepository = lesmomentRepository;
             this.gebruikerRepository = gebruikerRepository;
         }
-
-        [Authorize(Policy = "Beheerder")]
+        
         public IActionResult BeheerLesmoment()
         {
             List<Lesmoment> lesmomenten = geefLesmomenten();
@@ -54,8 +53,7 @@ namespace Taijitan.Controllers
             }
             return View("Aanwezigheden", new LesmomentAlgemeenViewModel(lesmoment, lesformulesMetGebruikers()));
         }
-
-        [Route("/Lesmoment/GebruikersPerFormule", Name = "gebruikersperformule")]
+        
         public IActionResult GebruikersPerFormule(int lesmomentId, string lesformule)
         {
             Lesformule formule = (Lesformule)Enum.Parse(typeof(Lesformule), lesformule);
@@ -65,20 +63,7 @@ namespace Taijitan.Controllers
 
             return View(new LesmomentGebruikersInFormuleViewModel(lesmoment, formule, gebruikers));
         }
-
-        public IActionResult Aanwezigen()
-        {
-            Lesmoment lesmoment = geefLesmomenten(l => l.Actief).FirstOrDefault();
-            if (lesmoment == null)
-            {
-                TempData["error"] = "Er is geen lesmoment bezig.";
-                return RedirectToAction("Index", "Home");
-            }
-            return View("Aanwezigen", new LesmomentGebruikerViewModel(lesmoment));
-        }
-
-        [Route("/Lesmoment/RegistreerAanwezigheid",
-       Name = "registreeraanwezigheid")]
+        
         public IActionResult RegistreerAanwezigheid(int lesmomentId, string gebruikersnaam)
         {
             Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
@@ -130,7 +115,6 @@ namespace Taijitan.Controllers
             lesmomentRepository.Save();
             return Aanwezigheden();
         }
-
 
         public List<Lesmoment> geefLesmomenten(Func<Lesmoment, bool> predicate = null)
         {

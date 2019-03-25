@@ -21,9 +21,6 @@ namespace Taijitan.Models.Domain.Databindings
             this.Aanwezig = aanwezig;
         }
 
-        public LesmomentLeden()
-        {
-
-        }
+        public LesmomentLeden(){}
     }
 }
