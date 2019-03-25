@@ -1,0 +1,67 @@
+﻿<style>
+    .header-image {
+        margin-bottom: 120px;
+    }
+
+    .header-image>div>h1 {
+        position: relative;
+        top: -200px;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        height: 0;
+        text-align: center;
+        font-size: 6em;
+        font-weight: bold;
+    }
+
+    .img-dashbboard {
+        max-width: 200px;
+    }
+
+    .col-dashboard {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+</style>
+
+<div class="header-image">
+    <img class="img-fluid" src="~/images/slide.jpg" />
+    <div><h1 class="text-light">Welkom @TempData["gebruiker"]</h1></div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col col-dashboard">
+            <a asp-controller="Gebruiker" asp-action="Index" class="btn btn-primary btn-lg">
+                <img src="~/images/gebruiker.png" class="img-fluid img-dashbboard"><br />
+                Gegevens
+            </a>
+        </div>
+        <div class="col col-dashboard">
+            <a asp-controller="Lesmateriaal" asp-action="Overzicht" class="btn btn-primary btn-lg">
+                <img src="~/images/checkbox.png" class="img-fluid img-dashbboard"><br />
+                Lesmateriaal
+            </a>
+        </div>
+        @if (TempData["leeromgeving"].Equals(true))
+        {
+            <div class="col col-dashboard">
+                <a asp-controller="Home" asp-action="Logout" class="btn btn-primary btn-lg">
+                    <img src="~/images/logout.png" class="img-fluid img-dashbboard"><br />
+                    Logout
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="col col-dashboard">
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <img src="~/images/logout.png" class="img-fluid img-dashbboard"><br />
+                        Logout
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+</div>

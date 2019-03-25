@@ -6,7 +6,7 @@ using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Models.Domain
 {
-    public class Gebruiker/* : IdentityUser<Guid>*/
+    public class Gebruiker
     {
         #region Fields
         private string _naam;
@@ -159,11 +159,7 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Constructor
-        public Gebruiker(string gebruikersnaam, string rijksregisternummer, DateTime inschrijvingsdatum, string naam, string voornaam, Geslacht geslacht, DateTime geboortedatum, string geboorteplaats, string telefoonnummer, string gsmnummer, string email, string emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker, Lesformule lesformule) : this(gebruikersnaam, rijksregisternummer, inschrijvingsdatum, naam, voornaam, geslacht, geboortedatum, geboorteplaats, telefoonnummer, gsmnummer, email, emailOuders, adres, punten, gradatie, typeGebruiker)
-        {
-            this.Lesformule = lesformule;
-        }
-        public Gebruiker(string gebruikersnaam, string rijksregisternummer, DateTime inschrijvingsdatum, string naam, string voornaam, Geslacht geslacht, DateTime geboortedatum, string geboorteplaats, string telefoonnummer, string gsmnummer, string email, string emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker)
+        public Gebruiker(string gebruikersnaam, string rijksregisternummer, DateTime inschrijvingsdatum, string naam, string voornaam, Geslacht geslacht, DateTime geboortedatum, string geboorteplaats, string telefoonnummer, string gsmnummer, string email, string emailOuders, Adres adres, int punten, Gradatie gradatie, TypeGebruiker typeGebruiker, Lesformule lesformule)
         {
             this.Gebruikersnaam = gebruikersnaam;
             this.Rijksregisternummer = rijksregisternummer;
@@ -181,8 +177,10 @@ namespace Taijitan.Models.Domain
             this.Punten = punten;
             this.Gradatie = gradatie;
             this.TypeGebruiker = typeGebruiker;
+            this.Lesformule = lesformule;
         }
 
+        // ProeflesGebruiker
         public Gebruiker(DateTime inschrijvingsdatum, TypeGebruiker type, string gebruikersnaam, string naam, string voornaam, string email, string telefoonnummer)
         {
             this.Inschrijvingsdatum = inschrijvingsdatum;
@@ -194,9 +192,7 @@ namespace Taijitan.Models.Domain
             this.TypeGebruiker = type;
         }
 
-        public Gebruiker()
-        {
-        }
+        public Gebruiker(){}
         #endregion
 
         #region Methods

@@ -1,35 +1,36 @@
-﻿@model Taijitan.Models.LesmomentViewModels.LesmomentdProeflesViewModel
+﻿@model Taijitan.Models.LesmomentViewModels.LesmomentProeflesViewModel
 
-<h2>Aanwezigheid registreren bij een proefles</h2>
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="RegistreerAanwezigheidProefles">
-            <div class="form-group ">
-                <label asp-for="Naam" class="control-label"></label>
-                <input asp-for="Naam" class="form-control" />
-                <span asp-validation-for="Naam" class="text-danger"></span>
-            </div>
-            <div class="form-group ">
-                <label asp-for="Voornaam" class="control-label"></label>
-                <input asp-for="Voornaam" class="form-control" />
-                <span asp-validation-for="Voornaam" class="text-danger"></span>
-            </div>
-            <div class="form-group ">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefoonnummer" class="control-label"></label>
-                <input asp-for="Telefoonnummer" class="form-control" />
-                <span asp-validation-for="Telefoonnummer" class="text-danger"></span>
-            </div>
-            <input type="hidden" value="@Model.LesmomentId" asp-for="LesmomentId" />
-            <div class="form-group col-md-12 text-center">
-                <a asp-controller="Lesmoment" asp-action="Aanwezigheden" class="btn btn-default">Keer terug</a>
-                <input type="submit" value="Opslaan" class="btn btn-primary" style="padding-left:4em;padding-right:4em;" />
-            </div>
-        </form>
+<div class="body-content container">
+    <h2 class="mt-5 mb-3">Aanwezigheid registreren bij een proefles</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="RegistreerAanwezigheidProefles">
+                <div class="form-group ">
+                    <label asp-for="Naam" class="control-label"></label>
+                    <input asp-for="Naam" class="form-control" />
+                    <span asp-validation-for="Naam" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="Voornaam" class="control-label"></label>
+                    <input asp-for="Voornaam" class="form-control" />
+                    <span asp-validation-for="Voornaam" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telefoonnummer" class="control-label"></label>
+                    <input asp-for="Telefoonnummer" class="form-control" />
+                    <span asp-validation-for="Telefoonnummer" class="text-danger"></span>
+                </div>
+                <input type="hidden" value="@Model.LesmomentId" asp-for="LesmomentId" />
+                <div class="form-group col-md-12 text-center">
+                    <a asp-controller="Lesmoment" asp-action="Aanwezigheden" class="btn btn-dark float-left">Terug naar aanwezigheidslijst</a>
+                    <input type="submit" value="Opslaan" class="btn btn-primary float-right" style="padding-left:4em;padding-right:4em;" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-

@@ -4,7 +4,7 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Models.LesmomentViewModels
 {
-    public class LesmomentdProeflesViewModel
+    public class LesmomentProeflesViewModel
     {
         [Required(ErrorMessage = "Naam is verplicht."), MaxLength(50)]
         //naam begint met kleine letter of hoofdletter
@@ -30,14 +30,11 @@ namespace Taijitan.Models.LesmomentViewModels
 
         public int LesmomentId { get; set; }
 
-        public LesmomentdProeflesViewModel(Lesmoment lesmoment)
+        public LesmomentProeflesViewModel(Lesmoment lesmoment)
         {
             this.LesmomentId = lesmoment.LesmomentId;
         }
 
-        public LesmomentdProeflesViewModel()
-        {
-
-        }
+        public LesmomentProeflesViewModel(){}
     }
 }

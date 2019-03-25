@@ -9,32 +9,39 @@
     }
 }
 
-<h2>Sessie op @Model.Lesmoment.StartTijd.ToString("dd/MM/yyyy") om @Model.Lesmoment.StartTijd.ToString("HH:mm")</h2>
-<div class="table col-md-12 text-center">
-    <a asp-controller="Lesmoment" asp-action="RegistreerAanwezigheidProefles" asp-route-id="@Model.Lesmoment.LesmomentId" class="btn btn-info">Ik volg een proefles</a>
-    @foreach (Taijitan.Models.Domain.Lesformule formule in Model.Lesformules)
-    {
-        var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "lesformuleId", formule.Id.ToString() } };
+<div class="body-content container">
+    <h2 class="mt-5 mb-5 text-center">Les op @Model.Lesmoment.StartTijd.ToString("dd/MM/yyyy") om @Model.Lesmoment.StartTijd.ToString("HH:mm")</h2>
+    <div class="table text-center">
+        <a asp-controller="Lesmoment" asp-action="RegistreerAanwezigheidProefles" asp-route-id="@Model.Lesmoment.LesmomentId" class="btn btn-info">Ik volg een proefles</a>
+        <div class="dropdown d-inline-block">
+            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Andere formule
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach (Taijitan.Models.Domain.Enums.Lesformule formule in Model.Lesformules)
+                {
+                    var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "lesformule", ((int)formule).ToString() } };
 
-        <a class="btn btn-default" asp-controller="Lesmoment" asp-action="gebruikersperformule" asp-all-route-data="parms">@formule.LesText</a>
-    }
-</div>
+                    <a class="dropdown-item" asp-controller="Lesmoment" asp-action="GebruikersPerFormule" asp-all-route-data="parms">@Model.LesformuleToStringMapper(formule)</a>
+                }
+            </div>
+        </div>
+    </div>
 
-<h3>Aanwezigen</h3>
-<table class="table table-striped">
-    <thead class="bg-primary">
-        <tr class="bg-primary">
-            <td><b>Gebruikersnaam</b></td>
-            <td><b>Voornaam</b></td>
-            <td><b>Achternaam</b></td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Lesmoment.Leden.OrderBy(l => l.Gebruikersnaam))
-        {
-            @if (item.Aanwezig)
+    <h3>Aanwezigen</h3>
+    <table class="table table-striped">
+        <thead class="bg-primary text-light">
+            <tr class="bg-primary">
+                <td><b>Gebruikersnaam</b></td>
+                <td><b>Voornaam</b></td>
+                <td><b>Achternaam</b></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Lesmoment.Leden.OrderByDescending(l => l.Aanwezig).ThenBy(l => l.Gebruikersnaam))
             {
+
                 var gebruikersnaam = item.Gebruikersnaam;
                 if (item.Gebruiker.TypeGebruiker.Equals(Taijitan.Models.Domain.Enums.TypeGebruiker.Proefgebruiker))
                 {
@@ -45,15 +52,22 @@
                     <td>@gebruikersnaam</td>
                     <td>@item.Gebruiker.Voornaam </td>
                     <td>@item.Gebruiker.Naam </td>
-                    @{
+                    @if (item.Aanwezig)
+                    {
                         var parms = new Dictionary<string, string> { { "gebruikersnaam", @item.Gebruiker.Gebruikersnaam } };
+                            <td><a class="btn btn-success btn-block" asp-controller="Home" asp-action="Login" asp-all-route-data="parms">Leeromgeving</a></td>
                     }
-                    <td><a class="btn btn-default" asp-controller="Gebruiker" asp-action="Login" asp-all-route-data="parms">Leeromgeving</a></td>
+                    else
+                    {
+                        var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "gebruikersnaam", item.Gebruiker.Gebruikersnaam } };
+                        <td><a class="btn btn-info btn-block" asp-action="RegistreerAanwezigheid" asp-controller="Lesmoment" asp-all-route-data="parms">Registreer aanwezigheid</a></td>
+                    }
+
                 </tr>
             }
-        }
-    </tbody>
-</table>
-<div class="form-group col-md-12 text-center">
-    <a asp-controller="Home" asp-action="Index" class="btn btn-default">Keer terug</a>
+        </tbody>
+    </table>
+    <div class="form-group col-md-12 text-center">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-dark">Terug naar dashboard</a>
+    </div>
 </div>

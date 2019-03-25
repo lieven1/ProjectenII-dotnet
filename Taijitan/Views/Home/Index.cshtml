@@ -1,34 +1,46 @@
-﻿@{
-    if (TempData.ContainsKey("error")) {
-        <div class="alert alert-danger">
-            @TempData["error"]
-        </div>
+﻿<style>
+    .header-image {
+        margin-bottom: 120px;
     }
-}
 
-        <div class="d-flex justify-content-between" style="padding-top: 30px">
-            <div class="col-xs-4 col-sm-3 ">
-                <a asp-controller="Lesmoment" asp-action="BeheerLesmoment" class="btn btn-primary btn-lg">
-                    <img src="~/images/lesmoment.png" class="img-responsive img-circle border-dark">
-                    Beheer lesmomenten
-                </a>
-            </div>
-            <div class="col-xs-4 col-sm-3 ">
-                <a asp-controller="Lesmoment" asp-action="Aanwezigheden" class="btn btn-primary btn-lg">
-                    <img src="~/images/checkbox.png" class="img-responsive img-circle border-dark">
-                    Registreer aanwezigheid
-                </a>
-            </div>
-            <div class="col-xs-4 col-sm-3 ">
-                <a asp-controller="Lesmoment" asp-action="Aanwezigen" class="btn btn-primary btn-lg">
-                    <img src="~/images/checkbox.png" class="img-responsive img-circle border-dark">
-                    Toon Aanwezigen
-                </a>
-            </div>
-            @*<div class="col-xs-4 col-sm-3 ">
-            <a asp-controller="Gebruiker" asp-action="Login" class="btn btn-primary btn-lg">
-                <img src="~/images/gebruiker.png" class="img-responsive img-circle border-dark">
-                Gebruiker
+    .img-dashbboard {
+        max-width: 200px;
+    }
+
+    .col-dashboard {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+</style>
+
+<img class="img-fluid header-image" src="~/images/slide.jpg" />
+<div class="container">
+    <div class="row">
+        <div class="col col-dashboard">
+            <a asp-controller="Lesmoment" asp-action="BeheerLesmoment" class="btn btn-primary btn-lg">
+                <img src="~/images/lesmoment.png" class="img-fluid img-dashbboard"><br />
+                Beheer lesmomenten
             </a>
-        </div>*@
         </div>
+        <div class="col col-dashboard">
+            <a asp-controller="Lesmoment" asp-action="Aanwezigheden" class="btn btn-primary btn-lg">
+                <img src="~/images/checkbox.png" class="img-fluid img-dashbboard"><br />
+                Registreer aanwezigheid
+            </a>
+        </div>
+        <div class="col col-dashboard">
+            <a asp-controller="Lesmoment" asp-action="RegistreerAanwezigheid" class="btn btn-primary btn-lg">
+                <img src="~/images/overview.png" class="img-fluid img-dashbboard"><br />
+                Overzicht aanwezigheid
+            </a>
+        </div>
+        <div class="col col-dashboard">
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <img src="~/images/logout.png" class="img-fluid img-dashbboard"><br />
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

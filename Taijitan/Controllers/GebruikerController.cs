@@ -16,43 +16,33 @@ namespace Taijitan.Controllers {
 
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Index(Gebruiker gebruiker) {
+            if (gebruiker.Equals(null))
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return View(gebruiker);
-        }
-        
-        //public IActionResult Login()
-        //{
-        //    return View(_gebruikerRepository.GetAllLeden());
-        //}
-
-        //gebruiker (gebruikersnaam) wordt meegegeven uit View Aanwezigen (LesmomentController)
-        public IActionResult Login(string gebruikersnaam)
-        {
-            HttpContext.Session.SetString("Gebruiker", gebruikersnaam);
-            var gebruiker = _gebruikerRepository.GetBy(gebruikersnaam);
-            return RedirectToAction("Leeromgeving", "Gebruiker", new { gebruiker });
-        }
-
-        public IActionResult Logout() {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Aanwezigen", "Lesmoment");
-        }
-        
-        public IActionResult Leeromgeving() {
-            TempData["beheerder"] = User.IsInRole("beheerder");
-            return View();
         }
 
         [HttpGet]
         [ServiceFilter(typeof(GebruikerFilter))]
-        public IActionResult Edit(Gebruiker gebruiker) {
-            if (gebruiker == null)
-                return NotFound();
+        public IActionResult Edit(Gebruiker gebruiker)
+        {
+            if (gebruiker.Equals(null))
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return View(new GebruikerEditViewModel(gebruiker));
         }
 
         [HttpPost]
         [ServiceFilter(typeof(GebruikerFilter))]
-        public IActionResult Edit(Gebruiker gebruiker, GebruikerEditViewModel model) {
+        public IActionResult Edit(Gebruiker gebruiker, GebruikerEditViewModel model)
+        {
+            if (gebruiker.Equals(null))
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
             try {
                 MapGebruikerEditViewModelToGebruiker(model, gebruiker);
                 _gebruikerRepository.SaveChanges();
@@ -63,8 +53,10 @@ namespace Taijitan.Controllers {
             }
             return RedirectToAction(nameof(Index));
         }
+
         private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker) {
             gebruiker.WijzigGegevens(model.Naam, model.Voornaam, model.TelefoonNummer, model.Gsmnummer, model.Email, model.EmailOuders, model.Land, model.Postcode, model.Stad, model.Straat, model.Nummer);
         }
+        
     }
 }

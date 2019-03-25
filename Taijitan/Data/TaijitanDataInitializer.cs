@@ -188,7 +188,7 @@ namespace Taijitan.Data {
             Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
             var gebruiker = new Gebruiker(usr, "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man,
                 new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com",
-                adres1, 100, Gradatie.YonDan, TypeGebruiker.Beheerder);
+                adres1, 100, Gradatie.YonDan, TypeGebruiker.Beheerder, Lesformule.DinsdagZaterdag);
             _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }

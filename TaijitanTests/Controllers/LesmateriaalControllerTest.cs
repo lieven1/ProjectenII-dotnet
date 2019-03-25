@@ -28,37 +28,37 @@ namespace TaijitanTests.Controllers {
             _controller = new LesmateriaalController(_lesmateriaalRepo.Object, _themaRepo.Object);
         }
 
-        [Fact]
-        public void Index_GeeftGradenGebruiker() {
-            var result = _controller.GraadOverzicht(_gebruiker1) as ViewResult;
-            var model = (IEnumerable<Gradatie>)result.Model;
-            var lijst = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>().ToList().Where(g => g.CompareTo(_gebruiker1.Gradatie) <= 0);
-            Assert.Contains(_gebruiker1.Gradatie, model);
-            Assert.Contains(_gebruiker1.Gradatie - 1, model);
-            Assert.DoesNotContain(_gebruiker1.Gradatie + 1, model);
-        }
+        //[Fact]
+        //public void Index_GeeftGradenGebruiker() {
+        //    var result = _controller.GraadOverzicht(_gebruiker1) as ViewResult;
+        //    var model = (IEnumerable<Gradatie>)result.Model;
+        //    var lijst = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>().ToList().Where(g => g.CompareTo(_gebruiker1.Gradatie) <= 0);
+        //    Assert.Contains(_gebruiker1.Gradatie, model);
+        //    Assert.Contains(_gebruiker1.Gradatie - 1, model);
+        //    Assert.DoesNotContain(_gebruiker1.Gradatie + 1, model);
+        //}
 
-        [Fact]
-        public void ToonThemas_GeeftThemasGraad() {
-            _themaRepo.Setup(tr => tr.GetAll()).Returns(_context.Themas);
-            var result = _controller.ThemaOverzicht((int)Gradatie.GoKyu) as ViewResult;
-            var model = (ThemaViewModel)result.Model;
-            Assert.Contains(_context.Themas[0], model.Themas);
-            Assert.DoesNotContain(_context.Themas[1], model.Themas);
-        }
+        //[Fact]
+        //public void ToonThemas_GeeftThemasGraad() {
+        //    _themaRepo.Setup(tr => tr.GetAll()).Returns(_context.Themas);
+        //    var result = _controller.ThemaOverzicht((int)Gradatie.GoKyu) as ViewResult;
+        //    var model = (ThemaViewModel)result.Model;
+        //    Assert.Contains(_context.Themas[0], model.Themas);
+        //    Assert.DoesNotContain(_context.Themas[1], model.Themas);
+        //}
 
-        [Fact]
-        public void ToonLesmateriaal_GeeftLesmateriaalThemaGraad() {
-            var thema = _context.Themas[0];
-            var graad = Gradatie.GoKyu;
-            var lesmateriaal = _context.Lesmateriaal.Where(l => l.Graad.Equals(graad)).ToList();
+        //[Fact]
+        //public void ToonLesmateriaal_GeeftLesmateriaalThemaGraad() {
+        //    var thema = _context.Themas[0];
+        //    var graad = Gradatie.GoKyu;
+        //    var lesmateriaal = _context.Lesmateriaal.Where(l => l.Graad.Equals(graad)).ToList();
 
-            _themaRepo.Setup(tr => tr.GetBy(thema.ThemaId)).Returns(thema);
-            _lesmateriaalRepo.Setup(lr => lr.GetAll()).Returns(_context.Lesmateriaal);
+        //    _themaRepo.Setup(tr => tr.GetBy(thema.ThemaId)).Returns(thema);
+        //    _lesmateriaalRepo.Setup(lr => lr.GetAll()).Returns(_context.Lesmateriaal);
 
-            var result = _controller.LesmateriaalOverzicht(thema.ThemaId, (int)Convert.ChangeType(graad,TypeCode.Int32)) as ViewResult;
-            var model = (IEnumerable<Lesmateriaal>)result.Model;
-            Assert.Equal(lesmateriaal, model);
-        }
+        //    var result = _controller.LesmateriaalOverzicht(thema.ThemaId, (int)Convert.ChangeType(graad,TypeCode.Int32)) as ViewResult;
+        //    var model = (IEnumerable<Lesmateriaal>)result.Model;
+        //    Assert.Equal(lesmateriaal, model);
+        //}
     }
 }

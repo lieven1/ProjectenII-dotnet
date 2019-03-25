@@ -19,10 +19,7 @@ namespace Taijitan.Data
         public DbSet<FotoLesmateriaal> FotoLesmateriaal { get; set; }
         public DbSet<Lesformule> Lesformules { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-                : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options){}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
