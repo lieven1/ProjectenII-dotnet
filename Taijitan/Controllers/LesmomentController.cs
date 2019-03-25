@@ -44,12 +44,6 @@ namespace Taijitan.Controllers
             return RedirectToAction(nameof(BeheerLesmoment));
         }
 
-        //[Authorize(Policy = "Beheerder")]
-        //public IActionResult ToonActieveLesmomenten()
-        //{
-        //    return View("ToonActieveLesmomenten", new LesmomentActiefViewModel(geefLesmomenten(l => l.Actief)));
-        //}
-
         public IActionResult Aanwezigheden()
         {
             Lesmoment lesmoment = geefLesmomenten(l => l.Actief).FirstOrDefault();
@@ -82,24 +76,6 @@ namespace Taijitan.Controllers
             }
             return View("Aanwezigen", new LesmomentGebruikerViewModel(lesmoment));
         }
-
-        //public IActionResult Start(int id)
-        //{
-        //    Lesmoment lesmoment = lesmomentRepository.GetById(id);
-
-        //    if (lesmoment != null)
-        //    {
-        //        return Aanwezigheden(lesmoment.LesmomentId);
-        //    }
-        //    else
-        //    {
-        //        // TODO
-        //        // er ging iets mis => error boodschap duidelijker
-        //        return NotFound();
-        //    }
-
-        //}
-
 
         [Route("/Lesmoment/RegistreerAanwezigheid",
        Name = "registreeraanwezigheid")]
