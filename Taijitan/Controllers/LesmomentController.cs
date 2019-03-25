@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Enums;
+using Taijitan.Models.Domain.IRepositories;
 using Taijitan.Models.LesmomentViewModels;
 
 namespace Taijitan.Controllers
@@ -14,11 +15,13 @@ namespace Taijitan.Controllers
     {
         private ILesmomentRepository lesmomentRepository;
         private IGebruikerRepository gebruikerRepository;
+        private ILesformuleRepository lesformuleRepository;
 
-        public LesmomentController(ILesmomentRepository lesmomentRepository, IGebruikerRepository gebruikerRepository)
+        public LesmomentController(ILesmomentRepository lesmomentRepository, IGebruikerRepository gebruikerRepository, ILesformuleRepository lesformuleRepository)
         {
             this.lesmomentRepository = lesmomentRepository;
             this.gebruikerRepository = gebruikerRepository;
+            this.lesformuleRepository = lesformuleRepository;
         }
         
         public IActionResult BeheerLesmoment()
@@ -59,9 +62,9 @@ namespace Taijitan.Controllers
             return View("Aanwezigheden", new LesmomentAlgemeenViewModel(lesmoment, LesformulesMetGebruikers()));
         }
         
-        public IActionResult GebruikersPerFormule(int lesmomentId, string lesformule)
+        public IActionResult GebruikersPerFormule(int lesmomentId, int lesformuleId)
         {
-            Lesformule formule = (Lesformule)Enum.Parse(typeof(Lesformule), lesformule);
+            Lesformule formule = lesformuleRepository.GetById(lesformuleId);
             Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
 
             List<Gebruiker> gebruikers = gebruikerRepository.GetAllLedenInFormule(formule);

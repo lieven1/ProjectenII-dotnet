@@ -18,11 +18,11 @@
                 Andere formule
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                @foreach (Taijitan.Models.Domain.Enums.Lesformule formule in Model.Lesformules)
+                @foreach (Taijitan.Models.Domain.Lesformule formule in Model.Lesformules)
                 {
-                    var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "lesformule", ((int)formule).ToString() } };
+                    var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "lesformuleId", formule.Id.ToString() } };
 
-                    <a class="dropdown-item" asp-controller="Lesmoment" asp-action="GebruikersPerFormule" asp-all-route-data="parms">@Model.LesformuleToStringMapper(formule)</a>
+                    <a class="dropdown-item" asp-controller="Lesmoment" asp-action="GebruikersPerFormule" asp-all-route-data="parms">@formule.LesText</a>
                 }
             </div>
         </div>

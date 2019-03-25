@@ -124,6 +124,7 @@ namespace TaijitanTests.Controllers
         #endregion
 
         #region Aanwezigen
+        /*
         [Fact]
         public void Aanwezigen_Valid() {
             _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.Lesmomenten);
@@ -138,8 +139,9 @@ namespace TaijitanTests.Controllers
             Assert.Equal("Index", actionResult?.ActionName);
             Assert.True(_controller.TempData.ContainsKey("error"));
         }
+        */
         #endregion
-
+        
         #region RegistreerAanwezigheidNietIngeschreven
         [Fact]
         public void RegistreerAanwezigheidNietIngeschreven_invalidArguments_Valid()
