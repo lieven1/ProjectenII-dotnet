@@ -3,20 +3,29 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="container body-content">
 
-@if (Model.ShowRequestId)
-{
+    <h1 class="text-danger mt-5">Error</h1>
+    <h2 class="text-danger">Er was een probleem bij het verwerken van je aanvraag.</h2>
+
+    @if (Model.ShowRequestId)
+    {
+        <p>
+            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        </p>
+    }
+
+    <h3>Wat nu?</h3>
     <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+        Probeer de aanvraag opnieuw op een later moment.<br />
+        Indien deze error blijft gebeuren dient u contact op te nemen met de systeembeheerder.<br />
+        Probeer hierbij de Request ID en een gedetaileerde beschrijving van de omstandigheden te geven.<br />
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+            <button type="submit" class="btn btn-primary btn-lg">
+                Terug naar login
+            </button>
+        </form>
+    </p>
+
+</div>

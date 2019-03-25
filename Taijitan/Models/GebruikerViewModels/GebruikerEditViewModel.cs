@@ -45,11 +45,8 @@ namespace Taijitan.Models.GebruikerViewModels {
         public String Straat { get; set; }
         [Required(ErrorMessage = "Nummer is verplicht.")]
         public String Nummer { get; set; }
-
-        public GebruikerEditViewModel()
-        {
-
-        }
+        
+        public GebruikerEditViewModel(){}
 
         public GebruikerEditViewModel(Gebruiker gebruiker)
         {

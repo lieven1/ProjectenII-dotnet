@@ -25,8 +25,8 @@ namespace TaijitanTests.Data
 
         public DummyDBcontext()
         {
-            Gebruiker gebruiker1 = new Gebruiker("username1", "25632112569", DateTime.Now, "name1", "first name1", Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.HachiDan, TypeGebruiker.Lid);
-            GebruikerNietInLijst = new Gebruiker("username2", "25632100000", DateTime.Now, "name2", "first name2", Taijitan.Models.Domain.Enums.Geslacht.Vrouw, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.JuichiDan, TypeGebruiker.Lid);
+            Gebruiker gebruiker1 = new Gebruiker("username1", "25632112569", DateTime.Now, "name1", "first name1", Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.HachiDan, TypeGebruiker.Lid, Lesformule.DinsdagDonderdag);
+            GebruikerNietInLijst = new Gebruiker("username2", "25632100000", DateTime.Now, "name2", "first name2", Taijitan.Models.Domain.Enums.Geslacht.Vrouw, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.JuichiDan, TypeGebruiker.Lid, Lesformule.Woensdag);
             GebruikerInLijst = gebruiker1;
 
             Lijst1Gebruiker = new List<Gebruiker>();
@@ -39,8 +39,8 @@ namespace TaijitanTests.Data
             Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
             Adres adres2 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
 
-            Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, Gradatie.NiDan, TypeGebruiker.Lid);
-            GebruikerInLesmomentLedenVanLesmomentValid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, Gradatie.JuichiDan, TypeGebruiker.Lid);
+            Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man, new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com", adres1, 100, Gradatie.NiDan, TypeGebruiker.Lid, Lesformule.WoensdagZaterdag);
+            GebruikerInLesmomentLedenVanLesmomentValid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man, new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com", adres1, 100, Gradatie.JuichiDan, TypeGebruiker.Lid, Lesformule.Zaterdag);
 
 
             // LesmomentController

@@ -31,7 +31,7 @@ namespace Taijitan.Controllers
             HttpContext.Session.SetString("Gebruiker", gebruikersnaam);
             return RedirectToAction(nameof(Dashboard));
         }
-
+        
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
@@ -41,7 +41,14 @@ namespace Taijitan.Controllers
         public IActionResult Dashboard()
         {
             TempData["leeromgeving"] = User.IsInRole("beheerder");
-            TempData["gebruiker"] = HttpContext.Session.GetString("Gebruiker");
+            try
+            {
+                TempData["gebruiker"] = HttpContext.Session.GetString("Gebruiker");
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Error));
+            }
             return View();
         }
 

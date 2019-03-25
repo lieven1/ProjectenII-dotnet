@@ -11,8 +11,16 @@ namespace Taijitan.Filters {
         }
 
         public override void OnActionExecuting(ActionExecutingContext context) {
-            context.ActionArguments["gebruiker"] = context.HttpContext.User.Identity.IsAuthenticated ? _gebruikerRepository.GetBy(context.HttpContext.Session.GetString("Gebruiker")) : null;
-            base.OnActionExecuting(context);
+            try
+            {
+                context.ActionArguments["gebruiker"] = context.HttpContext.User.Identity.IsAuthenticated ? _gebruikerRepository.GetBy(context.HttpContext.Session.GetString("Gebruiker")) : null;
+                base.OnActionExecuting(context);
+            }
+            catch
+            {
+                context.ActionArguments["gebruiker"] = null;
+                base.OnActionExecuting(context);
+            }
         }
     }
 }
