@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Taijitan.Controllers;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.IRepositories;
 using Taijitan.Models.LesmomentViewModels;
 using TaijitanTests.Data;
 using Xunit;
@@ -19,6 +20,7 @@ namespace TaijitanTests.Controllers
         private readonly DummyDBcontext _context;
         private readonly Mock<ILesmomentRepository> _lesmomentRepository;
         private readonly Mock<IGebruikerRepository> _gebruikerRepository;
+        private readonly Mock<ILesformuleRepository> _lesformuleRepository;
 
 
         public LesmomentControllerTest()
@@ -28,8 +30,9 @@ namespace TaijitanTests.Controllers
             _context = new DummyDBcontext();
             _lesmomentRepository = new Mock<ILesmomentRepository>();
             _gebruikerRepository = new Mock<IGebruikerRepository>();
+            _lesformuleRepository = new Mock<ILesformuleRepository>();
 
-            _controller = new LesmomentController(_lesmomentRepository.Object, _gebruikerRepository.Object) {
+            _controller = new LesmomentController(_lesmomentRepository.Object, _gebruikerRepository.Object, _lesformuleRepository.Object) {
                 ControllerContext = new ControllerContext {
                     HttpContext = mockHttpContext.Object
                 },

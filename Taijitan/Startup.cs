@@ -35,8 +35,7 @@ namespace Taijitan
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-                   //@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=taijitan;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+                options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Taijitan;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -58,6 +57,7 @@ namespace Taijitan
             services.AddScoped<ILesmomentRepository, LesmomentRepository>();
             services.AddScoped<IThemaRepository, ThemaRepository>();
             services.AddScoped<ILesmateriaalRepository, LesmateriaalRepository>();
+            services.AddScoped<ILesformuleRepository, LesformuleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
