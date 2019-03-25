@@ -29,6 +29,11 @@ namespace Taijitan.Controllers
 
         public IActionResult StartLesmoment(int id)
         {
+            if(lesmomentRepository.GetAll().Exists(t => t.Actief))
+            {
+                TempData["Error"] = "Er kan maar 1 lesmoment actief zijn.";
+                return RedirectToAction(nameof(BeheerLesmoment));
+            }
             Lesmoment lesmoment = lesmomentRepository.GetById(id);
             lesmoment.ZetActief(true);
             lesmomentRepository.Save();

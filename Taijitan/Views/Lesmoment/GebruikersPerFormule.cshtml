@@ -14,20 +14,21 @@
         </thead>
         @foreach (Taijitan.Models.Domain.Gebruiker gebruiker in Model.Gebruikers)
         {
-            <tr>
-                <td>@gebruiker.Gebruikersnaam </td>
-                <td>@gebruiker.Voornaam </td>
-                <td>@gebruiker.Naam</td>
-                @if (Model.isGebruikerAanwezig(gebruiker))
-                {
-                    <td>Aanwezig</td>
-                }
-                else
-                {
-                    var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "gebruikersnaam", gebruiker.Gebruikersnaam } };
-                    <td><a class="btn btn-info btn-block" asp-route="RegistreerAanwezigheid" asp-all-route-data="parms">Registreer aanwezigheid</a></td>
-                }
-            </tr>
+        <tr>
+            <td>@gebruiker.Gebruikersnaam </td>
+            <td>@gebruiker.Voornaam </td>
+            <td>@gebruiker.Naam</td>
+            @if (Model.isGebruikerAanwezig(gebruiker))
+            {
+                var parms = new Dictionary<string, string> { { "gebruikersnaam", @gebruiker.Gebruikersnaam } };
+                <td><a class="btn btn-success btn-block" asp-controller="Home" asp-action="Login" asp-all-route-data="parms">Leeromgeving</a></td>
+            }
+            else
+            {
+                var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "gebruikersnaam", gebruiker.Gebruikersnaam } };
+                <td><a class="btn btn-info btn-block" asp-action="RegistreerAanwezigheid" asp-controller="Lesmoment" asp-all-route-data="parms">Registreer aanwezigheid</a></td>
+            }
+        </tr>
         }
     </table>
     <div class="form-group col-md-12 text-center">

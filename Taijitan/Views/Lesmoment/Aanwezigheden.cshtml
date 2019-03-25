@@ -31,7 +31,7 @@
     <h3>Aanwezigen</h3>
     <table class="table table-striped">
         <thead class="bg-primary text-light">
-            <tr>
+            <tr class="bg-primary">
                 <td><b>Gebruikersnaam</b></td>
                 <td><b>Voornaam</b></td>
                 <td><b>Achternaam</b></td>
@@ -39,38 +39,35 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model.Lesmoment.Leden.Count < 0)
+            @foreach (var item in Model.Lesmoment.Leden.OrderByDescending(l => l.Aanwezig).ThenBy(l => l.Gebruikersnaam))
             {
 
-                @foreach (var item in Model.Lesmoment.Leden.OrderBy(l => l.Gebruikersnaam))
+                var gebruikersnaam = item.Gebruikersnaam;
+                if (item.Gebruiker.TypeGebruiker.Equals(Taijitan.Models.Domain.Enums.TypeGebruiker.Proefgebruiker))
                 {
+                    gebruikersnaam = "proefles";
+                }
+
+                <tr>
+                    <td>@gebruikersnaam</td>
+                    <td>@item.Gebruiker.Voornaam </td>
+                    <td>@item.Gebruiker.Naam </td>
                     @if (item.Aanwezig)
                     {
-                        var gebruikersnaam = item.Gebruikersnaam;
-                        if (item.Gebruiker.TypeGebruiker.Equals(Taijitan.Models.Domain.Enums.TypeGebruiker.Proefgebruiker))
-                        {
-                            gebruikersnaam = "proefles";
-                        }
-
-                        <tr>
-                            <td>@gebruikersnaam</td>
-                            <td>@item.Gebruiker.Voornaam </td>
-                            <td>@item.Gebruiker.Naam </td>
-                            @{
-                                var parms = new Dictionary<string, string> { { "gebruikersnaam", @item.Gebruiker.Gebruikersnaam } };
-                            }
-                            <td><a class="btn btn-default" asp-controller="Home" asp-action="Login" asp-all-route-data="parms">Leeromgeving</a></td>
-                        </tr>
+                        var parms = new Dictionary<string, string> { { "gebruikersnaam", @item.Gebruiker.Gebruikersnaam } };
+                            <td><a class="btn btn-success btn-block" asp-controller="Home" asp-action="Login" asp-all-route-data="parms">Leeromgeving</a></td>
                     }
-                }
-            }
-            else
-            {
-                <tr><td colspan="4" class="text-danger text-center"><b><i>Er zijn geen leden ingeschreven in deze les</i></b></td></tr>
+                    else
+                    {
+                        var parms = new Dictionary<string, string> { { "lesmomentId", Model.Lesmoment.LesmomentId.ToString() }, { "gebruikersnaam", item.Gebruiker.Gebruikersnaam } };
+                        <td><a class="btn btn-info btn-block" asp-action="RegistreerAanwezigheid" asp-controller="Lesmoment" asp-all-route-data="parms">Registreer aanwezigheid</a></td>
+                    }
+
+                </tr>
             }
         </tbody>
     </table>
     <div class="form-group col-md-12 text-center">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-dark mt-3">Terug naar dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-dark">Terug naar dashboard</a>
     </div>
 </div>
