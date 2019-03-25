@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudinaryDotNet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace Taijitan.Models.Domain {
         public string bestandsnaam { get; set; }
         public string extensie { get; set; }
         public List<FotoLesmateriaal> lesmateriaal { get; private set; }
+
+        public Cloudinary Cloudinary { get; } = new Cloudinary(new Account("dkbfdmful", "863719494787761", "DpGFihSrXeYjXljkQiaFcaqR14c"));
 
         public Foto(string bestandsnaam, string extensie) {
             this.bestandsnaam = bestandsnaam;
