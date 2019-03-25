@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-
-namespace Taijitan.Models.Domain.Enums
+﻿namespace Taijitan.Models.Domain.Enums
 {
     public enum Gradatie : int
     {

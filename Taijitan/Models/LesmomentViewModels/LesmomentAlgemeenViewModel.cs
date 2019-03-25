@@ -32,10 +32,7 @@ namespace Taijitan.Models.LesmomentViewModels
             };
         }
 
-
         public LesmomentAlgemeenViewModel()
-        {
-
-        }
+        {}
     }
 }

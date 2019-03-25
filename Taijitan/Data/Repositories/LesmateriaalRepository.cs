@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
-using Taijitan.Models.Domain.Enums;
 using Taijitan.Models.Domain.IRepositories;
 
 namespace Taijitan.Data.Repositories {

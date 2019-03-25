@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Taijitan.Models.Domain;
 
-namespace Taijitan.Models.LesmateriaalViewModels {
+namespace Taijitan.Models.LesmateriaalViewModels
+{
     public class ThemaViewModel {
         
         public int Graad { get; private set; }

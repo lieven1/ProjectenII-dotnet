@@ -100,9 +100,7 @@ namespace Taijitan.Models.Domain
             this.Straat = straat;
             this.Nummer = nummer;
         }
-        public Adres() {
-
-        }
+        public Adres() {}
         #endregion
         
         #region Methods

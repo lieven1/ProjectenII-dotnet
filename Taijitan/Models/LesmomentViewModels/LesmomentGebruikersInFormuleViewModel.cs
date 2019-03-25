@@ -9,7 +9,6 @@ namespace Taijitan.Models.LesmomentViewModels
         public List<Gebruiker> Gebruikers { get; set; }
         public Lesformule Lesformule { get; set; }
         public Lesmoment Lesmoment { get; set; }
-
         private Dictionary<Lesformule, string> lesformuleToStringDictionary;
 
         public string LesformuleTekst { get { return lesformuleToStringDictionary.GetValueOrDefault(Lesformule); } }

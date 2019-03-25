@@ -9,12 +9,8 @@ namespace Taijitan.Models.LesmomentViewModels
         public LesmomentGebruikerViewModel(Lesmoment lesmoment)
         {
             Lesmoment = lesmoment;
-
         }
 
-        public LesmomentGebruikerViewModel()
-        {
-
-        }
+        public LesmomentGebruikerViewModel(){}
     }
 }

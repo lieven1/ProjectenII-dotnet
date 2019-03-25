@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Databindings;
-using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Data.Repositories
 {
