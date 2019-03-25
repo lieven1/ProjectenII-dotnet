@@ -54,11 +54,6 @@ namespace Taijitan.Models.Domain
         #endregion
 
         #region Constructor
-        public Lesmoment(int lesmomentId, DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden) : this(startTijd, eindTijd, lesmomentLeden)
-        {
-            this.LesmomentId = lesmomentId;
-        }
-
         public Lesmoment(DateTime startTijd, DateTime eindTijd, List<LesmomentLeden> lesmomentLeden)
         {
             this.StartTijd = startTijd;

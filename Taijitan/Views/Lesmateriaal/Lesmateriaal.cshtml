@@ -1,0 +1,48 @@
+﻿@model Taijitan.Models.Domain.Lesmateriaal
+
+<div>
+    <h4>Lesmateriaal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            titel
+        </dt>
+        <dd>
+            @Model.Naam
+        </dd>
+        @if (Model.Beschrijving != null) {
+            <dt>
+                beschrijving
+            </dt>
+            <dd>
+                @Model.Beschrijving
+            </dd>
+        }
+        @if (Model.VideoId != null) {
+            var videoUrl = "https://www.youtube.com/embed/" + Model.VideoId;
+            <dt>
+                video
+            </dt>
+            <dd>
+                <iframe width="420" height="315" src="@videoUrl"></iframe>
+            </dd>
+        }
+        @foreach (Taijitan.Models.Domain.Databindings.FotoLesmateriaal item in Model.Fotos) {
+            var index = Model.Fotos.IndexOf(item) + 1;
+            var path = "images/fotos/" + item.Foto.bestandsnaam + "." + item.Foto.extensie;
+            <dt>
+                foto nr. @index
+            </dt>
+            <dd>
+                <img src="~/@path">
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    @{
+        var graadInt = Convert.ChangeType(Model.Graad, TypeCode.Int32);
+        var parms = new Dictionary<string, string> { { "themaId", Model.Thema.ThemaId.ToString() }, { "graad", graadInt.ToString() } };
+    }
+    <a class="btn btn-default btn-lg" asp-action="LesmateriaalOverzicht" asp-all-route-data="@parms">Terug</a>
+</div>

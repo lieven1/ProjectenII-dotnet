@@ -17,16 +17,14 @@ namespace Taijitan.Data.Repositories {
         }
 
         public List<Thema> GetAll() {
-            return _themas.Include(t => t.Lesmateriaal).ToList();
+            return _themas.ToList();
         }
 
         public Thema GetBy(int id) {
-            return _themas.Include(t => t.Lesmateriaal).FirstOrDefault(t => t.ThemaId == id);
+            return _themas.FirstOrDefault(t => t.ThemaId == id);
         }
 
-        public List<Lesmateriaal> GetLesmateriaal(Thema thema, Gradatie graad) {
-            return thema.Lesmateriaal.Where(l => l.Graad == graad).ToList();
-        }
+        
 
         public void SaveChanges() {
             _context.SaveChanges();

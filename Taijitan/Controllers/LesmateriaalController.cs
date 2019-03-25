@@ -34,15 +34,26 @@ namespace Taijitan.Controllers {
         }
         
         public IActionResult ThemaOverzicht(int graad) {
-            var themas = _themaRepo.GetAll().FindAll(thema => thema.Lesmateriaal.Any(l => l.Graad.Equals((Gradatie)graad)));
+            var lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)graad);
+            var themas = lesmateriaal.Select<Lesmateriaal, Thema>(l => l.Thema).Distinct().ToList();
             var themaViewModel = new ThemaViewModel(graad, themas);
             return View(themaViewModel);
         }
 
         public IActionResult LesmateriaalOverzicht(int themaId, int graad) {
             var thema = _themaRepo.GetBy(themaId);
-            var lesmateriaal = _themaRepo.GetLesmateriaal(thema, (Gradatie)graad);
+            var lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Thema.ThemaId == themaId && 
+                                                            (int)Convert.ChangeType(l.Graad, TypeCode.Int32) == graad);
             return View(lesmateriaal);
+        }
+
+        public IActionResult Lesmateriaal(int id) {
+            var lesmateriaal = _lesmateriaalRepo.GetById(id);
+            if(lesmateriaal == null) {
+                return NotFound();
+            } else {
+                return View(lesmateriaal);
+            }
         }
     }
 }

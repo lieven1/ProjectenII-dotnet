@@ -30,7 +30,7 @@ namespace Taijitan.Data.Repositories
 
         public Gebruiker GetBy(String gebruikersnaam)
         {
-            return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam); ;
+            return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam);
         }
 
         public void Save(Gebruiker gebruiker)

@@ -11,7 +11,6 @@ namespace Taijitan.Data.Mappers {
             builder.ToTable("Thema");
             builder.HasKey(t => t.ThemaId);
             builder.Property(t => t.Naam).IsRequired();
-            builder.HasMany(t => t.Lesmateriaal).WithOne();
         }
     }
 }

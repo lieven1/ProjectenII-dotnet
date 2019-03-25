@@ -3,26 +3,44 @@
 <fieldset>
     <h2>Overzicht lesmateriaal</h2>
     <table class="table table-striped">
-        <thead class="bg-primary">
-            <tr class="bg-primary">
-                <td colspan="2"><b>Lesmateriaal</b></td>
-            </tr>
-        </thead>
+        <tr>
+            <th>Titel</th>
+            <th>Beschrijving</th>
+            <th>Graad</th>
+            <th>Thema</th>
+            <th></th>
+        </tr>
         @foreach (var item in Model) {
+            var id = item.LesmateriaalId.ToString();
+            var beschrijving = "";
+            if (item.Beschrijving != null) {
+                beschrijving = new String(item.Beschrijving.Length > 73 ? item.Beschrijving.Take<char>(70).Append('.').Append('.').Append('.').ToArray() : item.Beschrijving.ToCharArray());
+            }
+
             <tr>
                 <td>
-                    <b>Naam: </b> @item.Naam
-                    <b>Type: </b> @item.Type
+                    @item.Naam
                 </td>
-
-                <td><a class="btn btn-default" asp-action="Lesmateriaal">Bekijk lesmateriaal</a></td>
+                <td style="width:500px">
+                    @beschrijving
+                </td>
+                <td>
+                    @item.Graad
+                </td>
+                <td>
+                    @item.Thema
+                </td>
+                <td>
+                    <a asp-action="Lesmateriaal" asp-route-id="@id">Bekijk lesmateriaal</a>
+                </td>
             </tr>
         }
     </table>
+    
     <div class="form-group col-md-12">
         @{
             var graadInt = Convert.ChangeType(Model.FirstOrDefault().Graad, TypeCode.Int32);
-            var parms = new Dictionary<string, string> {{ "graad", graadInt.ToString() } };
+            var parms = new Dictionary<string, string> { { "graad", graadInt.ToString() } };
         }
         <a asp-controller="lesmateriaal" asp-action="themaoverzicht" asp-all-route-data="parms" class="btn btn-default btn-lg">Keer Terug</a>
 

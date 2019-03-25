@@ -14,6 +14,8 @@ namespace Taijitan.Data
         public DbSet<LesmomentLeden> LesmomentLeden { get; set; }
         public DbSet<Thema> Themas { get; set; }
         public DbSet<Lesmateriaal> Lesmateriaal { get; set; }
+        public DbSet<Foto> Fotos { get; set; }
+        public DbSet<FotoLesmateriaal> FotoLesmateriaal { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)
@@ -29,13 +31,8 @@ namespace Taijitan.Data
             builder.ApplyConfiguration(new LesmomentLedenConfiguration());
             builder.ApplyConfiguration(new ThemaConfiguration());
             builder.ApplyConfiguration(new LesmateriaalConfiguration());
+            builder.ApplyConfiguration(new FotoConfiguration());
+            builder.ApplyConfiguration(new FotoLesmateriaalConfiguration());
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)   //zelf server link instellen --> met sqlserver express niet nodig(zie slide 18)
-        //{
-        //    var connectionstring =
-        //                      @"Server=DESKTOP-KS6ATME;Database=Taijitan;Integrated Security=True;";
-        //    optionsBuilder.UseSqlServer(connectionstring);
-        //}
     }
 }

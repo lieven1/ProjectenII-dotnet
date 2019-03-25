@@ -44,8 +44,8 @@ namespace TaijitanTests.Data
 
 
             // LesmomentController
-            LesmomentLeden lesmomentLedenBruceLee = new LesmomentLeden(BruceLee);
-            LesmomentLeden lesmomentLedenLid = new LesmomentLeden(GebruikerInLesmomentLedenVanLesmomentValid);
+            LesmomentLeden lesmomentLedenBruceLee = new LesmomentLeden() { Gebruiker = BruceLee };
+            LesmomentLeden lesmomentLedenLid = new LesmomentLeden() { Gebruiker = GebruikerInLesmomentLedenVanLesmomentValid };
             List<LesmomentLeden> lesmomentLeden = new List<LesmomentLeden>();
             lesmomentLeden.Add(lesmomentLedenBruceLee);
             lesmomentLeden.Add(lesmomentLedenLid);
@@ -58,19 +58,19 @@ namespace TaijitanTests.Data
             Lesmomenten.Add(LesmomentActief);
 
             //LesmateriaalController
-            
-            Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1", "video", Gradatie.GoKyu);
-            Lesmateriaal lesmateriaal2 = new Lesmateriaal("handworpen2", "video", Gradatie.JuniDan);
-            Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen1", "video", Gradatie.JuniDan);
+            Thema thema1 = new Thema("handworpen") { ThemaId = 1 };
+            Thema thema2 = new Thema("standen") { ThemaId = 2 };
+            Themas = new List<Thema>();
+            Themas.Add(thema1);
+            Themas.Add(thema2);
+
+            Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1", Gradatie.GoKyu, thema1);
+            Lesmateriaal lesmateriaal2 = new Lesmateriaal("handworpen2", Gradatie.JuniDan, thema1);
+            Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen1", Gradatie.JuniDan, thema2);
             Lesmateriaal = new List<Lesmateriaal>();
             Lesmateriaal.Add(lesmateriaal1);
             Lesmateriaal.Add(lesmateriaal2);
 
-            Thema thema1 = new Thema(1, "handworpen", new List<Lesmateriaal> { lesmateriaal1, lesmateriaal2 });
-            Thema thema2 = new Thema(2, "standen", new List<Lesmateriaal> { lesmateriaal3 });
-            Themas = new List<Thema>();
-            Themas.Add(thema1);
-            Themas.Add(thema2);
         }
     }
 }
