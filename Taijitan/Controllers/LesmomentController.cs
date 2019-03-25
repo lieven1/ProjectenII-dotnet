@@ -51,7 +51,7 @@ namespace Taijitan.Controllers
                 TempData["error"] = "Er is geen lesmoment bezig.";
                 return RedirectToAction("Index", "Home");
             }
-            return View("Aanwezigheden", new LesmomentAlgemeenViewModel(lesmoment, lesformulesMetGebruikers()));
+            return View("Aanwezigheden", new LesmomentAlgemeenViewModel(lesmoment, LesformulesMetGebruikers()));
         }
         
         public IActionResult GebruikersPerFormule(int lesmomentId, string lesformule)
@@ -66,22 +66,29 @@ namespace Taijitan.Controllers
         
         public IActionResult RegistreerAanwezigheid(int lesmomentId, string gebruikersnaam)
         {
-            Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
-            Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
-            if (lesmoment == null || gebruiker == null)
+            try
             {
-                return RedirectToAction(nameof(Aanwezigheden));
+                Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
+                Gebruiker gebruiker = gebruikerRepository.GetBy(gebruikersnaam);
+                if (lesmoment.Equals(null) || gebruiker.Equals(null))
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                else if (lesmoment.EersteHelftIsVoorbij())
+                {
+                    TempData["error"] = "De eerste helft van het lesmoment is al voorbij, u kan zelf niet meer aanwezig melden";
+                    return RedirectToRoute(new { controller = "Home", action = "Index" });
+                }
+                else
+                {
+                    lesmoment.RegistreerLid(gebruiker);
+                    lesmomentRepository.Save();
+                    return RedirectToAction(nameof(Aanwezigheden));
+                }
             }
-            else if (lesmoment.EersteHelftIsVoorbij())
+            catch
             {
-                TempData["error"] = "De eerste helft van het lesmoment is al voorbij, u kan zelf niet meer aanwezig melden";
-                return RedirectToRoute(new { controller = "Home", action = "Index" });
-            }
-            else
-            {
-                lesmoment.RegistreerLid(gebruiker);
-                lesmomentRepository.Save();
-                return Aanwezigheden();
+                return RedirectToAction("Error", "Home");
             }
         }
 
@@ -100,15 +107,15 @@ namespace Taijitan.Controllers
         [HttpGet]
         public IActionResult RegistreerAanwezigheidProefles(int id)
         {
-            return View(new LesmomentdProeflesViewModel(lesmomentRepository.GetById(id)));
+            return View(new LesmomentProeflesViewModel(lesmomentRepository.GetById(id)));
         }
 
         [HttpPost]
-        public IActionResult RegistreerAanwezigheidProefles(LesmomentdProeflesViewModel model)
+        public IActionResult RegistreerAanwezigheidProefles(LesmomentProeflesViewModel model)
         {
             Lesmoment lesmoment = lesmomentRepository.GetById(model.LesmomentId);
 
-            Gebruiker gebruiker = lesmomentdProeflesViewModelToGebruiker(model);
+            Gebruiker gebruiker = LesmomentProeflesViewModelToGebruiker(model);
             gebruikerRepository.Save(gebruiker);
 
             lesmoment.RegistreerLid(gebruiker);
@@ -128,12 +135,12 @@ namespace Taijitan.Controllers
             }
         }
 
-        private Gebruiker lesmomentdProeflesViewModelToGebruiker(LesmomentdProeflesViewModel model)
+        private Gebruiker LesmomentProeflesViewModelToGebruiker(LesmomentProeflesViewModel model)
         {
             return new Gebruiker(DateTime.Now, TypeGebruiker.Proefgebruiker, "proefles-" + DateTime.Now.TimeOfDay + "-" + model.Naam + "-" + model.Voornaam, model.Naam, model.Voornaam, model.Email, model.Telefoonnummer);
         }
 
-        private HashSet<Lesformule> lesformulesMetGebruikers()
+        private HashSet<Lesformule> LesformulesMetGebruikers()
         {
             HashSet<Lesformule> lesformules = new HashSet<Lesformule>();
             gebruikerRepository.GetAllLeden().ForEach(g => lesformules.Add(g.Lesformule));

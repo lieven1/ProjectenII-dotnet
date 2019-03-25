@@ -23,16 +23,15 @@ namespace Taijitan.Models.LesmomentViewModels
 
             LesformuleToStringDictionary = new Dictionary<Lesformule, string>
             {
-                { Lesformule.Dinsdag, "Ik volg enkel les op dinsdag."},
-                { Lesformule.DinsdagDonderdag, "Ik volg les op dinsdag en donderdag." },
-                { Lesformule.DinsdagZaterdag, "Ik volg les op dinsdag en zaterdag."},
-                { Lesformule.Woensdag, "Ik volg enkel les op woensdag."},
-                { Lesformule.WoensdagZaterdag, "Ik volg les op dinsdag en zaterdag"},
-                { Lesformule.Zaterdag, "Ik volg enkel les op zaterdag." }
+                { Lesformule.Dinsdag, "Les op dinsdag"},
+                { Lesformule.DinsdagDonderdag, "Les op dinsdag en donderdag" },
+                { Lesformule.DinsdagZaterdag, "Les op dinsdag en zaterdag"},
+                { Lesformule.Woensdag, "Les op woensdag"},
+                { Lesformule.WoensdagZaterdag, "Les op dinsdag en zaterdag"},
+                { Lesformule.Zaterdag, "Les op zaterdag"}
             };
         }
 
-        public LesmomentAlgemeenViewModel()
-        {}
+        public LesmomentAlgemeenViewModel(){}
     }
 }
