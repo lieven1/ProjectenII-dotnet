@@ -1,50 +1,74 @@
 ﻿@model Taijitan.Models.Domain.Lesmateriaal
 @using CloudinaryDotNet
 
-<div>
-    <h4>Lesmateriaal</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            titel
-        </dt>
-        <dd>
-            @Model.Naam
-        </dd>
-        @if (Model.Beschrijving != null) {
-            <dt>
-                beschrijving
-            </dt>
-            <dd>
-                @Model.Beschrijving
-            </dd>
-        }
-        @if (Model.VideoId != null) {
-            var videoUrl = "https://www.youtube.com/embed/" + Model.VideoId;
-            <dt>
-                video
-            </dt>
-            <dd>
-                <iframe width="420" height="315" src="@videoUrl"></iframe>
-            </dd>
-        }
-        @foreach (Taijitan.Models.Domain.Databindings.FotoLesmateriaal item in Model.Fotos){
-            var index = Model.Fotos.IndexOf(item) + 1;
-            var url = @item.Foto.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(300).Crop("fill"))
-                .BuildUrl("taijitan/" + item.Foto.bestandsnaam + "." + item.Foto.extensie);
-            <dt>
-                foto nr. @index
-            </dt>
-            <dd>
-                <img src="@url"/>
-            </dd>
-        }
-    </dl>
-</div>
-<div>
-    @{
-        var graadInt = Convert.ChangeType(Model.Graad, TypeCode.Int32);
-        var parms = new Dictionary<string, string> { { "themaId", Model.Thema.ThemaId.ToString() }, { "graad", graadInt.ToString() } };
-    }
-    <a class="btn btn-default btn-lg" asp-action="LesmateriaalOverzicht" asp-all-route-data="@parms">Terug</a>
+<div class="container body-content">
+    <div>
+        <h2 class="mt-5"><a href="/Lesmateriaal/Overzicht" class="btn-link">Lesmateriaal</a> > @Model.Naam</h2>
+        <hr />
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @if (Model.Beschrijving != null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link active" id="beschrijving-tab" data-toggle="tab" href="#beschrijving" role="tab" aria-controls="home" aria-selected="true">Beschrijving</a>
+                </li>
+            }
+            @if (Model.VideoId != null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" id="video-tab" data-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="false">Video</a>
+                </li>
+            }
+            @if (!Model.Fotos.Equals(null))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" id="foto-tab" data-toggle="tab" href="#foto" role="tab" aria-controls="foto" aria-selected="false">Afbeeldingen</a>
+                </li>
+            }
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="beschrijving" role="tabpanel" aria-labelledby="beschrijving-tab">
+                @if (Model.Beschrijving != null)
+                {
+                    <h5>
+                        Beschrijving
+                    </h5>
+                    <p>
+                        @Model.Beschrijving
+                    </p>
+                }
+            </div>
+            <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
+                @if (Model.VideoId != null)
+                {
+                    var videoUrl = "https://www.youtube.com/embed/" + Model.VideoId;
+                    <h5>
+                        Video
+                    </h5>
+                    <p>
+                        <iframe width="960" height="520" src="@videoUrl"></iframe>
+                    </p>
+                }
+            </div>
+            <div class="tab-pane fade" id="foto" role="tabpanel" aria-labelledby="foto-tab">
+                @if (!Model.Fotos.Equals(null))
+                {
+                <div class="row justify-content-center">
+                    @foreach (Taijitan.Models.Domain.Databindings.FotoLesmateriaal item in Model.Fotos)
+                    {
+                        var index = Model.Fotos.IndexOf(item) + 1;
+                        var url = @item.Foto.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(300).Crop("fill"))
+                            .BuildUrl("taijitan/" + item.Foto.bestandsnaam + "." + item.Foto.extensie);
+                    <figure class="figure m-3 border-dark">
+                        <img src="@url" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">@index</figcaption>
+                    </figure>
+                    }
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-dark" href="/Lesmateriaal/Overzicht">Terug naar overzicht</a>
+    </div>
 </div>
