@@ -20,17 +20,17 @@ namespace Taijitan.Data.Repositories
 
         public List<Gebruiker> GetAllLeden()
         {
-            return this._gebruikers.Include(g => g.Adres).Where(g => g.TypeGebruiker.Equals(TypeGebruiker.Lid)).ToList();
+            return this._gebruikers.Include(g => g.Adres).Include(g => g.Lesformule).Where(g => g.TypeGebruiker.Equals(TypeGebruiker.Lid)).ToList();
         }
 
         public List<Gebruiker> GetAllLedenInFormule(Lesformule formule)
         {
-            return this._gebruikers.Include(g => g.Adres).Where(g => g.TypeGebruiker.Equals(TypeGebruiker.Lid) && g.Lesformule.Equals(formule)).ToList();
+            return this._gebruikers.Include(g => g.Adres).Include(g => g.Lesformule).Where(g => g.TypeGebruiker.Equals(TypeGebruiker.Lid) && g.Lesformule.Equals(formule)).ToList();
         }
 
         public Gebruiker GetBy(String gebruikersnaam)
         {
-            return _gebruikers.Include(g => g.Adres).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam);
+            return _gebruikers.Include(g => g.Adres).Include(g => g.Lesformule).SingleOrDefault(g => g.Gebruikersnaam == gebruikersnaam);
         }
 
         public void Save(Gebruiker gebruiker)

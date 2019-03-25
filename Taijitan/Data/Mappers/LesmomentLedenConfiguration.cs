@@ -14,7 +14,7 @@ namespace Taijitan.Data.Mappers
             builder.HasOne(t => t.Gebruiker).WithMany(l => l.Lesmomenten).HasForeignKey(t => t.Gebruikersnaam);
             builder.Property(t => t.Ingeschreven).IsRequired();
             builder.Property(t => t.Aanwezig).IsRequired();
-            builder.Property(t => t.Formule);
+            builder.HasOne(t => t.Formule).WithMany();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Databindings;
 using Taijitan.Models.Domain.Enums;
+using Taijitan.Models.Domain.IRepositories;
 
 namespace Taijitan.Data {
     public class TaijitanDataInitializer {
@@ -22,6 +23,20 @@ namespace Taijitan.Data {
         public async Task InitializeData() {
             _context.Database.EnsureDeleted();
             if (_context.Database.EnsureCreated()) {
+                Lesformule lesformule1 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Wednesday }, "Woensdag", "Ik volg normaal les op woensdag.");
+                Lesformule lesformule2 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Saturday }, "Zaterdag", "Ik volg normaal les op zaterdag.");
+                Lesformule lesformule3 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday }, "Dinsdag", "Ik volg normaal les op dinsdag.");
+                Lesformule lesformule4 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Wednesday, DayOfWeek.Saturday }, "Woensdag en zaterdag", "Ik volg normaal les op woensdag en zaterdag.");
+                Lesformule lesformule5 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Saturday }, "Dinsdag en zaterdag", "Ik volg normaal les op dinsdag en zaterdag.");
+                Lesformule lesformule6 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Thursday }, "Dinsdag en donderdag", "Ik volg normaal les op dinsdag en donderdag.");
+                _context.Lesformules.Add(lesformule1);
+                _context.Lesformules.Add(lesformule2);
+                _context.Lesformules.Add(lesformule3);
+                _context.Lesformules.Add(lesformule4);
+                _context.Lesformules.Add(lesformule5);
+                _context.Lesformules.Add(lesformule6);
+                _context.SaveChanges();
+
                 Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
                 Adres adres2 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
                 _context.Adressen.Add(adres1);
@@ -29,13 +44,13 @@ namespace Taijitan.Data {
 
                 Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man,
                     new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com",
-                    adres1, 100, Gradatie.SanDan, TypeGebruiker.Lid, Lesformule.Dinsdag);
+                    adres1, 100, Gradatie.SanDan, TypeGebruiker.Lid, lesformule3);
                 Gebruiker Lid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man,
                     new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com",
-                    adres1, 100, Gradatie.IchiKyu, TypeGebruiker.Lid, Lesformule.DinsdagZaterdag);
+                    adres1, 100, Gradatie.IchiKyu, TypeGebruiker.Lid, lesformule2);
                 Gebruiker Lid2 = new Gebruiker("Doc", "12345678912", new DateTime(2018, 02, 12), "Johny", "Medicine", Geslacht.Man,
                     new DateTime(1970, 3, 24), "Antwerpen", "0525252526", "0479076259", "doc@MartialArt.com", "docsMom@MartialArt.com",
-                    adres2, 101, Gradatie.ShichiDan, TypeGebruiker.Lid, Lesformule.Woensdag);
+                    adres2, 101, Gradatie.ShichiDan, TypeGebruiker.Lid, lesformule5);
                 _context.Gebruikers.Add(BruceLee);
                 _context.Gebruikers.Add(Lid);
                 _context.Gebruikers.Add(Lid2);
@@ -139,16 +154,17 @@ namespace Taijitan.Data {
                 //_lesmomentRepository.GenereerLesmomentDag();
                 //_context.SaveChanges();
 
-                await InitializeUsers();
+                await InitializeUsers(lesformule3);
             }
         }
 
-        private async Task InitializeUsers() {
-            await InitializeLid();
+
+        private async Task InitializeUsers(Lesformule formule) {
+            await InitializeLid(formule);
             await InitializeBeheerder();
         }
 
-        private async Task InitializeLid() {
+        private async Task InitializeLid(Lesformule formule) {
             string email = "lid@taijitan.be";
             string usr = "lid";
             IdentityUser user = new IdentityUser { UserName = usr, Email = email };
@@ -157,7 +173,7 @@ namespace Taijitan.Data {
             Adres adres1 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
             var gebruiker = new Gebruiker(usr, "11111545645", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man,
                 new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com",
-                adres1, 100, Gradatie.ShoDan, TypeGebruiker.Lid, Lesformule.Zaterdag);
+                adres1, 100, Gradatie.ShoDan, TypeGebruiker.Lid, formule);
             _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }

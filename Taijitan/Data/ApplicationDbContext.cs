@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Taijitan.Data.Mappers;
 using Taijitan.Models.Domain;
 using Taijitan.Models.Domain.Databindings;
+using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Data
 {
@@ -16,6 +17,7 @@ namespace Taijitan.Data
         public DbSet<Lesmateriaal> Lesmateriaal { get; set; }
         public DbSet<Foto> Fotos { get; set; }
         public DbSet<FotoLesmateriaal> FotoLesmateriaal { get; set; }
+        public DbSet<Lesformule> Lesformules { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                 : base(options)
@@ -33,6 +35,7 @@ namespace Taijitan.Data
             builder.ApplyConfiguration(new LesmateriaalConfiguration());
             builder.ApplyConfiguration(new FotoConfiguration());
             builder.ApplyConfiguration(new FotoLesmateriaalConfiguration());
+            builder.ApplyConfiguration(new LesformuleConfiguration());
         }
     }
 }
