@@ -18,29 +18,6 @@ namespace Taijitan.Controllers {
         public IActionResult Index(Gebruiker gebruiker) {
             return View(gebruiker);
         }
-        
-        //public IActionResult Login()
-        //{
-        //    return View(_gebruikerRepository.GetAllLeden());
-        //}
-
-        //gebruiker (gebruikersnaam) wordt meegegeven uit View Aanwezigen (LesmomentController)
-        public IActionResult Login(string gebruikersnaam)
-        {
-            HttpContext.Session.SetString("Gebruiker", gebruikersnaam);
-            var gebruiker = _gebruikerRepository.GetBy(gebruikersnaam);
-            return RedirectToAction("Leeromgeving", "Gebruiker", new { gebruiker });
-        }
-
-        public IActionResult Logout() {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Aanwezigen", "Lesmoment");
-        }
-        
-        public IActionResult Leeromgeving() {
-            TempData["beheerder"] = User.IsInRole("beheerder");
-            return View();
-        }
 
         [HttpGet]
         [ServiceFilter(typeof(GebruikerFilter))]
