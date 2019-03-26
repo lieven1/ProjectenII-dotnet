@@ -130,23 +130,28 @@ namespace Taijitan.Data {
                     now = now.AddDays(1);
                 }
 
+                // Themas
                 List<Thema> themas = new List<Thema>();
                 themas.Add(new Thema("Handworpen"));
                 themas.Add(new Thema("Standen"));
                 themas.Add(new Thema("Sprongen"));
                 themas.Add(new Thema("Vallen"));
 
+                // Fotos
                 Foto foto1 = new Foto("achterwaartse_stand_1", "jpg");
                 Foto foto2 = new Foto("achterwaartse_stand_2", "jpg");
                 Foto foto3 = new Foto("achterwaartse_stand_3", "jpg");
                 _context.Fotos.Add(foto1);
                 _context.Fotos.Add(foto2);
                 _context.Fotos.Add(foto3);
-                _context.SaveChanges();
 
+                // Lesmateriaal
                 string loremIpsum = "Lorem ipsum dolor sit amet, has reque suscipiantur ad, an duo hinc habeo omnes, ex eam eirmod probatus. Vis cu dicant vocibus urbanitas, nostro facilisi eu nam, vim an aeque adolescens. Nec consequat moderatius ex. Eruditi graecis blandit vix eu, vel aperiri praesent id, ancillae scribentur ex eos.";
                 loremIpsum += loremIpsum + loremIpsum;
                 string videoId = "pD3T7WNsw6k";
+
+
+                _context.Lesmateriaal.Add(new Lesmateriaal("test_lege_velden", Gradatie.RokkuKyu, themas[0]));
 
                 List<Lesmateriaal> lesmateriaal = new List<Lesmateriaal>();
                 foreach(Thema thema in themas)

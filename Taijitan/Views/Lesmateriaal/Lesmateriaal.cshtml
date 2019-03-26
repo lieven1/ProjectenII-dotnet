@@ -6,51 +6,51 @@
         <h2 class="mt-5"><a href="/Lesmateriaal/Overzicht" class="btn-link">Lesmateriaal</a> > @Model.Naam</h2>
         <hr />
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            @if (Model.Beschrijving != null)
-            {
                 <li class="nav-item">
                     <a class="nav-link active" id="beschrijving-tab" data-toggle="tab" href="#beschrijving" role="tab" aria-controls="home" aria-selected="true">Beschrijving</a>
                 </li>
-            }
-            @if (Model.VideoId != null)
-            {
                 <li class="nav-item">
                     <a class="nav-link" id="video-tab" data-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="false">Video</a>
                 </li>
-            }
-            @if (!Model.Fotos.Equals(null))
-            {
                 <li class="nav-item">
                     <a class="nav-link" id="foto-tab" data-toggle="tab" href="#foto" role="tab" aria-controls="foto" aria-selected="false">Afbeeldingen</a>
                 </li>
-            }
         </ul>
         <div class="tab-content mt-3" id="myTabContent">
             <div class="tab-pane fade show active" id="beschrijving" role="tabpanel" aria-labelledby="beschrijving-tab">
-                @if (Model.Beschrijving != null)
-                {
                     <h5>
                         Beschrijving
                     </h5>
                     <p>
-                        @Model.Beschrijving
+                        @if (!String.IsNullOrWhiteSpace(Model.Beschrijving))
+                        {
+                            @Model.Beschrijving
+                        }
+                        else
+                        {
+                            <i><b>Geen beschrijving beschikbaar.</b></i>
+                        }
                     </p>
-                }
             </div>
             <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
-                @if (Model.VideoId != null)
-                {
-                    var videoUrl = "https://www.youtube.com/embed/" + Model.VideoId;
                     <h5>
                         Video
                     </h5>
                     <p>
-                        <iframe width="960" height="520" src="@videoUrl"></iframe>
-                    </p>
-                }
+                        @if (!String.IsNullOrWhiteSpace(Model.VideoId))
+                        {
+                            var videoUrl = "https://www.youtube.com/embed/" + Model.VideoId;
+                            <iframe width="960" height="520" src="@videoUrl"></iframe>
+                        }
+                        else
+                        {
+                            <i><b>Geen video beschikbaar.</b></i>
+                        }
+                        </p>
             </div>
             <div class="tab-pane fade" id="foto" role="tabpanel" aria-labelledby="foto-tab">
-                @if (!Model.Fotos.Equals(null))
+                <h5>Afbeeldingen</h5>
+                @if (Model.Fotos.Count > 0)
                 {
                 <div class="row justify-content-center">
                     @foreach (Taijitan.Models.Domain.Databindings.FotoLesmateriaal item in Model.Fotos)
@@ -64,6 +64,10 @@
                     </figure>
                     }
                 </div>
+                }
+                else
+                {
+                    <p><i><b>Geen afbeeldingen beschikbaar.</b></i></p>
                 }
             </div>
         </div>
