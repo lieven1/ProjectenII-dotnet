@@ -22,25 +22,47 @@ namespace Taijitan.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            LesmomentOverzichtEditViewmodel model = new LesmomentOverzichtEditViewmodel(DateTime.Now.Year,(Maanden)DateTime.Now.Month, lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(DateTime.Now.Year, DateTime.Now.Month));
-            ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
-            ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari , Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
-            return View(model);
+            try
+            {
+                LesmomentOverzichtEditViewmodel model = new LesmomentOverzichtEditViewmodel(DateTime.Now.Year, (Maanden)DateTime.Now.Month, lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(DateTime.Now.Year, DateTime.Now.Month));
+                ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
+                ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
+                return View(model);
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         public IActionResult Index(LesmomentOverzichtEditViewmodel model)
         {
-            model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(model.Year,(int) model.Month);
-            ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
-            ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
-            return View(model);
+            try
+            {
+                model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(model.Year, (int)model.Month);
+                ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
+                ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
+                return View(model);
+            }
+            catch {
+                return RedirectToAction("Error", "Home");
+            }
+
+
         }
 
         public IActionResult AanwezighedenLesmoment(int id)
         {
-            LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(lesmomentRepository.GetById(id), lesmomentRepository.GetAanwezigenLesmomenten(id));
-            return View(model);
+            try
+            {
+                LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(lesmomentRepository.GetById(id), lesmomentRepository.GetAanwezigenLesmomenten(id));
+                return View(model);
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
     }
 }
