@@ -16,11 +16,13 @@ namespace Taijitan.Controllers
     public class LesmateriaalController : Controller
     {
         private ILesmateriaalRepository _lesmateriaalRepo;
+        private IRaadplegingRepository _raadplegingRepo;
         private IThemaRepository _themaRepo;
 
-        public LesmateriaalController(ILesmateriaalRepository lesmateriaalRepo, IThemaRepository themaRepo) {
+        public LesmateriaalController(ILesmateriaalRepository lesmateriaalRepo, IThemaRepository themaRepo, IRaadplegingRepository raadplegingRepo) {
             this._lesmateriaalRepo = lesmateriaalRepo;
             this._themaRepo = themaRepo;
+            this._raadplegingRepo = raadplegingRepo;
         }
 
         [ServiceFilter(typeof(GebruikerFilter))]
@@ -56,8 +58,9 @@ namespace Taijitan.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        
-        public IActionResult Lesmateriaal(int id)
+
+        [ServiceFilter(typeof(GebruikerFilter))]
+        public IActionResult Lesmateriaal(Gebruiker gebruiker, int id)
         {
             try
             {
@@ -68,6 +71,8 @@ namespace Taijitan.Controllers
                 }
                 else
                 {
+                    _raadplegingRepo.AddRaadpleging(new Raadpleging(id, gebruiker.Gebruikersnaam, DateTime.Now));
+                    _raadplegingRepo.SaveChanges();
                     return View(lesmateriaal);
                 }
             }
