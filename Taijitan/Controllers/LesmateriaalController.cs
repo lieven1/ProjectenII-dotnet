@@ -25,22 +25,56 @@ namespace Taijitan.Controllers
 
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Overzicht(Gebruiker gebruiker, int gradatieInt = 0, int themaId = 0) {
-            IEnumerable<Lesmateriaal> lesmateriaal;
-            var gradatieGebruiker = gebruiker.Gradatie;
-            if (gradatieInt == 0 && themaId == 0) {
-                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker);
-            } else if (gradatieInt == 0 && themaId != 0) {
-                var thema = _themaRepo.GetBy(themaId);
-                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker && l.Thema == thema);
-            } else if(themaId == 0 && gradatieInt != 0) {
-                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt);
-            } else {
-                var thema = _themaRepo.GetBy(themaId);
-                lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt && l.Thema == thema);
+            try
+            {
+                IEnumerable<Lesmateriaal> lesmateriaal;
+                var gradatieGebruiker = gebruiker.Gradatie;
+                if (gradatieInt == 0 && themaId == 0)
+                {
+                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker);
+                }
+                else if (gradatieInt == 0 && themaId != 0)
+                {
+                    var thema = _themaRepo.GetBy(themaId);
+                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker && l.Thema == thema);
+                }
+                else if (themaId == 0 && gradatieInt != 0)
+                {
+                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt);
+                }
+                else
+                {
+                    var thema = _themaRepo.GetBy(themaId);
+                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt && l.Thema == thema);
+                }
+                ViewData["Graden"] = MapGradenNaarSelectList(gradatieGebruiker, gradatieInt);
+                ViewData["Themas"] = MapThemasNaarSelectList(themaId);
+                return View(lesmateriaal);
             }
-            ViewData["Graden"] = MapGradenNaarSelectList(gradatieGebruiker, gradatieInt);
-            ViewData["Themas"] = MapThemasNaarSelectList(themaId);
-            return View(lesmateriaal);
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        
+        public IActionResult Lesmateriaal(int id)
+        {
+            try
+            {
+                var lesmateriaal = _lesmateriaalRepo.GetById(id);
+                if (lesmateriaal == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return View(lesmateriaal);
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private SelectList MapThemasNaarSelectList(int selected) {
@@ -55,15 +89,6 @@ namespace Taijitan.Controllers
                 .Where(g => g.gradatie.CompareTo(gradatieGebruiker) <= 0);
             return new SelectList(graden,
                 "graadInt", "gradatie", selected);
-        }
-
-        public IActionResult Lesmateriaal(int id) {
-            var lesmateriaal = _lesmateriaalRepo.GetById(id);
-            if(lesmateriaal == null) {
-                return NotFound();
-            } else {
-                return View(lesmateriaal);
-            }
         }
     }
 }
