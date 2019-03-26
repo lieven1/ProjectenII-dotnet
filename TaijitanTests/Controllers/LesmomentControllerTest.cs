@@ -126,7 +126,7 @@ namespace TaijitanTests.Controllers
             _gebruikerRepository.Setup(v => v.GetBy(_context.GebruikerInLesmomentLedenVanLesmomentValid.Gebruikersnaam)).Returns(_context.GebruikerInLesmomentLedenVanLesmomentValid);
             _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
             var result = _controller.RegistreerAanwezigheid(_context.LesmomentValid.LesmomentId, _context.GebruikerInLesmomentLedenVanLesmomentValid.Gebruikersnaam) as RedirectToActionResult;
-            Assert.Equal(nameof(_controller.Aanwezigheden), result.ActionName);
+            Assert.Equal("Aanwezigheden", result.ActionName);
         }
 
         #endregion

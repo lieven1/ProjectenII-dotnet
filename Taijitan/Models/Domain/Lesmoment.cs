@@ -7,48 +7,13 @@ namespace Taijitan.Models.Domain
 {
     public class Lesmoment
     {
-        #region Fields
-        private DateTime _startTijd;
-        private DateTime _eindTijd;
-        private bool _actief;
-        #endregion
-
         #region Properties
         public int LesmomentId { get; private set; }
 
-        public DateTime StartTijd
-        {
-            get { return _startTijd; }
-            private set
-            {
-                // Startijd van een les kan niet meer dan 2h in het verleden liggen
-                if (DateTime.Now.Subtract(value).TotalHours > 2)
-                {
-                    throw new ArgumentException("Een nieuw lesmoment kan niet langer dan twee uur geleden gestart zijn.");
-                }
-                else
-                {
-                    _startTijd = value;
-                }
-            }
-        }
-        public DateTime EindTijd
-        {
-            get { return _eindTijd; }
-            private set
-            {
-                if (StartTijd.CompareTo(value) >= 0)
-                {
-                    throw new ArgumentException("Eindtijd kan niet voor starttijd plaatsvinden.");
-                }
-                else
-                {
-                    _eindTijd = value;
-                }
-            }
-        }
+        public DateTime StartTijd { get; private set; }
+        public DateTime EindTijd { get; private set; }
 
-        public bool Actief { get { return _actief; } private set { _actief = value; } }
+        public bool Actief { get; private set; }
 
         public List<LesmomentLeden> Leden { get; set; }
         #endregion
@@ -127,7 +92,7 @@ namespace Taijitan.Models.Domain
 
         public bool EersteHelftIsVoorbij()
         {
-            return _startTijd.Add(_eindTijd.Subtract(_startTijd) / 2).CompareTo(DateTime.Now) < 0;
+            return StartTijd.Add(EindTijd.Subtract(StartTijd) / 2).CompareTo(DateTime.Now) < 0;
         }
         #endregion
     }

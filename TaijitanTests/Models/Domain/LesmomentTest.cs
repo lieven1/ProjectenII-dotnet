@@ -42,32 +42,12 @@ namespace TaijitanTests.Models.Domain
         }
 
         [Fact]
-        public void MaakLesmomentAan_LaterStartDanEindTijd_ExceptionRaised()
-        {
-            Assert.Throws<ArgumentException>(() => new Lesmoment(eindTijd, startTijd, _context.Lijst1Gebruiker));
-        }
-
-        [Fact]
         public void MaakLesmomentAan_AllesCorrect_Valid()
         {
             var result = new Lesmoment(startTijd, eindTijd, _context.Lijst1Gebruiker);
             Assert.IsType<Lesmoment>(result);
             Assert.Empty(result.geefAanwezigeLeden());
             Assert.Single(result.geefIngeschrevenLeden());
-        }
-
-        [Fact]
-        public void MaakLesmomentAan_StartijdInVerleden_ExceptionRaised()
-        {
-            Assert.Throws<ArgumentException>(() => new Lesmoment(DateTime.Now.AddDays(-5), DateTime.Now.AddDays(-4), _context.Lijst1Gebruiker));
-        }
-
-        [Fact]
-        public void MaakLesmomentAan_StarttijdMeerDanTweeUurInVerleden_ExceptionRaised()
-        {
-            DateTime tooLongAgo = DateTime.Now.AddMinutes(-121);
-
-            Assert.Throws<ArgumentException>(() => new Lesmoment(tooLongAgo, eindTijd, _context.Lijst1Gebruiker));
         }
         #endregion
 
