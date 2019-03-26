@@ -88,7 +88,9 @@ namespace Taijitan
                     name: "default",
                     template: "{controller=Home}/{action=Index}");
             });
-            dataInitializer.InitializeData().Wait();
+
+            // Enable to generate data
+            // dataInitializer.InitializeData().Wait();
         }
     }
 }

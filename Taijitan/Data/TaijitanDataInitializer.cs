@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Taijitan.Models.Domain;
@@ -23,77 +24,117 @@ namespace Taijitan.Data {
         public async Task InitializeData() {
             _context.Database.EnsureDeleted();
             if (_context.Database.EnsureCreated()) {
-                Lesformule lesformule1 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Wednesday }, "Woensdag", "Ik volg normaal les op woensdag.");
-                Lesformule lesformule2 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Saturday }, "Zaterdag", "Ik volg normaal les op zaterdag.");
-                Lesformule lesformule3 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday }, "Dinsdag", "Ik volg normaal les op dinsdag.");
-                Lesformule lesformule4 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Wednesday, DayOfWeek.Saturday }, "Woensdag en zaterdag", "Ik volg normaal les op woensdag en zaterdag.");
-                Lesformule lesformule5 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Saturday }, "Dinsdag en zaterdag", "Ik volg normaal les op dinsdag en zaterdag.");
-                Lesformule lesformule6 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Thursday }, "Dinsdag en donderdag", "Ik volg normaal les op dinsdag en donderdag.");
-                _context.Lesformules.Add(lesformule1);
-                _context.Lesformules.Add(lesformule2);
-                _context.Lesformules.Add(lesformule3);
-                _context.Lesformules.Add(lesformule4);
-                _context.Lesformules.Add(lesformule5);
-                _context.Lesformules.Add(lesformule6);
-                _context.SaveChanges();
+                // Lesformules
+                List<Lesformule> lesformules = new List<Lesformule>();
+                lesformules.Add(new Lesformule(new List<DayOfWeek>() { DayOfWeek.Wednesday }, "Woensdag", "Ik volg normaal les op woensdag."));
+                lesformules.Add(new Lesformule(new List<DayOfWeek>() { DayOfWeek.Saturday }, "Zaterdag", "Ik volg normaal les op zaterdag."));
+                lesformules.Add(new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday }, "Dinsdag", "Ik volg normaal les op dinsdag."));
+                lesformules.Add(new Lesformule(new List<DayOfWeek>() { DayOfWeek.Wednesday, DayOfWeek.Saturday }, "Woensdag en zaterdag", "Ik volg normaal les op woensdag en zaterdag."));
+                lesformules.Add(new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Saturday }, "Dinsdag en zaterdag", "Ik volg normaal les op dinsdag en zaterdag."));
+                lesformules.Add(new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Thursday }, "Dinsdag en donderdag", "Ik volg normaal les op dinsdag en donderdag."));
+                foreach(Lesformule lesformule in lesformules)
+                {
+                    _context.Lesformules.Add(lesformule);
+                }
 
-                Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
-                Adres adres2 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
-                _context.Adressen.Add(adres1);
-                _context.Adressen.Add(adres2);
+                // Gebruikers
+                List<Gebruiker> _gebruikers = new List<Gebruiker>();
+                Adres adres;
+                Gebruiker gebruiker;
+                Random rand = new Random();
+                for (int lesformule = 0; lesformule < 6; lesformule++)
+                {
+                    for(int i = 101; i <= 110; i++)
+                    {
+                        adres = new Adres("België", "9000", "Gent", "Teststraat", i.ToString());
+                        gebruiker = new Gebruiker(
+                            "gebruiker_"+ lesformule.ToString()+"_"+i.ToString(),
+                            "1111111"+ lesformule.ToString()+ i.ToString(),
+                            new DateTime(2018, 03, 12),
+                            "Naam"+ i.ToString(),
+                            "Voornaam"+ i.ToString(),
+                            (Geslacht) (rand.Next(2)+1),
+                            new DateTime(1970, 10, 25),
+                            "Gent",
+                            "078151525",
+                            "0468431531",
+                            "emailgebruiker@test.be",
+                            "emailouders@test.be",
+                            adres,
+                            rand.Next(1000),
+                            (Gradatie) (rand.Next(17)+1),
+                            TypeGebruiker.Lid,
+                            lesformules[lesformule]
+                            );
+                        _gebruikers.Add(gebruiker);
+                        _context.Gebruikers.Add(gebruiker);
+                    }
+                }
 
-                Gebruiker BruceLee = new Gebruiker("taijitan2", "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man,
-                    new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com",
-                    adres1, 100, Gradatie.SanDan, TypeGebruiker.Lid, lesformule3);
-                Gebruiker Lid = new Gebruiker("lid2", "12312312312", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man,
-                    new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com",
-                    adres1, 100, Gradatie.IchiKyu, TypeGebruiker.Lid, lesformule2);
-                Gebruiker Lid2 = new Gebruiker("Doc", "12345678912", new DateTime(2018, 02, 12), "Johny", "Medicine", Geslacht.Man,
-                    new DateTime(1970, 3, 24), "Antwerpen", "0525252526", "0479076259", "doc@MartialArt.com", "docsMom@MartialArt.com",
-                    adres2, 101, Gradatie.ShichiDan, TypeGebruiker.Lid, lesformule5);
-                _context.Gebruikers.Add(BruceLee);
-                _context.Gebruikers.Add(Lid);
-                _context.Gebruikers.Add(Lid2);
-                _context.SaveChanges();
+                // Lesmomenten
+                DateTime now = DateTime.Now;
+                DateTime start, end;
+                for (int i = 0; i < 7; i++)
+                {
+                    switch ((int)now.DayOfWeek)
+                    {
+                        // Zondag
+                        case 0:
+                            start = now.Date + new TimeSpan(11, 00, 00);
+                            end = now.Date + new TimeSpan(12, 30, 00);
+                            // Alle gebruikers (geen formule voorzien)
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers));
+                            break;
+                        // Maandag
+                        case 1:
+                            // Geen les
+                            break;
+                        // Dinsdag
+                        case 2:
+                            start = now.Date + new TimeSpan(18, 00, 00);
+                            end = now.Date + new TimeSpan(19, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[4]) ||
+                                g.Lesformule.Equals(lesformules[5]) ||
+                                g.Lesformule.Equals(lesformules[2])).ToList()));
+                            break;
+                        // Woensdag
+                        case 3:
+                            start = now.Date + new TimeSpan(14, 00, 00);
+                            end = now.Date + new TimeSpan(16, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[0]) ||
+                                g.Lesformule.Equals(lesformules[3])).ToList()));
+                            break;
+                        // Donderdag
+                        case 4:
+                            start = now.Date + new TimeSpan(18, 00, 00);
+                            end = now.Date + new TimeSpan(20, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[5])).ToList()));
+                            break;
+                        // Vrijdag
+                        case 5:
+                            // Geen les
+                            break;
+                        // Zaterdag
+                        case 6:
+                            start = now.Date + new TimeSpan(11, 30, 00);
+                            end = now.Date + new TimeSpan(13, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[4]) ||
+                                g.Lesformule.Equals(lesformules[3]) ||
+                                g.Lesformule.Equals(lesformules[1])).ToList()));
+                            break;
+                    }
+                    now = now.AddDays(1);
+                }
 
-
-                DateTime datum = DateTime.Now;
-                Lesmoment lesmoment1 = new Lesmoment(datum.AddDays(1), datum.AddDays(1).AddHours(2));
-                Lesmoment lesmoment2 = new Lesmoment(datum.AddDays(2), datum.AddDays(2).AddHours(2));
-                Lesmoment lesmoment4 = new Lesmoment(datum.AddMinutes(1), datum.AddMinutes(1).AddHours(1));
-
-                LesmomentLeden lesmoment1LedenBruceLee = new LesmomentLeden(lesmoment1, BruceLee, true);
-                LesmomentLeden lesmoment1LedenLid = new LesmomentLeden(lesmoment1, Lid, true);
-                LesmomentLeden lesmoment2LedenBruceLee = new LesmomentLeden(lesmoment2, BruceLee, true);
-                LesmomentLeden lesmoment2LedenLid = new LesmomentLeden(lesmoment2, Lid, true);
-                LesmomentLeden lesmoment4LedenBruceLee = new LesmomentLeden(lesmoment4, BruceLee, true);
-                LesmomentLeden lesmoment4LedenLid = new LesmomentLeden(lesmoment4, Lid, true);
-
-                List<LesmomentLeden> lesmomentLeden1 = new List<LesmomentLeden>();
-                List<LesmomentLeden> lesmomentLeden2 = new List<LesmomentLeden>();
-                List<LesmomentLeden> lesmomentLeden4 = new List<LesmomentLeden>();
-
-                lesmomentLeden1.Add(lesmoment1LedenBruceLee);
-                lesmomentLeden1.Add(lesmoment1LedenLid);
-                lesmomentLeden2.Add(lesmoment2LedenBruceLee);
-                lesmomentLeden2.Add(lesmoment2LedenLid);
-                lesmomentLeden4.Add(lesmoment4LedenBruceLee);
-                lesmomentLeden4.Add(lesmoment4LedenLid);
-
-                lesmoment1.Leden = lesmomentLeden1;
-                lesmoment2.Leden = lesmomentLeden2;
-                lesmoment4.Leden = lesmomentLeden4;
-
-                _context.Lesmomenten.Add(lesmoment1);
-                _context.Lesmomenten.Add(lesmoment2);
-                _context.Lesmomenten.Add(lesmoment4);
-                _context.SaveChanges();
-
-                Thema thema = new Thema("handworpen");
-                Thema thema2 = new Thema("standen");
-                _context.Themas.Add(thema);
-                _context.Themas.Add(thema2);
-                _context.SaveChanges();
+                List<Thema> themas = new List<Thema>();
+                themas.Add(new Thema("Handworpen"));
+                themas.Add(new Thema("Standen"));
+                themas.Add(new Thema("Sprongen"));
+                themas.Add(new Thema("Vallen"));
 
                 Foto foto1 = new Foto("achterwaartse_stand_1", "jpg");
                 Foto foto2 = new Foto("achterwaartse_stand_2", "jpg");
@@ -104,92 +145,62 @@ namespace Taijitan.Data {
                 _context.SaveChanges();
 
                 string loremIpsum = "Lorem ipsum dolor sit amet, has reque suscipiantur ad, an duo hinc habeo omnes, ex eam eirmod probatus. Vis cu dicant vocibus urbanitas, nostro facilisi eu nam, vim an aeque adolescens. Nec consequat moderatius ex. Eruditi graecis blandit vix eu, vel aperiri praesent id, ancillae scribentur ex eos.";
+                loremIpsum += loremIpsum + loremIpsum;
                 string videoId = "pD3T7WNsw6k";
-                Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1_GoKyu", Gradatie.GoKyu, thema, loremIpsum, videoId);
-                Lesmateriaal lesmateriaal2 = new Lesmateriaal("standen1_GoKyu", Gradatie.GoKyu, thema2, loremIpsum, videoId);
-                Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen2_NiKyu", Gradatie.NiKyu, thema2, loremIpsum, videoId);
-                Lesmateriaal lesmateriaal4 = new Lesmateriaal("handworpen2_JuniDan", Gradatie.JuniDan, thema, loremIpsum, videoId);
-                
 
-                FotoLesmateriaal fotoLesmateriaal1_1 = new FotoLesmateriaal(lesmateriaal1, foto1);
-                FotoLesmateriaal fotoLesmateriaal1_2 = new FotoLesmateriaal(lesmateriaal1, foto2);
-                FotoLesmateriaal fotoLesmateriaal1_3 = new FotoLesmateriaal(lesmateriaal1, foto3);
-                FotoLesmateriaal fotoLesmateriaal2_1 = new FotoLesmateriaal(lesmateriaal2, foto1);
-                FotoLesmateriaal fotoLesmateriaal2_2 = new FotoLesmateriaal(lesmateriaal2, foto2);
-                FotoLesmateriaal fotoLesmateriaal2_3 = new FotoLesmateriaal(lesmateriaal2, foto3);
-                FotoLesmateriaal fotoLesmateriaal3_1 = new FotoLesmateriaal(lesmateriaal3, foto1);
-                FotoLesmateriaal fotoLesmateriaal3_2 = new FotoLesmateriaal(lesmateriaal3, foto2);
-                FotoLesmateriaal fotoLesmateriaal3_3 = new FotoLesmateriaal(lesmateriaal3, foto3);
-                FotoLesmateriaal fotoLesmateriaal4_1 = new FotoLesmateriaal(lesmateriaal4, foto1);
-                FotoLesmateriaal fotoLesmateriaal4_2 = new FotoLesmateriaal(lesmateriaal4, foto2);
-                FotoLesmateriaal fotoLesmateriaal4_3 = new FotoLesmateriaal(lesmateriaal4, foto3);
-
-                List<FotoLesmateriaal> fotoLesmateriaal1 = new List<FotoLesmateriaal>();
-                fotoLesmateriaal1.Add(fotoLesmateriaal1_1);
-                fotoLesmateriaal1.Add(fotoLesmateriaal1_2);
-                fotoLesmateriaal1.Add(fotoLesmateriaal1_3);
-                List<FotoLesmateriaal> fotoLesmateriaal2 = new List<FotoLesmateriaal>();
-                fotoLesmateriaal2.Add(fotoLesmateriaal2_1);
-                fotoLesmateriaal2.Add(fotoLesmateriaal2_2);
-                fotoLesmateriaal2.Add(fotoLesmateriaal2_3);
-                List<FotoLesmateriaal> fotoLesmateriaal3 = new List<FotoLesmateriaal>();
-                fotoLesmateriaal3.Add(fotoLesmateriaal3_1);
-                fotoLesmateriaal3.Add(fotoLesmateriaal3_2);
-                fotoLesmateriaal3.Add(fotoLesmateriaal3_3);
-                List<FotoLesmateriaal> fotoLesmateriaal4 = new List<FotoLesmateriaal>();
-                fotoLesmateriaal4.Add(fotoLesmateriaal4_1);
-                fotoLesmateriaal4.Add(fotoLesmateriaal4_2);
-                fotoLesmateriaal4.Add(fotoLesmateriaal4_3);
-                lesmateriaal1.Fotos = fotoLesmateriaal1;
-                lesmateriaal2.Fotos = fotoLesmateriaal2;
-                lesmateriaal3.Fotos = fotoLesmateriaal3;
-                lesmateriaal4.Fotos = fotoLesmateriaal4;
+                List<Lesmateriaal> lesmateriaal = new List<Lesmateriaal>();
+                foreach(Thema thema in themas)
+                {
+                    foreach(Gradatie gradatie in (Gradatie[]) Enum.GetValues(typeof(Gradatie)))
+                    {
+                        for(int i = 1; i < 4; i++)
+                        {
+                            lesmateriaal.Add(new Lesmateriaal(
+                                "oefeningtitel_"+thema.Naam+"_"+gradatie.ToString()+"_"+i.ToString(),
+                                gradatie,
+                                thema,
+                                loremIpsum,
+                                videoId));
+                        }
+                    }
+                }
                 
-                _context.Lesmateriaal.Add(lesmateriaal1);
-                _context.Lesmateriaal.Add(lesmateriaal2);
-                _context.Lesmateriaal.Add(lesmateriaal3);
-                _context.Lesmateriaal.Add(lesmateriaal4);
+                FotoLesmateriaal fotoLesmateriaal1, fotoLesmateriaal2, fotoLesmateriaal3;
+                foreach(Lesmateriaal _lesmateriaal in lesmateriaal)
+                {
+                    fotoLesmateriaal1 = new FotoLesmateriaal(_lesmateriaal, foto1);
+                    fotoLesmateriaal2 = new FotoLesmateriaal(_lesmateriaal, foto2);
+                    fotoLesmateriaal3 = new FotoLesmateriaal(_lesmateriaal, foto3);
+                    _lesmateriaal.Fotos = new List<FotoLesmateriaal>() { fotoLesmateriaal1, fotoLesmateriaal2, fotoLesmateriaal3 };
+                    _context.Lesmateriaal.Add(_lesmateriaal);
+                }
                 _context.SaveChanges();
-
-                //_lesmomentRepository.GenereerLesmomentDag();
-                //_context.SaveChanges();
-
-                await InitializeUsers(lesformule3);
+                await InitializeUsers(_gebruikers);
             }
         }
 
 
-        private async Task InitializeUsers(Lesformule formule) {
-            await InitializeLid(formule);
-            await InitializeBeheerder(formule);
+        private async Task InitializeUsers(List<Gebruiker> _gebruikers) {
+            await InitializeLid(_gebruikers);
+            await InitializeBeheerder();
         }
 
-        private async Task InitializeLid(Lesformule formule) {
-            string email = "lid@taijitan.be";
-            string usr = "lid";
-            IdentityUser user = new IdentityUser { UserName = usr, Email = email };
-            await _userManager.CreateAsync(user, "P@ssword1");
-            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "gebruiker"));
-            Adres adres1 = new Adres("België", "9820", "Gent", "Ledenstraat", "16");
-            var gebruiker = new Gebruiker(usr, "11111545645", new DateTime(2018, 05, 24), "John", "Doe", Geslacht.Man,
-                new DateTime(1960, 3, 24), "Brussel", "0525252525", "0479076258", "lid@MartialArt.com", "LidsMom@MartialArt.com",
-                adres1, 100, Gradatie.ShoDan, TypeGebruiker.Lid, formule);
-            _context.Gebruikers.Add(gebruiker);
+        private async Task InitializeLid(List<Gebruiker> _gebruikers) {
+            foreach(Gebruiker gebruiker in _gebruikers)
+            {
+                IdentityUser user = new IdentityUser { UserName = gebruiker.Gebruikersnaam, Email = gebruiker.Email };
+                await _userManager.CreateAsync(user, "P@ssword1");
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "gebruiker"));
+            }
             _context.SaveChanges();
         }
-        private async Task InitializeBeheerder(Lesformule formule) {
+
+        private async Task InitializeBeheerder() {
             string email = "taijitan@taijitan.be";
             string usr = "taijitan";
             IdentityUser user = new IdentityUser { UserName = usr, Email = email };
             await _userManager.CreateAsync(user, "P@ssword1");
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "beheerder"));
-
-
-            Adres adres1 = new Adres("België", "9820", "Gent", "MartialArtStraat", "5a");
-            var gebruiker = new Gebruiker(usr, "11111111111", new DateTime(2018, 05, 16), "Lee", "Bruce", Geslacht.Man,
-                new DateTime(1940, 11, 27), "UZ Gent", null, "0479076258", "BruceLee@MartialArt.com", "BruceLeesMom@MartialArt.com",
-                adres1, 100, Gradatie.YonDan, TypeGebruiker.Beheerder, formule);
-            _context.Gebruikers.Add(gebruiker);
             _context.SaveChanges();
         }
     }
