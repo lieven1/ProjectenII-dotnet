@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Taijitan.Filters;
 using Taijitan.Models.Domain;
 using Taijitan.Models.GebruikerViewModels;
 
-namespace Taijitan.Controllers {
+namespace Taijitan.Controllers
+{
     [Authorize]
     public class GebruikerController : Controller {
         private IGebruikerRepository _gebruikerRepository;
