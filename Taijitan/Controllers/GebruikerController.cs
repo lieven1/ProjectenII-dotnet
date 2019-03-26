@@ -16,42 +16,67 @@ namespace Taijitan.Controllers {
 
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Index(Gebruiker gebruiker) {
-            if (gebruiker.Equals(null))
+            try
+            {
+                if (gebruiker.Equals(null))
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                return View(gebruiker);
+            }
+            catch
             {
                 return RedirectToAction("Error", "Home");
             }
-            return View(gebruiker);
         }
 
         [HttpGet]
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Edit(Gebruiker gebruiker)
         {
-            if (gebruiker.Equals(null))
+            try
+            {
+                if (gebruiker.Equals(null))
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                return View(new GebruikerEditViewModel(gebruiker));
+            }
+            catch
             {
                 return RedirectToAction("Error", "Home");
             }
-            return View(new GebruikerEditViewModel(gebruiker));
         }
 
         [HttpPost]
         [ServiceFilter(typeof(GebruikerFilter))]
         public IActionResult Edit(Gebruiker gebruiker, GebruikerEditViewModel model)
         {
-            if (gebruiker.Equals(null))
+            try
+            {
+
+                if (gebruiker.Equals(null))
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+
+                try
+                {
+                    MapGebruikerEditViewModelToGebruiker(model, gebruiker);
+                    _gebruikerRepository.SaveChanges();
+                    TempData["message"] = $"Je hebt je gegevens succesvol bijgewerkt.";
+                }
+                catch
+                {
+                    TempData["error"] = "Er vond een probleem plaats bij het wijzigen van je gegevens. Probeer later opnieuw.";
+                    return RedirectToAction(nameof(Edit), model);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch
             {
                 return RedirectToAction("Error", "Home");
             }
-
-            try {
-                MapGebruikerEditViewModelToGebruiker(model, gebruiker);
-                _gebruikerRepository.SaveChanges();
-                TempData["message"] = $"Je hebt je gegevens succesvol bijgewerkt.";
-            } catch {
-                TempData["error"] = "Er vond een probleem plaats bij het wijzigen van je gegevens. Probeer later opnieuw.";
-                return RedirectToAction(nameof(Edit), model);
-            }
-            return RedirectToAction(nameof(Index));
         }
 
         private void MapGebruikerEditViewModelToGebruiker(GebruikerEditViewModel model, Gebruiker gebruiker) {
