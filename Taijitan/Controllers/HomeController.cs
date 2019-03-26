@@ -14,42 +14,64 @@ namespace Taijitan.Controllers
     {
         [ServiceFilter(typeof(AspUserToGebruiker))]
         public IActionResult Index(Gebruiker gebruiker) {
-            if (User.IsInRole("gebruiker"))
-            {
-                HttpContext.Session.SetString("Gebruiker", gebruiker.Gebruikersnaam);
-                return RedirectToAction(nameof(Dashboard));
-            }
-            else if(User.IsInRole("beheerder"))
-            {
-                return View();
-            }
-            return RedirectToAction(nameof(Error));
-        }
-
-        public IActionResult Login(String gebruikersnaam)
-        {
-            HttpContext.Session.SetString("Gebruiker", gebruikersnaam);
-            return RedirectToAction(nameof(Dashboard));
-        }
-        
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Aanwezigheden", "Lesmoment");
-        }
-
-        public IActionResult Dashboard()
-        {
-            TempData["leeromgeving"] = User.IsInRole("beheerder");
             try
             {
-                TempData["gebruiker"] = HttpContext.Session.GetString("Gebruiker");
+
+                if (User.IsInRole("gebruiker"))
+                {
+                    HttpContext.Session.SetString("Gebruiker", gebruiker.Gebruikersnaam);
+                    return RedirectToAction(nameof(Dashboard));
+                }
+                else if (User.IsInRole("beheerder"))
+                {
+                    return View();
+                }
+                return RedirectToAction(nameof(Error));
             }
             catch
             {
                 return RedirectToAction(nameof(Error));
             }
-            return View();
+        }
+
+        public IActionResult Login(String gebruikersnaam)
+        {
+            try
+            {
+                HttpContext.Session.SetString("Gebruiker", gebruikersnaam);
+                return RedirectToAction(nameof(Dashboard));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Error));
+            }
+        }
+        
+        public IActionResult Logout()
+        {
+            try
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Aanwezigheden", "Lesmoment");
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Error));
+            }
+        }
+
+        public IActionResult Dashboard()
+        {
+            try
+            {
+                TempData["leeromgeving"] = User.IsInRole("beheerder");
+                TempData["gebruiker"] = HttpContext.Session.GetString("Gebruiker");
+                return View();
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Error));
+            }
         }
 
         [AllowAnonymous]

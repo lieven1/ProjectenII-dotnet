@@ -6,9 +6,9 @@ namespace Taijitan.Data {
     public class FotoConfiguration : IEntityTypeConfiguration<Foto> {
         public void Configure(EntityTypeBuilder<Foto> builder) {
             builder.ToTable("Foto");
-            builder.HasKey(t => t.id);
-            builder.Property(t => t.bestandsnaam).IsRequired();
-            builder.Property(t => t.extensie).IsRequired();
+            builder.HasKey(t => t.Id);
+            builder.Property(t => t.Bestandsnaam).IsRequired();
+            builder.Property(t => t.Extensie).IsRequired();
         }
     }
 }

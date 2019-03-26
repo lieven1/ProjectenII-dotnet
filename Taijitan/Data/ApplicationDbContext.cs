@@ -18,6 +18,7 @@ namespace Taijitan.Data
         public DbSet<Foto> Fotos { get; set; }
         public DbSet<FotoLesmateriaal> FotoLesmateriaal { get; set; }
         public DbSet<Lesformule> Lesformules { get; set; }
+        public DbSet<Raadpleging> Raadplegingen { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options){}
 
@@ -33,6 +34,7 @@ namespace Taijitan.Data
             builder.ApplyConfiguration(new FotoConfiguration());
             builder.ApplyConfiguration(new FotoLesmateriaalConfiguration());
             builder.ApplyConfiguration(new LesformuleConfiguration());
+            builder.ApplyConfiguration(new RaadplegingConfiguration());
         }
 
      

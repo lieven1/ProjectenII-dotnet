@@ -34,8 +34,8 @@ namespace Taijitan
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Taijitan;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+//options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Taijitan;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -58,6 +58,7 @@ namespace Taijitan
             services.AddScoped<IThemaRepository, ThemaRepository>();
             services.AddScoped<ILesmateriaalRepository, LesmateriaalRepository>();
             services.AddScoped<ILesformuleRepository, LesformuleRepository>();
+            services.AddScoped<IRaadplegingRepository, RaadplegingRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

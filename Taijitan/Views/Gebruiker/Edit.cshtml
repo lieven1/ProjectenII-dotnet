@@ -14,70 +14,74 @@
 
             <div class="row">
                 <form asp-action="Edit" class="container-fluid">
-                    <fieldset class="row">
+                    <fieldset>
                         <legend>Persoonlijke gegevens</legend>
-                        <div class="form-group col-md-6 ">
-                            <label asp-for="Naam" class="control-label"></label>
-                            <input asp-for="Naam" class="form-control" />
-                            <span asp-validation-for="Naam" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Voornaam" class="control-label"></label>
-                            <input asp-for="Voornaam" class="form-control" />
-                            <span asp-validation-for="Voornaam" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="TelefoonNummer" class="control-label"></label>
-                            <input asp-for="TelefoonNummer" class="form-control" />
-                            <span asp-validation-for="TelefoonNummer" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Gsmnummer" class="control-label"></label>
-                            <input asp-for="Gsmnummer" class="form-control" />
-                            <span asp-validation-for="Gsmnummer" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="EmailOuders" class="control-label"></label>
-                            <input asp-for="EmailOuders" class="form-control" />
-                            <span asp-validation-for="EmailOuders" class="text-danger"></span>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="Naam" class="control-label"></label>
+                                <input asp-for="Naam" class="form-control" />
+                                <span asp-validation-for="Naam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Voornaam" class="control-label"></label>
+                                <input asp-for="Voornaam" class="form-control" />
+                                <span asp-validation-for="Voornaam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="TelefoonNummer" class="control-label"></label>
+                                <input asp-for="TelefoonNummer" class="form-control" />
+                                <span asp-validation-for="TelefoonNummer" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Gsmnummer" class="control-label"></label>
+                                <input asp-for="Gsmnummer" class="form-control" />
+                                <span asp-validation-for="Gsmnummer" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="EmailOuders" class="control-label"></label>
+                                <input asp-for="EmailOuders" class="form-control" />
+                                <span asp-validation-for="EmailOuders" class="text-danger"></span>
+                            </div>
                         </div>
                     </fieldset>
                     <hr class="bg-info" style="height:3px; border-radius: 5px;"/>
-                    <fieldset class="row">
+                    <fieldset>
                         <legend>Adres</legend>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Land" class="control-label"></label>
-                            <input asp-for="Land" class="form-control" />
-                            <span asp-validation-for="Land" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Postcode" class="control-label"></label>
-                            <input asp-for="Postcode" class="form-control" />
-                            <span asp-validation-for="Postcode" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Stad" class="control-label"></label>
-                            <input asp-for="Stad" class="form-control" />
-                            <span asp-validation-for="Stad" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Straat" class="control-label"></label>
-                            <input asp-for="Straat" class="form-control" />
-                            <span asp-validation-for="Straat" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="Nummer" class="control-label"></label>
-                            <input asp-for="Nummer" class="form-control" />
-                            <span asp-validation-for="Nummer" class="text-danger"></span>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="Land" class="control-label"></label>
+                                <input asp-for="Land" class="form-control" />
+                                <span asp-validation-for="Land" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Postcode" class="control-label"></label>
+                                <input asp-for="Postcode" class="form-control" />
+                                <span asp-validation-for="Postcode" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Stad" class="control-label"></label>
+                                <input asp-for="Stad" class="form-control" />
+                                <span asp-validation-for="Stad" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Straat" class="control-label"></label>
+                                <input asp-for="Straat" class="form-control" />
+                                <span asp-validation-for="Straat" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Nummer" class="control-label"></label>
+                                <input asp-for="Nummer" class="form-control" />
+                                <span asp-validation-for="Nummer" class="text-danger"></span>
+                            </div>
                         </div>
                     </fieldset>
 
-                    <div class="form-group col-md-12 text-center">
+                    <div class="form-group col-12 text-center">
                         <a asp-controller="Gebruiker" asp-action="Index" class="btn btn-outline-primary btn-lg float-left" style="padding-left:4em;padding-right:4em; margin-right:15px;">Annuleer</a>
 
                         <input type="submit" value="Opslaan" class="btn btn-primary btn-lg float-right" style="padding-left:4em;padding-right:4em;" />

@@ -57,7 +57,7 @@
                     {
                         var index = Model.Fotos.IndexOf(item) + 1;
                         var url = @item.Foto.Cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(300).Crop("fill"))
-                            .BuildUrl("taijitan/" + item.Foto.bestandsnaam + "." + item.Foto.extensie);
+                            .BuildUrl("taijitan/" + item.Foto.Bestandsnaam + "." + item.Foto.Extensie);
                     <figure class="figure m-3 border-dark">
                         <img src="@url" class="figure-img img-fluid rounded">
                         <figcaption class="figure-caption">@index</figcaption>
