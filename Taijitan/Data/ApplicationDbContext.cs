@@ -27,7 +27,7 @@ namespace Taijitan.Data
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new GebruikerConfiguration());
             builder.ApplyConfiguration(new AdresConfiguration());
-            builder.ApplyConfiguration(new LesmomentConfiguration());
+            builder.ApplyConfiguration(new LesmomentConfiguration()); 
             builder.ApplyConfiguration(new LesmomentLedenConfiguration());
             builder.ApplyConfiguration(new ThemaConfiguration());
             builder.ApplyConfiguration(new LesmateriaalConfiguration());
@@ -36,5 +36,7 @@ namespace Taijitan.Data
             builder.ApplyConfiguration(new LesformuleConfiguration());
             builder.ApplyConfiguration(new RaadplegingConfiguration());
         }
+
+     
     }
 }

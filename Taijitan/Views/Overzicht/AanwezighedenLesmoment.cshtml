@@ -1,0 +1,35 @@
+﻿@model Taijitan.Models.LesmomentViewModels.LesmomentOverzichtAanwezigenViewModel
+
+
+<div class="body-content container">
+    <h2  style="margin-top: 50px;margin-bottom: 20px;">Aanwezigheden Lesmoment @Model.Lesmoment.StartTijd.ToString("dd/MM/yyyy")</h2>
+
+    @if (Model.Gebruikers.Count() == 0)
+    {
+        <p>Geen aanwezigheden</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead class="bg-primary">
+                <tr class="bg-primary">
+                    <td><b>Gebruikersnaam</b></td>
+                    <td><b>Naam</b></td>
+                    <td colspan="2"><b>Voornaam</b></td>
+                </tr>
+            </thead>
+            @foreach (var item in Model.Gebruikers)
+            {
+                <tr>
+                    <td>@item.Gebruikersnaam</td>
+                    <td>@item.Naam</td>
+                    <td>@item.Voornaam</td>
+                </tr>
+            }
+        </table>
+    }
+
+    <div class="form-group col-md-12 text-center">
+        <a asp-controller="Overzicht" asp-action="Index" class="btn btn-default">Keer Terug</a>
+    </div>
+</div>

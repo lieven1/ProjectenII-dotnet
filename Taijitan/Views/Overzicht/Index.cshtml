@@ -1,0 +1,49 @@
+﻿@model Taijitan.Models.LesmomentViewModels.LesmomentOverzichtEditViewmodel
+
+<div class="body-content container">
+    <h2 style="margin-top: 50px;margin-bottom: 20px;">Filter lesmomenten</h2>
+    <form asp-controller="Overzicht" asp-action="Index" method="post" class="container-fluid form-inline">
+        <div class="form-group col-md-2">
+            <label asp-for="Year" style="padding-right:15px;">Jaar</label>
+            <select asp-for="Year"
+                    asp-items="@(ViewData["Jaren"] as SelectList)"></select>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Month" style="padding-right:15px;">Maand</label>
+            <select asp-for="Month"
+                    asp-items="@(ViewData["Maanden"] as SelectList)"></select>
+        </div>
+        <div class="form-group col-md-2">
+            <button class="btn btn-primary" type="submit">Filter</button>
+        </div>
+    </form>
+
+    <h2 style="margin-top: 50px;margin-bottom: 20px;">Lesmomenten  @Model.Month @Model.Year</h2>
+    @if (Model.Lesmomenten.Count() == 0)
+    {
+        <p>Er werden geen lessen teruggevonden voor @Model.Month @Model.Year</p>
+    }
+    else
+    {<table class="table table-striped">
+        <thead class="bg-primary">
+            <tr class="bg-primary">
+                <td><b>Datum</b></td>
+                <td><b>Van</b></td>
+                <td colspan="2"><b>Tot</b></td>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Lesmomenten)
+        {
+            <tr>
+                <td>@item.StartTijd.ToString("dd/MM/yyyy")</td>
+                <td>@item.StartTijd.ToString("HH:mm")</td>
+                <td>@item.EindTijd.ToString("HH:mm")</td>
+                <td><a class="btn btn-default btn-primary" asp-controller="Overzicht" asp-action="AanwezighedenLesmoment" asp-route-id="@item.LesmomentId">Toon aanwezeigheden</a></td>
+            </tr>
+        }
+        </table>}
+
+    <div class="form-group col-md-12 text-center">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-default">Keer Terug</a>
+    </div>
+</div>
