@@ -96,8 +96,11 @@ namespace Taijitan.Controllers
             {
                 Lesformule formule = lesformuleRepository.GetById(lesformuleId);
                 Lesmoment lesmoment = lesmomentRepository.GetById(lesmomentId);
-
                 List<Gebruiker> gebruikers = gebruikerRepository.GetAllLedenInFormule(formule);
+                if(formule == null || lesmoment == null || gebruikers == null)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
 
                 return View(new LesmomentGebruikersInFormuleViewModel(lesmoment, formule, gebruikers));
             }
@@ -140,8 +143,8 @@ namespace Taijitan.Controllers
                 {
                     return RedirectToAction(nameof(Aanwezigheden));
                 }
-                var IngeshrevenGebruikers = lesmoment.Leden.Select(l => l.Gebruikersnaam);
-                var gebruikers = gebruikerRepository.GetAllLeden().OrderBy(g => g.Gebruikersnaam).Where(g => !IngeshrevenGebruikers.Contains(g.Gebruikersnaam));
+                var ingeschrevenGebruikers = lesmoment.Leden.Select(l => l.Gebruikersnaam);
+                var gebruikers = gebruikerRepository.GetAllLeden().OrderBy(g => g.Gebruikersnaam).Where(g => !ingeschrevenGebruikers.Contains(g.Gebruikersnaam));
                 return View(new LesmomentNietIngeschrevenViewModel(gebruikers, lesmoment));
             }
             catch
@@ -183,7 +186,7 @@ namespace Taijitan.Controllers
             }
         }
 
-        public List<Lesmoment> geefLesmomenten(Func<Lesmoment, bool> predicate = null)
+        private List<Lesmoment> geefLesmomenten(Func<Lesmoment, bool> predicate = null)
         {
             if (predicate == null)
             {
