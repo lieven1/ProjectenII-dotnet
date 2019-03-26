@@ -29,25 +29,26 @@ namespace Taijitan.Controllers
         public IActionResult Overzicht(Gebruiker gebruiker, int gradatieInt = 0, int themaId = 0) {
             try
             {
-                IEnumerable<Lesmateriaal> lesmateriaal;
                 var gradatieGebruiker = gebruiker.Gradatie;
+                IEnumerable<Lesmateriaal> lesmateriaal = _lesmateriaalRepo.GetAll()
+                    .OrderByDescending(l => l.Graad).ThenBy(l => l.Thema.Naam).ThenBy(l => l.Naam);
                 if (gradatieInt == 0 && themaId == 0)
                 {
-                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker);
+                    lesmateriaal = lesmateriaal.Where(l => l.Graad <= gradatieGebruiker);
                 }
                 else if (gradatieInt == 0 && themaId != 0)
                 {
                     var thema = _themaRepo.GetBy(themaId);
-                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad <= gradatieGebruiker && l.Thema == thema);
+                    lesmateriaal = lesmateriaal.Where(l => l.Graad <= gradatieGebruiker && l.Thema == thema);
                 }
                 else if (themaId == 0 && gradatieInt != 0)
                 {
-                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt);
+                    lesmateriaal = lesmateriaal.Where(l => l.Graad == (Gradatie)gradatieInt);
                 }
                 else
                 {
                     var thema = _themaRepo.GetBy(themaId);
-                    lesmateriaal = _lesmateriaalRepo.GetAll().Where(l => l.Graad == (Gradatie)gradatieInt && l.Thema == thema);
+                    lesmateriaal = lesmateriaal.Where(l => l.Graad == (Gradatie)gradatieInt && l.Thema == thema);
                 }
                 ViewData["Graden"] = MapGradenNaarSelectList(gradatieGebruiker, gradatieInt);
                 ViewData["Themas"] = MapThemasNaarSelectList(themaId);
@@ -106,7 +107,8 @@ namespace Taijitan.Controllers
         private SelectList MapGradenNaarSelectList(Gradatie gradatieGebruiker, int selected) {
             var graden = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>()
                 .Select(g => new GradatieViewModel((int)Convert.ChangeType(g,TypeCode.Int32))).ToList()
-                .Where(g => g.gradatie.CompareTo(gradatieGebruiker) <= 0);
+                .Where(g => g.gradatie.CompareTo(gradatieGebruiker) <= 0)
+                .OrderByDescending(g => g.graadInt);
             return new SelectList(graden,
                 "graadInt", "gradatie", selected);
         }
