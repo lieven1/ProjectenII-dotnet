@@ -74,9 +74,9 @@ namespace TaijitanTests.Data
             Themas.Add(thema1);
             Themas.Add(thema2);
 
-            Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1", Gradatie.GoKyu, thema1);
-            Lesmateriaal lesmateriaal2 = new Lesmateriaal("handworpen2", Gradatie.JuniDan, thema1);
-            Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen1", Gradatie.JuniDan, thema2);
+            Lesmateriaal lesmateriaal1 = new Lesmateriaal("handworpen1", Gradatie.GoKyu, thema1) { LesmateriaalId = 1 };
+            Lesmateriaal lesmateriaal2 = new Lesmateriaal("handworpen2", Gradatie.JuniDan, thema1) { LesmateriaalId = 2 };
+            Lesmateriaal lesmateriaal3 = new Lesmateriaal("standen1", Gradatie.JuniDan, thema2) { LesmateriaalId = 3 };
             Lesmateriaal = new List<Lesmateriaal>();
             Lesmateriaal.Add(lesmateriaal1);
             Lesmateriaal.Add(lesmateriaal2);

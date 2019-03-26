@@ -81,6 +81,21 @@ namespace Taijitan.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+        
+        public IActionResult LesmateriaalMock(Gebruiker gebruiker, int id, Raadpleging raadpleging) {
+            try {
+                var lesmateriaal = _lesmateriaalRepo.GetById(id);
+                if (lesmateriaal == null) {
+                    return NotFound();
+                } else {
+                    _raadplegingRepo.AddRaadpleging(raadpleging);
+                    _raadplegingRepo.SaveChanges();
+                    return View(lesmateriaal);
+                }
+            } catch {
+                return RedirectToAction("Error", "Home");
+            }
+        }
 
         private SelectList MapThemasNaarSelectList(int selected) {
             var themas = _themaRepo.GetAll().OrderBy(t => t.Naam);

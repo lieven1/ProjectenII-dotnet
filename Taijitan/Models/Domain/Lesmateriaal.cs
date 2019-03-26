@@ -5,7 +5,7 @@ using Taijitan.Models.Domain.Enums;
 namespace Taijitan.Models.Domain
 {
     public class Lesmateriaal {
-        public int LesmateriaalId { get; private set; }
+        public int LesmateriaalId { get; internal set; }
         public string Naam { get; private set; }
         public string Beschrijving { get; private set; }
         public Gradatie Graad { get; private set; }
