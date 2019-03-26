@@ -22,7 +22,7 @@ namespace TaijitanTests.Data
         public List<Lesmoment> GeenLesmomenten { get { return new List<Lesmoment>(); } }
         public List<Thema> Themas { get; }
         public List<Lesmateriaal> Lesmateriaal { get; }
-        public List<Lesformule> lesformules { get; }
+        public List<Lesformule> Lesformules { get; }
 
         public DummyDBcontext()
         {
@@ -33,7 +33,7 @@ namespace TaijitanTests.Data
             Lesformule lesformule4 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Wednesday, DayOfWeek.Saturday }, "Woensdag en zaterdag", "Ik volg normaal les op woensdag en zaterdag.");
             Lesformule lesformule5 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Saturday }, "Dinsdag en zaterdag", "Ik volg normaal les op dinsdag en zaterdag.");
             Lesformule lesformule6 = new Lesformule(new List<DayOfWeek>() { DayOfWeek.Tuesday, DayOfWeek.Thursday }, "Dinsdag en donderdag", "Ik volg normaal les op dinsdag en donderdag.");
-            lesformules = new List<Lesformule>() { lesformule1, lesformule2, lesformule3, lesformule4, lesformule5, lesformule6 };
+            Lesformules = new List<Lesformule>() { lesformule1, lesformule2, lesformule3, lesformule4, lesformule5, lesformule6 };
 
             Gebruiker gebruiker1 = new Gebruiker("username1", "25632112569", DateTime.Now, "name1", "first name1", Taijitan.Models.Domain.Enums.Geslacht.Man, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.HachiDan, TypeGebruiker.Lid, lesformule4);
             GebruikerNietInLijst = new Gebruiker("username2", "25632100000", DateTime.Now, "name2", "first name2", Taijitan.Models.Domain.Enums.Geslacht.Vrouw, new DateTime(1990, 1, 1), "Gent", "00712345678", "0236587496", "something@some.th", "somet@som.th", new Adres("België", "9000", "Gent", "Voskenslaan", "1"), 100, Gradatie.JuichiDan, TypeGebruiker.Lid, lesformule1);
