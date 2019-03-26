@@ -8,7 +8,7 @@ namespace Taijitan.Data {
             builder.ToTable("FotoLesmateriaal");
             builder.HasKey(t => new { t.FotoId, t.LesmateriaalId });
             builder.HasOne(t => t.Lesmateriaal).WithMany(l => l.Fotos).HasForeignKey(t => t.LesmateriaalId);
-            builder.HasOne(t => t.Foto).WithMany(l => l.lesmateriaal).HasForeignKey(t => t.FotoId);
+            builder.HasOne(t => t.Foto).WithMany(l => l.Lesmateriaal).HasForeignKey(t => t.FotoId);
         }
     }
 }
