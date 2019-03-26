@@ -26,13 +26,20 @@ namespace Taijitan.Data
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new GebruikerConfiguration());
             builder.ApplyConfiguration(new AdresConfiguration());
-            builder.ApplyConfiguration(new LesmomentConfiguration());
+            builder.ApplyConfiguration(new LesmomentConfiguration()); 
             builder.ApplyConfiguration(new LesmomentLedenConfiguration());
             builder.ApplyConfiguration(new ThemaConfiguration());
             builder.ApplyConfiguration(new LesmateriaalConfiguration());
             builder.ApplyConfiguration(new FotoConfiguration());
             builder.ApplyConfiguration(new FotoLesmateriaalConfiguration());
             builder.ApplyConfiguration(new LesformuleConfiguration());
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)   //zelf server link instellen --> met sqlserver express niet nodig(zie slide 18)
+        {
+            var connectionstring =
+                              @"Server=DESKTOP-KS6ATME;Database=Taijitan;Integrated Security=True;";
+            optionsBuilder.UseSqlServer(connectionstring);
         }
     }
 }

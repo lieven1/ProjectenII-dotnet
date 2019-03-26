@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Taijitan.Models.Domain;
@@ -46,6 +47,33 @@ namespace Taijitan.Data.Repositories
         public Lesmoment GetById(int id)
         {
             return _lesmomenten.Include(lesm => lesm.Leden).ThenInclude(lid => lid.Gebruiker).SingleOrDefault(l => l.LesmomentId == id);
+        }
+
+        public IEnumerable<Lesmoment> GetAfgelopenLesmomentenByYear(int year)
+        {
+            return _lesmomenten.Where(l => l.StartTijd.Year == year && l.EindTijd < DateTime.Now).OrderBy(l => l.StartTijd.Month).ThenBy(l => l.StartTijd.Day);
+        }
+
+        public IEnumerable<int> GetJarenInDatabase()
+        {
+            IEnumerable<int> jaren = new List<int>() { DateTime.Now.Year };
+            _lesmomenten.ForEachAsync(l =>
+            {
+                if (!jaren.Contains(l.StartTijd.Year)) { jaren.Append(l.StartTijd.Year); }
+            });
+            return jaren;
+        }
+
+        public IEnumerable<Lesmoment> GetAfgelopenLesmomentenByYearAndMonth(int year, int month)
+        {
+            return _lesmomenten.Where(l => (l.StartTijd.Year == year) && (l.StartTijd < DateTime.Now) && (l.StartTijd.Month == month)).OrderBy(l => l.StartTijd.Month).ThenBy(l => l.StartTijd.Day);
+
+        }
+
+        public IEnumerable<Gebruiker> GetAanwezigenLesmomenten(int id)
+        {
+            IEnumerable<Gebruiker> gebr =  _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == true).Select(l => l.Gebruiker).ToList();
+            return gebr;
         }
     }
 }
