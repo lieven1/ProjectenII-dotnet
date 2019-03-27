@@ -44,7 +44,7 @@ namespace Taijitan.Data {
                 Random rand = new Random();
                 for (int lesformule = 0; lesformule < 6; lesformule++)
                 {
-                    for(int i = 101; i <= 110; i++)
+                    for(int i = 101; i <= 108; i++)
                     {
                         adres = new Adres("België", "9000", "Gent", "Teststraat", i.ToString());
                         gebruiker = new Gebruiker(
@@ -129,11 +129,11 @@ namespace Taijitan.Data {
                     }
                     now = now.AddDays(1);
                 }
-
+                
                 // Lesmomenten historiek
-                now = DateTime.Now;
+                now = new DateTime(2019, 3, 20);
                 Lesmoment lesmomentTemp;
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     switch ((int)now.DayOfWeek)
                     {
@@ -226,7 +226,7 @@ namespace Taijitan.Data {
                             _context.Lesmomenten.Add(lesmomentTemp);
                             break;
                     }
-                    now = now.AddDays(-7);
+                    now = now.AddDays(-14);
                 }
 
                 // Themas
