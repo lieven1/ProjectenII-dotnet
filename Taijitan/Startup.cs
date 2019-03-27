@@ -90,7 +90,7 @@ namespace Taijitan
             });
 
             // Enable to generate data
-            dataInitializer.InitializeData().Wait();
+          // dataInitializer.InitializeData().Wait();
         }
     }
 }
