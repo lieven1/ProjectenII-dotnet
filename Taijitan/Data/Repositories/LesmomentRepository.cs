@@ -57,7 +57,7 @@ namespace Taijitan.Data.Repositories
         public IEnumerable<int> GetJarenInDatabase()
         {
             IEnumerable<int> jaren = new List<int>() { DateTime.Now.Year };
-            _lesmomenten.ForEachAsync(l =>
+            _lesmomenten.ToList().ForEach(l =>
             {
                 if (!jaren.Contains(l.StartTijd.Year)) { jaren.Append(l.StartTijd.Year); }
             });
