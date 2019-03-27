@@ -9,17 +9,17 @@
 @if (showBanner)
 {
 
-<div class="alert alert-danger mt-5" id="cookieConsent">
-    <p>
-        Gelieve cookies te accepteren om deze website optimaal te kunnen gebruiken.
-    </p>
-        <button type="button" class="btn btn-success mb-0 d-inline" data-cookie-string="@cookieString">Accept</button>
-</div>
+    <div class="alert alert-danger mt-5" id="cookieConsent">
+        <p>
+            Gelieve cookies te accepteren om deze website optimaal te kunnen gebruiken.<br />
+            Zonder deze cookies zullen verschillende features niet bruikbaar zijn!
+        </p>
+        <button type="button" class="btn btn-success m-0" data-cookie-string="@cookieString">Accept</button>
+    </div>
     <script>
         (function () {
             document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
                 document.cookie = el.target.dataset.cookieString;
-                document.querySelector("#cookieConsent").classList.add("hidden");
                 location.reload();
             }, false);
         })();
