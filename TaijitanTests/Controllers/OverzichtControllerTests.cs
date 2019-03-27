@@ -62,17 +62,19 @@ namespace TaijitanTests.Controllers
         [Fact]
         public void Index_NullViewModel_RedirectToError()
         {
-            
+            var actionResult = _controller.Index(null) as RedirectToActionResult;
+            Assert.Equal(nameof(HomeController.Error), actionResult.ActionName);
         }
 
         [Fact]
         public void Index_LeegViewModel_RedirectToError()
         {
-
+            var actionResult = _controller.Index(new LesmomentOverzichtEditViewmodel()) as RedirectToActionResult;
+            Assert.Equal(nameof(HomeController.Error), actionResult.ActionName);
         }
 
         [Fact]
-        public void Index_CorrectViewModel_Valid()
+        public void Index_ValidArgument_Valid()
         {
             List<Lesmoment> lessen = new List<Lesmoment>();
             lessen.Add(new Lesmoment(new DateTime(2018,1,17), new DateTime(2018, 1, 17).AddHours(2)));
@@ -83,6 +85,25 @@ namespace TaijitanTests.Controllers
 
             Assert.IsType<LesmomentOverzichtEditViewmodel>(model);
         }
+        #endregion
+
+        #region AanwezighedenLesmoment(int id)
+        [Fact]
+        public void AanwezighedenLesmoment_invalidArguments_RedirectoToIndex()
+        {
+            _lesmomentRepository.Setup(v => v.GetById(-1)).Returns((Lesmoment)null);
+            var result = _controller.AanwezighedenLesmoment(-1) as RedirectToActionResult;
+            Assert.Equal(nameof(_controller.Index), result.ActionName);
+        }
+
+        [Fact]
+        public void AanwezighedenLesmoment_ValidArguments_Valid()
+        {
+            _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
+            var result = _controller.AanwezighedenLesmoment(_context.LesmomentValid.LesmomentId) as ViewResult;
+            Assert.IsType<LesmomentOverzichtAanwezigenViewModel>(result?.Model);
+        }
+
         #endregion
     }
 }

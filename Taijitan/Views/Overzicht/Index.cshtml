@@ -1,7 +1,7 @@
 ﻿@model Taijitan.Models.LesmomentViewModels.LesmomentOverzichtEditViewmodel
 
 <div class="body-content container">
-    <h2 style="margin-top: 50px;margin-bottom: 20px;">Filter lesmomenten</h2>
+    <h2 class="mt-5 mb-3"><a href="/Home/Index" class="btn-link">Dashboard</a> > Overzicht Lesmomenten  @Model.Month @Model.Year</h2>
     <form asp-controller="Overzicht" asp-action="Index" method="post" class="container-fluid form-inline">
         <div class="form-group col-md-2">
             <label asp-for="Year" style="padding-right:15px;">Jaar</label>
@@ -18,15 +18,15 @@
         </div>
     </form>
 
-    <h2 style="margin-top: 50px;margin-bottom: 20px;">Lesmomenten  @Model.Month @Model.Year</h2>
+    <h2 style="margin-top: 50px;margin-bottom: 20px;"></h2>
     @if (Model.Lesmomenten.Count() == 0)
     {
         <p>Er werden geen lessen teruggevonden voor @Model.Month @Model.Year</p>
     }
     else
-    {<table class="table table-striped">
-        <thead class="bg-primary">
-            <tr class="bg-primary">
+    {<table  class="table table-striped mt-5">
+        <thead >
+            <tr>
                 <td><b>Datum</b></td>
                 <td><b>Van</b></td>
                 <td colspan="2"><b>Tot</b></td>

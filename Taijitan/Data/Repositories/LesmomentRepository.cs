@@ -66,14 +66,14 @@ namespace Taijitan.Data.Repositories
 
         public IEnumerable<Lesmoment> GetAfgelopenLesmomentenByYearAndMonth(int year, int month)
         {
-            return _lesmomenten.Where(l => (l.StartTijd.Year == year) && (l.StartTijd < DateTime.Now) && (l.StartTijd.Month == month)).OrderBy(l => l.StartTijd.Month).ThenBy(l => l.StartTijd.Day);
+            return _lesmomenten.Where(l => (l.StartTijd.Year == year) && (l.EindTijd < DateTime.Now) && (l.StartTijd.Month == month)).OrderBy(l => l.StartTijd.Month).ThenBy(l => l.StartTijd.Day);
 
         }
 
         public IEnumerable<Gebruiker> GetAanwezigenLesmomenten(int id)
         {
-            IEnumerable<Gebruiker> gebr =  _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == true).Select(l => l.Gebruiker).ToList();
-            return gebr;
+                IEnumerable<Gebruiker> gebr = _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == true).Select(l => l.Gebruiker).ToList();
+                return gebr;                  
         }
     }
 }

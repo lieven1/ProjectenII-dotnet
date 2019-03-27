@@ -40,12 +40,20 @@ namespace Taijitan.Controllers
         {
             try
             {
-                model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(model.Year, (int)model.Month);
-                ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
-                ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
-                return View(model);
+                if (model.Year == 0 || model.Month == 0)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                else
+                {
+                    model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(model.Year, (int)model.Month);
+                    ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
+                    ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
+                    return View(model);
+                }
             }
-            catch {
+            catch
+            {
                 return RedirectToAction("Error", "Home");
             }
 
@@ -56,8 +64,16 @@ namespace Taijitan.Controllers
         {
             try
             {
-                LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(lesmomentRepository.GetById(id), lesmomentRepository.GetAanwezigenLesmomenten(id));
-                return View(model);
+                Lesmoment les = lesmomentRepository.GetById(id);
+                if (les == null)
+                {
+                    return RedirectToAction("Index", "Overzicht");
+                }
+                else
+                {
+                    LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(les, lesmomentRepository.GetAanwezigenLesmomenten(id););
+                    return View(model);
+                }
             }
             catch
             {
