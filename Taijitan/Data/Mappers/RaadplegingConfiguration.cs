@@ -7,8 +7,9 @@ namespace Taijitan.Data {
         public void Configure(EntityTypeBuilder<Raadpleging> builder) {
             builder.ToTable("Raadpleging");
             builder.HasKey(r => r.RaadplegingId);
-            builder.Property(t => t.Gebruikersnaam).IsRequired();
-            builder.Property(t => t.LesmateriaalId).IsRequired();
+            //builder.HasAlternateKey(r => new { r.Gebruikersnaam, r.LesmateriaalId, r.Tijdstip });
+            builder.HasOne(r => r.Gebruiker).WithMany(g => g.Raadplegingen).IsRequired();
+            builder.HasOne(r => r.Lesmateriaal).WithMany(l => l.Raadplegingen).IsRequired();
             builder.Property(t => t.Tijdstip).IsRequired();
         }
     }

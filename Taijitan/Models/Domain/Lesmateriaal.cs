@@ -12,6 +12,7 @@ namespace Taijitan.Models.Domain
         public Thema Thema { get; private set; }
         public string VideoId { get; private set; }
         public List<FotoLesmateriaal> Fotos { get; set; }
+        public List<Raadpleging> Raadplegingen { get; private set; }
 
         public Lesmateriaal(string naam, Gradatie graad, Thema thema, string beschrijving = null, string videoId = null, List<FotoLesmateriaal> fotos = null) {
             this.Naam = naam;

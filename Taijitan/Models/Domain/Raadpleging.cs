@@ -6,13 +6,15 @@ namespace Taijitan.Models.Domain
     {
         public int RaadplegingId { get; private set; }
         public DateTime Tijdstip { get; private set; }
-        public string Gebruikersnaam { get; private set; }
-        public int LesmateriaalId { get; private set; }
+        public Gebruiker Gebruiker { get; private set; }
+        public Lesmateriaal Lesmateriaal { get; private set; }
 
-        public Raadpleging(int lesmateriaalId, string gebruikersnaam, DateTime tijdstip) {
-            this.LesmateriaalId = lesmateriaalId;
-            this.Gebruikersnaam = gebruikersnaam;
+        public Raadpleging(Lesmateriaal lesmateriaal, Gebruiker gebruiker, DateTime tijdstip) {
+            this.Lesmateriaal = lesmateriaal;
+            this.Gebruiker = gebruiker;
             this.Tijdstip = tijdstip;
         }
+
+        public Raadpleging() { }
     }
 }

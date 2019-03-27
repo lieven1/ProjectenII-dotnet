@@ -72,7 +72,7 @@ namespace Taijitan.Controllers
                 }
                 else
                 {
-                    _raadplegingRepo.AddRaadpleging(new Raadpleging(id, gebruiker.Gebruikersnaam, DateTime.Now));
+                    _raadplegingRepo.AddRaadpleging(new Raadpleging(lesmateriaal, gebruiker, DateTime.Now));
                     _raadplegingRepo.SaveChanges();
                     return View(lesmateriaal);
                 }

@@ -87,7 +87,7 @@ namespace TaijitanTests.Controllers {
         public void Lesmateriaal_valid() {
             var lesmateriaal = _context.Lesmateriaal[0];
             _lesmateriaalRepo.Setup(r => r.GetById(lesmateriaal.LesmateriaalId)).Returns(lesmateriaal);
-            var raadpleging = new Raadpleging(lesmateriaal.LesmateriaalId, _gebruiker1.Gebruikersnaam, DateTime.Now);
+            var raadpleging = new Raadpleging(lesmateriaal, _gebruiker1, DateTime.Now);
             _raadplegingRepo.Setup(r => r.AddRaadpleging(raadpleging)).Verifiable();
             _raadplegingRepo.Setup(r => r.SaveChanges()).Verifiable();
 

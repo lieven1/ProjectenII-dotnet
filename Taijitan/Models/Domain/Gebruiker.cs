@@ -157,6 +157,8 @@ namespace Taijitan.Models.Domain
         public Lesformule Lesformule { get; private set; }
         // Property voor Intersectietabel
         public List<LesmomentLeden> Lesmomenten { get; private set; }
+        // Property voor Intersectietabel
+        public List<Raadpleging> Raadplegingen { get; private set; }
         #endregion
 
         #region Constructor
