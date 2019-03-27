@@ -45,7 +45,7 @@ namespace TaijitanTests.Controllers
         [Fact]
         public void BeheerLesmoment_LoadGeenLesmomenten_Valid()
         {
-            _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.GeenLesmomenten);
+            _lesmomentRepository.Setup(v => v.GetVolgendeWeek()).Returns(_context.GeenLesmomenten);
             var actionResult = _controller.BeheerLesmoment() as ViewResult;
             var model = actionResult?.Model;
             Assert.IsAssignableFrom<IEnumerable<Lesmoment>>(model);
@@ -55,7 +55,7 @@ namespace TaijitanTests.Controllers
         [Fact]
         public void BeheerLesmoment_LoadWelLesmomenten_Valid()
         {
-            _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.Lesmomenten);
+            _lesmomentRepository.Setup(v => v.GetVolgendeWeek()).Returns(_context.Lesmomenten);
             var actionResult = _controller.BeheerLesmoment() as ViewResult;
             var model = actionResult?.Model;
             Assert.IsAssignableFrom<IEnumerable<Lesmoment>>(model);

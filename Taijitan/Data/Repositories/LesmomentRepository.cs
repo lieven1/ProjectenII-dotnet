@@ -75,7 +75,7 @@ namespace Taijitan.Data.Repositories
             return _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == true).Select(l => l.Gebruiker);
         }
 
-        public IEnumerable<Gebruiker> GetAfwezeigenLesmomenten(int id)
+        public IEnumerable<Gebruiker> GetAfwezigenLesmomenten(int id)
         {
             return _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == false).Select(l => l.Gebruiker);
         }

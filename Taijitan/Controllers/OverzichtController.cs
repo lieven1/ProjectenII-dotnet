@@ -52,6 +52,7 @@ namespace Taijitan.Controllers
                     }
                     else
                     {
+                        
                         model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(model.Year, (int)model.Month);
                     }
                     ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
@@ -78,7 +79,7 @@ namespace Taijitan.Controllers
                 }
                 else
                 {
-                    LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(les, lesmomentRepository.GetAanwezigenLesmomenten(id), lesmomentRepository.GetAfwezeigenLesmomenten(id));
+                    LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(les, lesmomentRepository.GetAanwezigenLesmomenten(id), lesmomentRepository.GetAfwezigenLesmomenten(id));
                     return View(model);
                 }
             }

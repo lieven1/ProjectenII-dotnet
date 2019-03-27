@@ -44,7 +44,8 @@ namespace TaijitanTests.Controllers
         [Fact]
         public void Index_LoadGeenLesmomenten_Valid()
         {
-            _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.GeenLesmomenten);
+            _lesmomentRepository.Setup(v => v.GetAfgelopenLesmomentenByYearAndMonth(DateTime.Now.Year, DateTime.Now.Month)).Returns(_context.GeenLesmomenten);
+            _lesmomentRepository.Setup(v => v.GetJarenInDatabase()).Returns(new List<int>());
             var actionResult = _controller.Index() as ViewResult;
             Assert.IsType<LesmomentOverzichtEditViewmodel>(actionResult?.Model);
         }
@@ -52,7 +53,8 @@ namespace TaijitanTests.Controllers
         [Fact]
         public void Index_LoadWelLesmomenten_Valid()
         {
-            _lesmomentRepository.Setup(v => v.GetAll()).Returns(_context.Lesmomenten);
+            _lesmomentRepository.Setup(v => v.GetAfgelopenLesmomentenByYearAndMonth(DateTime.Now.Year, DateTime.Now.Month)).Returns(_context.Lesmomenten);
+            _lesmomentRepository.Setup(v => v.GetJarenInDatabase()).Returns(new List<int>());
             var actionResult = _controller.Index() as ViewResult;
             Assert.IsType<LesmomentOverzichtEditViewmodel>(actionResult?.Model);
         }
@@ -79,7 +81,9 @@ namespace TaijitanTests.Controllers
             List<Lesmoment> lessen = new List<Lesmoment>();
             lessen.Add(new Lesmoment(new DateTime(2018,1,17), new DateTime(2018, 1, 17).AddHours(2)));
             LesmomentOverzichtEditViewmodel temp = new LesmomentOverzichtEditViewmodel(2018, Taijitan.Models.Domain.Enums.Maanden.Januari,lessen);
-
+            _lesmomentRepository.Setup(l => l.GetAfgelopenLesmomentenByYear(temp.Year)).Returns(lessen);
+            _lesmomentRepository.Setup(l => l.GetAfgelopenLesmomentenByYearAndMonth(temp.Year, (int)temp.Month)).Returns(lessen);
+            _lesmomentRepository.Setup(l => l.GetJarenInDatabase()).Returns(new List<int>());
             var result = _controller.Index(temp) as ViewResult;
             var model = result.Model;
 
