@@ -108,10 +108,11 @@ namespace TaijitanTests.Controllers {
         }
 
         [Fact]
-        public void Lesmateriaal_ongeldigLesmateriaal_invalid_returnsNotFound() {
+        public void Lesmateriaal_ongeldigLesmateriaal_invalid_redirectsToError()
+        {
             _lesmateriaalRepo.Setup(r => r.GetById(-1)).Returns((Lesmateriaal)null);
-            var result = _controller.Lesmateriaal(_gebruiker1, -1) as NotFoundResult;
-            Assert.Equal(404, result.StatusCode);
+            var result = _controller.Lesmateriaal(_gebruiker1, -1) as RedirectToActionResult;
+            Assert.Equal("Error", result.ActionName);
             _lesmateriaalRepo.Verify(r => r.GetById(-1), Times.Once);
         } 
         #endregion

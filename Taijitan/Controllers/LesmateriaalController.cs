@@ -65,10 +65,14 @@ namespace Taijitan.Controllers
         {
             try
             {
+                if(gebruiker == null)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
                 var lesmateriaal = _lesmateriaalRepo.GetById(id);
                 if (lesmateriaal == null)
                 {
-                    return NotFound();
+                    return RedirectToAction("Error", "Home");
                 }
                 else
                 {
