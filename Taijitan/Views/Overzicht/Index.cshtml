@@ -1,7 +1,7 @@
 ﻿@model Taijitan.Models.LesmomentViewModels.LesmomentOverzichtEditViewmodel
 
 <div class="body-content container">
-    <h2 class="mt-5 mb-3"><a href="/Home/Index" class="btn-link">Dashboard</a> > Overzicht Lesmomenten  @Model.Month @Model.Year</h2>
+    <h2 class="mt-5 mb-3"><a href="/Home/Index" class="btn-link">Dashboard</a> > Overzicht Lesmomenten</h2>
     <form asp-controller="Overzicht" asp-action="Index" method="post" class="container-fluid form-inline">
         <div class="form-group col-md-2">
             <label asp-for="Year" style="padding-right:15px;">Jaar</label>
@@ -21,26 +21,32 @@
     <h2 style="margin-top: 50px;margin-bottom: 20px;"></h2>
     @if (Model.Lesmomenten.Count() == 0)
     {
-        <p>Er werden geen lessen teruggevonden voor @Model.Month @Model.Year</p>
+        @if ((int)Model.Month == -1)
+        {
+            <p>Er werden geen lessen teruggevonden voor @Model.Year</p>}
+        else
+        {
+            <p>Er werden geen lessen teruggevonden voor @Model.Month @Model.Year</p>
+        }
     }
     else
-    {<table  class="table table-striped mt-5">
-        <thead >
-            <tr>
-                <td><b>Datum</b></td>
-                <td><b>Van</b></td>
-                <td colspan="2"><b>Tot</b></td>
-            </tr>
-        </thead>
-        @foreach (var item in Model.Lesmomenten)
-        {
-            <tr>
-                <td>@item.StartTijd.ToString("dd/MM/yyyy")</td>
-                <td>@item.StartTijd.ToString("HH:mm")</td>
-                <td>@item.EindTijd.ToString("HH:mm")</td>
-                <td><a class="btn btn-default btn-primary" asp-controller="Overzicht" asp-action="AanwezighedenLesmoment" asp-route-id="@item.LesmomentId">Toon aanwezeigheden</a></td>
-            </tr>
-        }
+    {<table class="table table-striped mt-5">
+            <thead>
+                <tr>
+                    <td><b>Datum</b></td>
+                    <td><b>Van</b></td>
+                    <td colspan="2"><b>Tot</b></td>
+                </tr>
+            </thead>
+            @foreach (var item in Model.Lesmomenten)
+            {
+                <tr>
+                    <td>@item.StartTijd.ToString("dd/MM/yyyy")</td>
+                    <td>@item.StartTijd.ToString("HH:mm")</td>
+                    <td>@item.EindTijd.ToString("HH:mm")</td>
+                    <td><a class="btn btn-default btn-primary" asp-controller="Overzicht" asp-action="AanwezighedenLesmoment" asp-route-id="@item.LesmomentId">Toon aanwezigheden</a></td>
+                </tr>
+            }
         </table>}
 
     <div class="form-group col-md-12 text-center">
