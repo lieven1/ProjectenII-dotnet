@@ -110,7 +110,7 @@ namespace Taijitan.Controllers
 
         private SelectList MapGradenNaarSelectList(Gradatie gradatieGebruiker, int selected) {
             var graden = Enum.GetValues(typeof(Gradatie)).Cast<Gradatie>()
-                .Select(g => new GradatieViewModel((int)Convert.ChangeType(g,TypeCode.Int32))).ToList()
+                .Select(g => new GradatieViewModel((int)g)).ToList()
                 .Where(g => g.gradatie.CompareTo(gradatieGebruiker) <= 0)
                 .OrderByDescending(g => g.graadInt);
             return new SelectList(graden,
