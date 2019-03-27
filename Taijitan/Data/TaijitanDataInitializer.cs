@@ -160,25 +160,49 @@ namespace Taijitan.Data {
                         case 2:
                             start = now.Date + new TimeSpan(18, 00, 00);
                             end = now.Date + new TimeSpan(19, 00, 00);
-                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                            lesmomentTemp = new Lesmoment(start, end, _gebruikers.Where(
                                 g => g.Lesformule.Equals(lesformules[4]) ||
                                 g.Lesformule.Equals(lesformules[5]) ||
-                                g.Lesformule.Equals(lesformules[2])).ToList()));
+                                g.Lesformule.Equals(lesformules[2])).ToList());
+                            foreach (Gebruiker ingeschrevenLid in lesmomentTemp.geefIngeschrevenLeden())
+                            {
+                                if (rand.Next(4).Equals(0))
+                                {
+                                    lesmomentTemp.RegistreerLid(ingeschrevenLid);
+                                }
+                            }
+                            _context.Lesmomenten.Add(lesmomentTemp);
                             break;
                         // Woensdag
                         case 3:
                             start = now.Date + new TimeSpan(14, 00, 00);
                             end = now.Date + new TimeSpan(16, 00, 00);
-                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                            lesmomentTemp = new Lesmoment(start, end, _gebruikers.Where(
                                 g => g.Lesformule.Equals(lesformules[0]) ||
-                                g.Lesformule.Equals(lesformules[3])).ToList()));
+                                g.Lesformule.Equals(lesformules[3])).ToList());
+                            foreach (Gebruiker ingeschrevenLid in lesmomentTemp.geefIngeschrevenLeden())
+                            {
+                                if (rand.Next(4).Equals(0))
+                                {
+                                    lesmomentTemp.RegistreerLid(ingeschrevenLid);
+                                }
+                            }
+                            _context.Lesmomenten.Add(lesmomentTemp);
                             break;
                         // Donderdag
                         case 4:
                             start = now.Date + new TimeSpan(18, 00, 00);
                             end = now.Date + new TimeSpan(20, 00, 00);
-                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
-                                g => g.Lesformule.Equals(lesformules[5])).ToList()));
+                            lesmomentTemp = new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[5])).ToList());
+                            foreach (Gebruiker ingeschrevenLid in lesmomentTemp.geefIngeschrevenLeden())
+                            {
+                                if (rand.Next(4).Equals(0))
+                                {
+                                    lesmomentTemp.RegistreerLid(ingeschrevenLid);
+                                }
+                            }
+                            _context.Lesmomenten.Add(lesmomentTemp);
                             break;
                         // Vrijdag
                         case 5:
@@ -188,10 +212,18 @@ namespace Taijitan.Data {
                         case 6:
                             start = now.Date + new TimeSpan(11, 30, 00);
                             end = now.Date + new TimeSpan(13, 00, 00);
-                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                            lesmomentTemp = new Lesmoment(start, end, _gebruikers.Where(
                                 g => g.Lesformule.Equals(lesformules[4]) ||
                                 g.Lesformule.Equals(lesformules[3]) ||
-                                g.Lesformule.Equals(lesformules[1])).ToList()));
+                                g.Lesformule.Equals(lesformules[1])).ToList());
+                            foreach (Gebruiker ingeschrevenLid in lesmomentTemp.geefIngeschrevenLeden())
+                            {
+                                if (rand.Next(4).Equals(0))
+                                {
+                                    lesmomentTemp.RegistreerLid(ingeschrevenLid);
+                                }
+                            }
+                            _context.Lesmomenten.Add(lesmomentTemp);
                             break;
                     }
                     now = now.AddDays(-1);
