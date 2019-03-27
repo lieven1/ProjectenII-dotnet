@@ -54,12 +54,12 @@ namespace Taijitan.Data.Repositories
             return _lesmomenten.Where(l => l.StartTijd.Year == year && l.EindTijd < DateTime.Now).OrderBy(l => l.StartTijd.Month).ThenBy(l => l.StartTijd.Day);
         }
 
-        public IEnumerable<int> GetJarenInDatabase()
+        public List<int> GetJarenInDatabase()
         {
-            IEnumerable<int> jaren = new List<int>() { DateTime.Now.Year };
+            List<int> jaren = new List<int>();
             _lesmomenten.ToList().ForEach(l =>
             {
-                if (!jaren.Contains(l.StartTijd.Year)) { jaren.Append(l.StartTijd.Year); }
+                if (!jaren.Contains(l.StartTijd.Year)) { jaren.Add(l.StartTijd.Year); }
             });
             return jaren;
         }
