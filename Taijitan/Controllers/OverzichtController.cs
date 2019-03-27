@@ -26,7 +26,7 @@ namespace Taijitan.Controllers
             {
                 LesmomentOverzichtEditViewmodel model = new LesmomentOverzichtEditViewmodel(DateTime.Now.Year, (Maanden)DateTime.Now.Month, lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(DateTime.Now.Year, DateTime.Now.Month));
                 ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
-                ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
+                ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Alle, Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
                 return View(model);
             }
             catch
@@ -40,15 +40,22 @@ namespace Taijitan.Controllers
         {
             try
             {
-                if (model.Year == 0 || model.Month == 0)
+                if (model.Year == 0 || (int)model.Month == 0)
                 {
                     return RedirectToAction("Error", "Home");
                 }
                 else
                 {
-                    model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(model.Year, (int)model.Month);
+                    if (model.Month == Maanden.Alle)
+                    {
+                        model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYear(model.Year);
+                    }
+                    else
+                    {
+                        model.Lesmomenten = lesmomentRepository.GetAfgelopenLesmomentenByYearAndMonth(model.Year, (int)model.Month);
+                    }
                     ViewData["Jaren"] = new SelectList(lesmomentRepository.GetJarenInDatabase());
-                    ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
+                    ViewData["Maanden"] = new SelectList(new List<Maanden>() { Maanden.Alle, Maanden.Januari, Maanden.Februari, Maanden.Maart, Maanden.April, Maanden.Mei, Maanden.Juni, Maanden.Juli, Maanden.Augustus, Maanden.September, Maanden.Oktober, Maanden.November, Maanden.December });
                     return View(model);
                 }
             }
