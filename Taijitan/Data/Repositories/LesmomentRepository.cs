@@ -72,7 +72,12 @@ namespace Taijitan.Data.Repositories
 
         public IEnumerable<Gebruiker> GetAanwezigenLesmomenten(int id)
         {
-                return _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == true).Select(l => l.Gebruiker);             
+            return _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == true).Select(l => l.Gebruiker);
+        }
+
+        public IEnumerable<Gebruiker> GetAfwezeigenLesmomenten(int id)
+        {
+            return _lesmomentLeden.Where(l => l.Lesmoment.LesmomentId == id && l.Aanwezig == false).Select(l => l.Gebruiker);
         }
 
         public IEnumerable<Lesmoment> GetVolgendeWeek()

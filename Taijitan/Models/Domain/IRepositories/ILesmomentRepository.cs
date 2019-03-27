@@ -10,6 +10,7 @@ namespace Taijitan.Models.Domain
         IEnumerable<Lesmoment> GetAfgelopenLesmomentenByYear(int year);
         IEnumerable<Lesmoment> GetAfgelopenLesmomentenByYearAndMonth(int year, int month);
         IEnumerable<Gebruiker> GetAanwezigenLesmomenten(int id);
+        IEnumerable<Gebruiker> GetAfwezeigenLesmomenten(int id);
         List<int> GetJarenInDatabase();
         Lesmoment GetById(int id);
         IEnumerable<Lesmoment> GetVolgendeWeek();

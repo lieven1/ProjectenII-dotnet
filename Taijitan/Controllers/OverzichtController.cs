@@ -78,7 +78,7 @@ namespace Taijitan.Controllers
                 }
                 else
                 {
-                    LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(les, lesmomentRepository.GetAanwezigenLesmomenten(id));
+                    LesmomentOverzichtAanwezigenViewModel model = new LesmomentOverzichtAanwezigenViewModel(les, lesmomentRepository.GetAanwezigenLesmomenten(id), lesmomentRepository.GetAfwezeigenLesmomenten(id));
                     return View(model);
                 }
             }

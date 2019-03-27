@@ -1,35 +1,76 @@
 ﻿@model Taijitan.Models.LesmomentViewModels.LesmomentOverzichtAanwezigenViewModel
 
-
 <div class="body-content container">
-    <h2  style="margin-top: 50px;margin-bottom: 20px;">Aanwezigheden Lesmoment @Model.Lesmoment.StartTijd.ToString("dd/MM/yyyy")</h2>
-
-    @if (Model.Gebruikers.Count() == 0)
-    {
-        <p>Geen aanwezigheden</p>
-    }
-    else
-    {
-        <table class="table table-striped">
-            <thead class="bg-primary">
-                <tr class="bg-primary">
-                    <td><b>Gebruikersnaam</b></td>
-                    <td><b>Naam</b></td>
-                    <td colspan="2"><b>Voornaam</b></td>
-                </tr>
-            </thead>
-            @foreach (var item in Model.Gebruikers)
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 50px;">
+        <li class="nav-item">
+            <a class="nav-link active" id="aanwezigen-tab" data-toggle="tab" href="#aanwezigen" role="tab" aria-controls="home" aria-selected="true">Aanwezigen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="afwezigen-tab" data-toggle="tab" href="#afwezigen" role="tab" aria-controls="afwezigen" aria-selected="false">Afwezigen</a>
+        </li>
+    </ul>
+    <div class="tab-content mt-3" id="myTabContent">
+        <div class="tab-pane fade show active" id="aanwezigen" role="tabpanel" aria-labelledby="aanwezigen-tab">
+            <h3 style="margin-top: 50px;margin-bottom: 15px;">Aanwezigheden lesmoment @Model.Lesmoment.StartTijd.ToString("dd/MM/yyyy")</h3>
+            @if (Model.AanwezigeGebruikers.Count() == 0)
             {
-                <tr>
-                    <td>@item.Gebruikersnaam</td>
-                    <td>@item.Naam</td>
-                    <td>@item.Voornaam</td>
-                </tr>
+                <p>Geen aanwezigheden</p>
             }
-        </table>
-    }
+            else
+            {
+                <table class="table table-striped mt-5">
+                    <thead>
+                        <tr>
+                            <td><b>Gebruikersnaam</b></td>
+                            <td><b>Naam</b></td>
+                            <td colspan="2"><b>Voornaam</b></td>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.AanwezigeGebruikers)
+                    {
+                        <tr>
+                            <td>@item.Gebruikersnaam</td>
+                            <td>@item.Naam</td>
+                            <td>@item.Voornaam</td>
+                        </tr>
+                    }
+                </table>
+            }
 
-    <div class="form-group col-md-12 text-center">
-        <a asp-controller="Overzicht" asp-action="Index" class="btn btn-default">Keer Terug</a>
+            <div class="form-group col-md-12 text-center">
+                <a asp-controller="Overzicht" asp-action="Index" class="btn btn-default">Keer Terug</a>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="afwezigen" role="tabpanel" aria-labelledby="afwezigen-tab">
+            <h2 style="margin-top: 50px;margin-bottom: 20px;">Afwezigen lesmoment @Model.Lesmoment.StartTijd.ToString("dd/MM/yyyy")</h2>
+            @if (Model.AfwezigeGebruikers.Count() == 0)
+            {
+                <p>Geen aanwezigheden</p>
+            }
+            else
+            {
+                <table class="table table-striped mt-5">
+                    <thead>
+                        <tr>
+                            <td><b>Gebruikersnaam</b></td>
+                            <td><b>Naam</b></td>
+                            <td colspan="2"><b>Voornaam</b></td>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.AfwezigeGebruikers)
+                    {
+                        <tr>
+                            <td>@item.Gebruikersnaam</td>
+                            <td>@item.Naam</td>
+                            <td>@item.Voornaam</td>
+                        </tr>
+                    }
+                </table>
+            }
+
+            <div class="form-group col-md-12 text-center">
+                <a asp-controller="Overzicht" asp-action="Index" class="btn btn-default">Keer Terug</a>
+            </div>
+        </div>
     </div>
 </div>

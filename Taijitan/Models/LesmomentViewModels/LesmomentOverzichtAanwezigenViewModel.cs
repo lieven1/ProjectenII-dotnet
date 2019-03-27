@@ -6,18 +6,20 @@ using Taijitan.Models.Domain;
 
 namespace Taijitan.Models.LesmomentViewModels
 {
-  
-  
+
+
 
     public class LesmomentOverzichtAanwezigenViewModel
     {
         public Lesmoment Lesmoment { get; set; }
-        public IEnumerable<Gebruiker> Gebruikers { get; set; }
+        public IEnumerable<Gebruiker> AanwezigeGebruikers { get; set; }
+        public IEnumerable<Gebruiker> AfwezigeGebruikers { get; set; }
 
-        public LesmomentOverzichtAanwezigenViewModel(Lesmoment les, IEnumerable<Gebruiker> gebruikers)
+        public LesmomentOverzichtAanwezigenViewModel(Lesmoment les, IEnumerable<Gebruiker> aanwezigeGebruikers, IEnumerable<Gebruiker> afwezigeGebruikers)
         {
             Lesmoment = les;
-            this.Gebruikers = gebruikers;
+            this.AanwezigeGebruikers = aanwezigeGebruikers;
+            this.AfwezigeGebruikers = afwezigeGebruikers;
         }
 
     }
