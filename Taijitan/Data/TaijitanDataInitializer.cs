@@ -71,7 +71,7 @@ namespace Taijitan.Data {
                     }
                 }
 
-                // Lesmomenten
+                // Lesmomenten toekomst
                 DateTime now = DateTime.Now;
                 DateTime start, end;
                 for (int i = 0; i < 7; i++)
@@ -128,6 +128,73 @@ namespace Taijitan.Data {
                             break;
                     }
                     now = now.AddDays(1);
+                }
+
+                // Lesmomenten historiek
+                now = DateTime.Now;
+                Lesmoment lesmomentTemp;
+                for (int i = 0; i < 400; i++)
+                {
+                    switch ((int)now.DayOfWeek)
+                    {
+                        // Zondag
+                        case 0:
+                            start = now.Date + new TimeSpan(11, 00, 00);
+                            end = now.Date + new TimeSpan(12, 30, 00);
+                            // Alle gebruikers (geen formule voorzien)
+                            lesmomentTemp = new Lesmoment(start, end, _gebruikers);
+                            foreach(Gebruiker ingeschrevenLid in lesmomentTemp.geefIngeschrevenLeden())
+                            {
+                                if (rand.Next(4).Equals(0))
+                                {
+                                    lesmomentTemp.RegistreerLid(ingeschrevenLid);
+                                }
+                            }
+                            _context.Lesmomenten.Add(lesmomentTemp);
+                            break;
+                        // Maandag
+                        case 1:
+                            // Geen les
+                            break;
+                        // Dinsdag
+                        case 2:
+                            start = now.Date + new TimeSpan(18, 00, 00);
+                            end = now.Date + new TimeSpan(19, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[4]) ||
+                                g.Lesformule.Equals(lesformules[5]) ||
+                                g.Lesformule.Equals(lesformules[2])).ToList()));
+                            break;
+                        // Woensdag
+                        case 3:
+                            start = now.Date + new TimeSpan(14, 00, 00);
+                            end = now.Date + new TimeSpan(16, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[0]) ||
+                                g.Lesformule.Equals(lesformules[3])).ToList()));
+                            break;
+                        // Donderdag
+                        case 4:
+                            start = now.Date + new TimeSpan(18, 00, 00);
+                            end = now.Date + new TimeSpan(20, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[5])).ToList()));
+                            break;
+                        // Vrijdag
+                        case 5:
+                            // Geen les
+                            break;
+                        // Zaterdag
+                        case 6:
+                            start = now.Date + new TimeSpan(11, 30, 00);
+                            end = now.Date + new TimeSpan(13, 00, 00);
+                            _context.Lesmomenten.Add(new Lesmoment(start, end, _gebruikers.Where(
+                                g => g.Lesformule.Equals(lesformules[4]) ||
+                                g.Lesformule.Equals(lesformules[3]) ||
+                                g.Lesformule.Equals(lesformules[1])).ToList()));
+                            break;
+                    }
+                    now = now.AddDays(-1);
                 }
 
                 // Themas
