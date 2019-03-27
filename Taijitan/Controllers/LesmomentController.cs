@@ -123,6 +123,12 @@ namespace Taijitan.Controllers
                 }
                 else
                 {
+                    if (gebruiker.Lesformule.TitleText.Count() > 8) { //meerdere dagen formule => 5 punten
+                        gebruiker.voegPuntenToe(5);
+                    } else {
+                        gebruiker.voegPuntenToe(10);                 //1 dag formule => 10 punten
+                    }
+                    gebruikerRepository.SaveChanges();
                     lesmoment.RegistreerLid(gebruiker);
                     lesmomentRepository.Save();
                     return RedirectToAction(nameof(Aanwezigheden));

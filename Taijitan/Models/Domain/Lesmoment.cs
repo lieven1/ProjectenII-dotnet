@@ -92,7 +92,9 @@ namespace Taijitan.Models.Domain
 
         public bool EersteHelftIsVoorbij()
         {
-            return StartTijd.Add(EindTijd.Subtract(StartTijd) / 2).CompareTo(DateTime.Now) < 0;
+            var start = StartTijd;
+            var eind = EindTijd;
+            return start.Add(eind.Subtract(start) / 2).CompareTo(DateTime.Now) < 0;
         }
         #endregion
     }

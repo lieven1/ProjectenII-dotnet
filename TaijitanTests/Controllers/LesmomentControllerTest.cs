@@ -123,10 +123,13 @@ namespace TaijitanTests.Controllers
         [Fact]
         public void RegistreerAanwezigheid_validArguments_Valid()
         {
-            _gebruikerRepository.Setup(v => v.GetBy(_context.GebruikerInLesmomentLedenVanLesmomentValid.Gebruikersnaam)).Returns(_context.GebruikerInLesmomentLedenVanLesmomentValid);
+            var gebruiker = _context.GebruikerInLesmomentLedenVanLesmomentValid;
+            _gebruikerRepository.Setup(v => v.GetBy(gebruiker.Gebruikersnaam)).Returns(gebruiker);
             _lesmomentRepository.Setup(v => v.GetById(_context.LesmomentValid.LesmomentId)).Returns(_context.LesmomentValid);
-            var result = _controller.RegistreerAanwezigheid(_context.LesmomentValid.LesmomentId, _context.GebruikerInLesmomentLedenVanLesmomentValid.Gebruikersnaam) as RedirectToActionResult;
+            _gebruikerRepository.Setup(v => v.SaveChanges()).Verifiable();
+            var result = _controller.RegistreerAanwezigheid(_context.LesmomentValid.LesmomentId, gebruiker.Gebruikersnaam) as RedirectToActionResult;
             Assert.Equal("Aanwezigheden", result.ActionName);
+            _gebruikerRepository.Verify(v => v.SaveChanges(), Times.Once);
         }
 
         #endregion

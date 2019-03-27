@@ -144,6 +144,7 @@ namespace Taijitan.Models.Domain
                 }
             }
         }
+
         // Aanpasbaar via Adres.WijzigGegevens(...)
         public Adres Adres { get; private set; }
         // Niet aanpasbaar
@@ -205,6 +206,15 @@ namespace Taijitan.Models.Domain
             this.Email = email;
             this.EmailOuders = emailOuders;
             this.Adres.WijzigGegevens(land, postcode, stad, straat, nummer);
+        }
+
+        public void voegPuntenToe(int punten) {
+            if (punten >= 0) {
+                Punten += punten;
+            } else {
+                throw new ArgumentException("Er kunnen niet minder dan 0 punten toegekend worden");
+            }
+            
         }
         #endregion
     }
