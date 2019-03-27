@@ -6,12 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Taijitan.Filters;
 using Taijitan.Models;
 using Taijitan.Models.Domain;
+using Taijitan.Models.Domain.Enums;
 
 namespace Taijitan.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private IGebruikerRepository _gebruikerRepository;
+
+        public HomeController(IGebruikerRepository gebruikerRepository)
+        {
+            this._gebruikerRepository = gebruikerRepository;
+        }
+
         [ServiceFilter(typeof(AspUserToGebruiker))]
         public IActionResult Index(Gebruiker gebruiker) {
             try
@@ -66,6 +74,7 @@ namespace Taijitan.Controllers
             {
                 TempData["leeromgeving"] = User.IsInRole("beheerder");
                 TempData["gebruiker"] = HttpContext.Session.GetString("Gebruiker");
+                TempData["proefles"] = _gebruikerRepository.GetBy(HttpContext.Session.GetString("Gebruiker")).TypeGebruiker.Equals(TypeGebruiker.Proefgebruiker);
                 return View();
             }
             catch

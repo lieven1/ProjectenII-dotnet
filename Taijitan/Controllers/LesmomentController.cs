@@ -206,7 +206,7 @@ namespace Taijitan.Controllers
 
         private Gebruiker LesmomentProeflesViewModelToGebruiker(LesmomentProeflesViewModel model)
         {
-            return new Gebruiker(DateTime.Now, TypeGebruiker.Proefgebruiker, "proefles-" + DateTime.Now.TimeOfDay + "-" + model.Naam + "-" + model.Voornaam, model.Naam, model.Voornaam, model.Email, model.Telefoonnummer);
+            return new Gebruiker(DateTime.Now, TypeGebruiker.Proefgebruiker, "proefles-" + DateTime.Now.TimeOfDay + "-" + model.Naam + "-" + model.Voornaam, model.Naam, model.Voornaam, model.Email, model.Telefoonnummer, Gradatie.JuniDan);
         }
 
         private HashSet<Lesformule> LesformulesMetGebruikers()

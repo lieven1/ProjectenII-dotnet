@@ -182,7 +182,7 @@ namespace Taijitan.Models.Domain
         }
 
         // ProeflesGebruiker
-        public Gebruiker(DateTime inschrijvingsdatum, TypeGebruiker type, string gebruikersnaam, string naam, string voornaam, string email, string telefoonnummer)
+        public Gebruiker(DateTime inschrijvingsdatum, TypeGebruiker type, string gebruikersnaam, string naam, string voornaam, string email, string telefoonnummer, Gradatie gradatie)
         {
             this.Inschrijvingsdatum = inschrijvingsdatum;
             this.Gebruikersnaam = gebruikersnaam;
@@ -191,6 +191,7 @@ namespace Taijitan.Models.Domain
             this.Email = email;
             this.Telefoonnummer = telefoonnummer;
             this.TypeGebruiker = type;
+            this.Gradatie = gradatie;
         }
 
         public Gebruiker(){}
