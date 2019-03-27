@@ -12,5 +12,6 @@ namespace Taijitan.Models.Domain
         IEnumerable<Gebruiker> GetAanwezigenLesmomenten(int id);
         IEnumerable<int> GetJarenInDatabase();
         Lesmoment GetById(int id);
+        IEnumerable<Lesmoment> GetVolgendeWeek();
     }
 }

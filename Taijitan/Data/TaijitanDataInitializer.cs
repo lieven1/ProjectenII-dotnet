@@ -133,7 +133,7 @@ namespace Taijitan.Data {
                 // Lesmomenten historiek
                 now = DateTime.Now;
                 Lesmoment lesmomentTemp;
-                for (int i = 0; i < 400; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     switch ((int)now.DayOfWeek)
                     {
@@ -226,7 +226,7 @@ namespace Taijitan.Data {
                             _context.Lesmomenten.Add(lesmomentTemp);
                             break;
                     }
-                    now = now.AddDays(-1);
+                    now = now.AddDays(-7);
                 }
 
                 // Themas

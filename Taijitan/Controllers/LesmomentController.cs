@@ -28,7 +28,7 @@ namespace Taijitan.Controllers
         {
             try
             {
-                List<Lesmoment> lesmomenten = geefLesmomenten();
+                List<Lesmoment> lesmomenten = lesmomentRepository.GetVolgendeWeek().ToList();
                 return View(lesmomenten.OrderBy(l => l.StartTijd.Date));
             }
             catch
